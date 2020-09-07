@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/create_background"
+    tools:context=".ui.issues.submitIssue.SubmitAnIssueActivity">
+
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        app:srcCompat="@drawable/ic_back" />
+
+
+    <TextView
+        android:id="@+id/txt_submit_issue_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_toRightOf="@+id/img_back"
+        android:text="@string/submit_issue_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txt_submit_issue_title"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/login_border"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <LinearLayout
+            android:id="@+id/steps_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="32dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginRight="32dip"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/img_media_step_icon"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="12"
+                android:src="@drawable/image" />
+
+
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_weight="15"
+                android:background="@color/button_background" />
+
+            <ImageView
+                android:id="@+id/img_category_step_icon"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="12"
+                android:src="@drawable/categorylight"
+                />
+
+
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_weight="15"
+                android:background="@color/button_background"
+
+
+                />
+
+            <ImageView
+                android:id="@+id/img_description_step_icon"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="12"
+                android:src="@drawable/describelight" />
+
+            <View
+                android:layout_width="0dip"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_weight="15"
+                android:background="@color/button_background" />
+
+            <ImageView
+                android:id="@+id/img_location_step_icon"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="12"
+                android:src="@drawable/locationlight" />
+
+        </LinearLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/steps_layout"
+            android:layout_above="@+id/btn_next"
+
+            />
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login_border"
+            android:backgroundTint="@color/colorPrimary"
+            android:paddingTop="8dip"
+            android:paddingBottom="8dip"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

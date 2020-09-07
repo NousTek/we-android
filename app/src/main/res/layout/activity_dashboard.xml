@@ -1,0 +1,1475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background"
+    tools:context=".ui.dashboard.DashboardActivity">
+
+
+    <TextView
+        android:id="@+id/txt_dashboard_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/dashboard_title"
+        android:textColor="@color/white"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:textSize="@dimen/_16sdp" />
+
+    <ImageView
+        android:id="@+id/img_notify"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        app:srcCompat="@drawable/ic_notify"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:visibility="gone"
+        />
+
+    <ImageView
+        android:id="@+id/img_notify_gif"
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_12sdp"/>
+
+    <ImageView
+        android:id="@+id/img_notification"
+        android:layout_width="@dimen/_12sdp"
+        android:layout_height="@dimen/_12sdp"
+        app:srcCompat="@drawable/notification"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:visibility="gone"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_dashboard_title"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/login_border">
+
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_hello"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:text="Hello"
+                    android:textColor="#99000000"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/txt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_hello"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColor="#000"
+                    android:textSize="@dimen/_16sdp" />
+
+                <RelativeLayout
+                    android:id="@+id/locationLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_name"
+
+                    >
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        app:cardCornerRadius="@dimen/_10sdp"
+                        android:background="@drawable/issue_border">
+
+                        <fragment
+                            android:id="@+id/autocomplete_fragment_from"
+                            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/summeryLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/locationLayout"
+                    android:background="@color/near_by_issue_background">
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#14000000" />
+
+                    <LinearLayout
+                        android:id="@+id/MainLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:weightSum="2">
+
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/summaryCardLayout"
+                            style="@style/CustomCardViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:background="@drawable/dashboard_card_shape"
+                            android:padding="@dimen/_10sdp"
+                            app:cardElevation="@dimen/_10sdp"
+
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/issuePostedLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <RelativeLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_issue_posted_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:textColor="@color/issue_posted_color"
+                                    android:textSize="@dimen/_30sdp"
+                                    android:text="0"
+                                    android:textStyle="bold" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_weight="3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txt_issue_posted_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:paddingTop="@dimen/_5sdp"
+                                    android:text="@string/dashboard_issue_posted_title"
+                                    android:textColor="@color/issue_posted_color"
+                                    android:textSize="@dimen/_12sdp" />
+
+
+                                <TextView
+                                    android:id="@+id/txt_issue_posted_km"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/txt_issue_posted_title"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:paddingBottom="@dimen/_5sdp"
+                                    android:text="@string/dashboard_card_radius"
+                                    android:textAllCaps="true"
+                                    android:textColor="#80000000"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/issuePosted"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_below="@+id/issuePostedLayout"
+                                android:background="#4D999999" />
+
+                            <LinearLayout
+                                android:id="@+id/issueResolvedLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/_5sdp"
+                                android:layout_below="@+id/issuePosted">
+
+
+                                <RelativeLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_issue_resolved_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:textColor="@color/issue_resolved_color"
+                                    android:textSize="@dimen/_30sdp"
+                                    android:text="0"
+                                    android:textStyle="bold" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_weight="3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txt_issue_resolved_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:text="@string/dashboard_issue_resolved_title"
+                                    android:textColor="@color/issue_resolved_color"
+                                    android:textSize="@dimen/_12sdp" />
+
+
+                                <TextView
+                                    android:id="@+id/txt_issue_resolved_km"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/txt_issue_resolved_title"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:paddingBottom="@dimen/_3sdp"
+                                    android:text="@string/dashboard_card_radius"
+                                    android:textAllCaps="true"
+                                    android:textColor="#80000000"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/issueResolved"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_below="@+id/issueResolvedLayout"
+                                android:background="#4D999999" />
+
+
+                            <LinearLayout
+                                android:id="@+id/gatheringsNearbyLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/_8sdp"
+                                android:layout_below="@+id/issueResolved">
+
+                                <RelativeLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/txt_gathering_nearby_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:textColor="@color/gathering_color"
+                                    android:textSize="@dimen/_30sdp"
+                                    android:text="0"
+                                    android:textStyle="bold" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_weight="3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txt_gathering_nearby_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:text="@string/dashboard_gatherings_nearby_title"
+                                    android:textColor="@color/gathering_color"
+                                    android:textSize="@dimen/_12sdp" />
+
+
+                                <TextView
+                                    android:id="@+id/txt_gathering_nearby_km"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/txt_gathering_nearby_title"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:paddingBottom="@dimen/_2sdp"
+                                    android:text="@string/dashboard_gatherings_up_coming"
+                                    android:textAllCaps="true"
+                                    android:textColor="#80000000"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/gathering"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_1sdp"
+                                android:layout_below="@+id/gatheringsNearbyLayout"
+                                android:background="#4D999999" />
+
+                            <LinearLayout
+                                android:id="@+id/newInfoPublishedLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_below="@+id/gathering">
+
+
+                                <RelativeLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/txt_new_info_published_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:textColor="@color/new_info_color"
+                                    android:textSize="@dimen/_30sdp"
+                                    android:text="0"
+                                    android:textStyle="bold" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_weight="3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent">
+
+                                <TextView
+                                    android:id="@+id/txt_new_info_published_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_8sdp"
+                                    android:text="@string/dashboard_new_info_published_title"
+                                    android:textColor="@color/new_info_color"
+                                    android:textSize="@dimen/_12sdp" />
+
+
+                                <TextView
+                                    android:id="@+id/txt_new_info_published_km"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/txt_new_info_published_title"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_marginTop="@dimen/_2sdp"
+                                    android:paddingBottom="@dimen/_5sdp"
+                                    android:text="@string/dashboard_card_radius"
+                                    android:textAllCaps="true"
+                                    android:textColor="#80000000"
+                                    android:textSize="@dimen/_8sdp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                        <!--
+
+                                            <com.google.android.material.card.MaterialCardView
+                                                android:id="@+id/issuePostedLayout"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="@dimen/_100sdp"
+                                                android:layout_weight="1"
+                                                android:background="@drawable/dashboard_card_shape"
+                                                android:padding="@dimen/_10sdp"
+                                                android:layout_marginLeft="@dimen/_10sdp"
+                                                android:layout_marginRight="@dimen/_10sdp"
+                                                style="@style/CustomCardViewStyle"
+                                                app:cardElevation="@dimen/_10sdp"
+                                                >
+
+                                                <RelativeLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                <TextView
+                                                    android:id="@+id/txt_issue_posted_count"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:textSize="@dimen/_30sdp"
+                                                    android:textStyle="bold"
+                                                    android:textColor="#FFB45A"/>
+
+                                                <TextView
+                                                    android:id="@+id/txt_issue_posted_title"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_below="@+id/txt_issue_posted_count"
+                                                    android:text="@string/dashboard_issue_posted_title"
+                                                    android:textSize="@dimen/_12sdp"
+                                                    android:layout_marginTop="@dimen/_5sdp"
+                                                    android:textColor="#000"/>
+
+                                                    <TextView
+                                                        android:id="@+id/txt_issue_posted_km"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:text="@string/dashboard_card_radius"
+                                                        android:textSize="@dimen/_8sdp"
+                                                        android:paddingBottom="@dimen/_3sdp"
+                                                        android:layout_alignParentBottom="true"
+                                                        android:textAllCaps="true"
+                                                        android:textColor="#80000000"
+
+                                                        />
+
+
+                                                    <ImageView
+                                                        android:id="@+id/img_issue_posted"
+                                                        android:layout_width="@dimen/_15sdp"
+                                                        android:layout_height="@dimen/_15sdp"
+                                                        android:layout_alignParentBottom="true"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_marginRight="@dimen/_5sdp"
+                                                        app:srcCompat="@drawable/ic_issue_posted"
+                                                        />
+                                                </RelativeLayout>
+
+                                            </com.google.android.material.card.MaterialCardView>
+
+
+                                            <com.google.android.material.card.MaterialCardView
+                                                android:id="@+id/gatheringsNearbyLayout"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="@dimen/_100sdp"
+                                                android:layout_weight="1"
+                                                android:background="@drawable/dashboard_card_shape"
+                                                android:padding="@dimen/_10sdp"
+                                                android:layout_margin="@dimen/_10sdp"
+                                                style="@style/CustomCardViewStyle"
+                                                app:cardElevation="@dimen/_10sdp"
+                                                >
+
+                                                <RelativeLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                    <TextView
+                                                        android:id="@+id/txt_gathering_nearby_count"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:textSize="@dimen/_30sdp"
+                                                        android:textStyle="bold"
+                                                        android:textColor="#249CB9"
+                                                       />
+
+                                                    <TextView
+                                                        android:id="@+id/txt_gathering_nearby_title"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_below="@+id/txt_gathering_nearby_count"
+                                                        android:text="@string/dashboard_gatherings_nearby_title"
+                                                        android:textSize="@dimen/_12sdp"
+                                                        android:layout_marginTop="@dimen/_5sdp"
+                                                        android:textColor="#000"/>
+
+                                                    <TextView
+                                                        android:id="@+id/txt_gathering_nearby_km"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:text="@string/dashboard_gatherings_up_coming"
+                                                        android:textSize="@dimen/_8sdp"
+                                                        android:layout_alignParentBottom="true"
+                                                        android:textAllCaps="true"
+                                                        android:paddingBottom="@dimen/_3sdp"
+                                                        android:textColor="#80000000"/>
+
+                                                    <ImageView
+                                                        android:id="@+id/img_gathering_nearby"
+                                                        android:layout_width="@dimen/_15sdp"
+                                                        android:layout_height="@dimen/_15sdp"
+                                                        android:layout_alignParentBottom="true"
+                                                        android:layout_alignParentRight="true"
+                                                        android:layout_marginRight="@dimen/_5sdp"
+                                                        app:srcCompat="@drawable/dashboard_gathering"
+                                                        />
+
+                                                </RelativeLayout>
+
+
+                                            </com.google.android.material.card.MaterialCardView>
+
+
+
+                                        </LinearLayout>
+
+
+                                            <LinearLayout
+                                                android:layout_width="0dp"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:orientation="vertical">
+
+
+                                                <com.google.android.material.card.MaterialCardView
+                                                    android:id="@+id/issueResolvedLayout"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_100sdp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/dashboard_card_shape"
+                                                    android:padding="@dimen/_10sdp"
+                                                    android:layout_marginLeft="@dimen/_10sdp"
+                                                    android:layout_marginRight="@dimen/_10sdp"
+                                                    style="@style/CustomCardViewStyle"
+                                                    app:cardElevation="@dimen/_10sdp"
+                                                    >
+
+
+                                                    <RelativeLayout
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                        <TextView
+                                                            android:id="@+id/txt_issue_resolved_count"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:textSize="@dimen/_30sdp"
+                                                            android:textStyle="bold"
+                                                            android:textColor="#8CC048"/>
+
+                                                        <TextView
+                                                            android:id="@+id/txt_issue_resolved_title"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_below="@+id/txt_issue_resolved_count"
+                                                            android:text="@string/dashboard_issue_resolved_title"
+                                                            android:textSize="@dimen/_12sdp"
+                                                            android:layout_marginTop="@dimen/_5sdp"
+                                                            android:textColor="#000"/>
+
+                                                        <TextView
+                                                            android:id="@+id/txt_issue_resolved_km"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:text="@string/dashboard_card_radius"
+                                                            android:textSize="@dimen/_8sdp"
+                                                            android:layout_alignParentBottom="true"
+                                                            android:paddingBottom="@dimen/_3sdp"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="#80000000"/>
+
+                                                        <ImageView
+                                                            android:id="@+id/img_issue_resolved"
+                                                            android:layout_width="@dimen/_15sdp"
+                                                            android:layout_height="@dimen/_15sdp"
+                                                            android:layout_alignParentBottom="true"
+                                                            android:layout_alignParentRight="true"
+                                                            android:layout_marginRight="@dimen/_5sdp"
+                                                            app:srcCompat="@drawable/ic_issuesresolved"
+                                                           />
+
+                                                    </RelativeLayout>
+
+                                                </com.google.android.material.card.MaterialCardView>
+
+
+                                                <com.google.android.material.card.MaterialCardView
+                                                    android:id="@+id/newInfoPublishedLayout"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="@dimen/_100sdp"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/dashboard_card_shape"
+                                                    android:padding="@dimen/_10sdp"
+                                                    android:layout_margin="@dimen/_10sdp"
+                                                    style="@style/CustomCardViewStyle"
+                                                    app:cardElevation="@dimen/_10sdp"
+                                                    >
+
+                                                    <RelativeLayout
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                        <TextView
+                                                            android:id="@+id/txt_new_info_published_count"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:textSize="@dimen/_30sdp"
+                                                            android:textStyle="bold"
+                                                            android:textColor="#6a54b5"/>
+
+                                                        <TextView
+                                                            android:id="@+id/txt_new_info_published_title"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_below="@+id/txt_new_info_published_count"
+                                                            android:text="@string/dashboard_new_info_published_title"
+                                                            android:textSize="@dimen/_12sdp"
+                                                            android:layout_marginTop="@dimen/_5sdp"
+                                                            android:textColor="#000"/>
+
+
+                                                        <TextView
+                                                            android:id="@+id/txt_new_info_published_km"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:text="@string/dashboard_card_radius"
+                                                            android:textSize="@dimen/_8sdp"
+                                                            android:layout_alignParentBottom="true"
+                                                            android:textAllCaps="true"
+                                                            android:paddingBottom="@dimen/_3sdp"
+                                                            android:textColor="#80000000"/>
+
+
+                                                        <ImageView
+                                                            android:id="@+id/img_near_by_published"
+                                                            android:layout_width="@dimen/_15sdp"
+                                                            android:layout_height="@dimen/_15sdp"
+                                                            android:layout_alignParentBottom="true"
+                                                            android:layout_alignParentRight="true"
+                                                            android:layout_marginRight="@dimen/_5sdp"
+                                                            app:srcCompat="@drawable/ic_publications"
+                                                            />
+                                                    </RelativeLayout>
+
+
+                                                </com.google.android.material.card.MaterialCardView>
+
+
+
+                                            </LinearLayout>
+                        -->
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/MainLayout"
+                        android:background="#14000000" />
+                </RelativeLayout>
+
+             <!--   <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/summeryLayout"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/_10sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@color/dashboard_background"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/issuesLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+
+                                    <ImageView
+                                        android:id="@+id/img_issue"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/issues" />
+
+                                    <TextView
+                                        android:id="@+id/txt_issue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_issue"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_issues"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <Button
+                                        android:id="@+id/btn_submit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_below="@+id/txt_issue"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:background="@drawable/rounded_color_border"
+                                        android:backgroundTint="@color/button_background"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="Submit issues"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/connectLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_connect"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/connect" />
+
+                                    <TextView
+                                        android:id="@+id/txt_connect"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_connect"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_connect"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                    <Button
+                                        android:id="@+id/btn_publish"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_below="@+id/txt_connect"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:background="@drawable/rounded_color_border"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/dashboard_publish"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp"
+
+
+                                        />
+
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/leaderboardLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_leaderboard"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/leaderboard" />
+
+                                    <TextView
+                                        android:id="@+id/txt_leaderboard"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_leaderboard"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_leaderborad"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/issuesPostedLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+
+                                    <ImageView
+                                        android:id="@+id/img_issue_posted"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/issues" />
+
+                                    <TextView
+                                        android:id="@+id/txt_issue_posted"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_issue_posted"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="All Issues Posted"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/gatheringLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_gathering"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/gathering" />
+
+                                    <TextView
+                                        android:id="@+id/txt_gathering"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_gathering"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_gathering"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <Button
+                                        android:id="@+id/btn_create"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_below="@+id/txt_gathering"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:background="@drawable/rounded_color_border"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/dashboard_create"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp" />
+
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/heatMapLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_heatmap"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/heatmap" />
+
+                                    <TextView
+                                        android:id="@+id/txt_heatmap"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_heatmap"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_heatmap"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/profileLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_profile"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/profile" />
+
+                                    <TextView
+                                        android:id="@+id/txt_profile"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_profile"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_profile"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>-->
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/summeryLayout"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/_10sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:background="@color/dashboard_background"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/issuesLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+
+                                    <ImageView
+                                        android:id="@+id/img_issue"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/issues" />
+
+                                    <TextView
+                                        android:id="@+id/txt_issue"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_issue"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_issues"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <Button
+                                        android:id="@+id/btn_submit"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_below="@+id/txt_issue"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:background="@drawable/rounded_color_border"
+                                        android:backgroundTint="@color/button_background"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/dashboard_submit"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp" />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/gatheringLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_gathering"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/gathering" />
+
+                                    <TextView
+                                        android:id="@+id/txt_gathering"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_gathering"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_gathering"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                    <Button
+                                        android:id="@+id/btn_create"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_below="@+id/txt_gathering"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:background="@drawable/rounded_color_border"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/dashboard_create"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp" />
+
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/connectLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_connect"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/connect" />
+
+                                    <TextView
+                                        android:id="@+id/txt_connect"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_connect"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_connect"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                    <Button
+                                        android:id="@+id/btn_publish"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_below="@+id/txt_connect"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="@dimen/_10sdp"
+                                        android:background="@drawable/rounded_color_border"
+                                        android:paddingLeft="@dimen/_10sdp"
+                                        android:paddingTop="@dimen/_5sdp"
+                                        android:paddingRight="@dimen/_10sdp"
+                                        android:paddingBottom="@dimen/_5sdp"
+                                        android:text="@string/dashboard_publish"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_10sdp"
+
+
+                                        />
+
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/leaderboardLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_leaderboard"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/leaderboard" />
+
+                                    <TextView
+                                        android:id="@+id/txt_leaderboard"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_leaderboard"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_leaderborad"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/profileLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_profile"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/profile" />
+
+                                    <TextView
+                                        android:id="@+id/txt_profile"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_profile"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_profile"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/issuesPostedLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+
+                                    <ImageView
+                                        android:id="@+id/img_issue_posted"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/issues" />
+
+                                    <TextView
+                                        android:id="@+id/txt_issue_posted"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_issue_posted"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="All Issues Posted"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/gatheringOverallLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_gathering_overall"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/gathering" />
+
+                                    <TextView
+                                        android:id="@+id/txt_gathering_oveall"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_gathering_overall"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="All NearBy Gatherings"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp" />
+
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/connectOverAllLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_connect_overAll"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/connect" />
+
+                                    <TextView
+                                        android:id="@+id/txt_connect_overAll"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_connect_overAll"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="All Connect Published"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+
+                                </RelativeLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/heatMapLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_heatmap"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/heatmap" />
+
+                                    <TextView
+                                        android:id="@+id/txt_heatmap"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_heatmap"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_heatmap"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_100sdp"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:padding="@dimen/_10sdp"
+                                app:cardCornerRadius="@dimen/_15sdp"
+                                app:cardElevation="@dimen/_10sdp">
+
+                                <RelativeLayout
+                                    android:id="@+id/nearByMeLayout"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_100sdp"
+                                    android:layout_margin="@dimen/_10sdp">
+
+                                    <ImageView
+                                        android:id="@+id/img_nearByMe"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:src="@drawable/profile" />
+
+                                    <TextView
+                                        android:id="@+id/txt_nearByMe"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_below="@+id/img_nearByMe"
+                                        android:layout_marginTop="@dimen/_5sdp"
+                                        android:text="@string/dashboard_near_by_me"
+                                        android:textColor="@color/dashboard_menu_text"
+                                        android:textSize="@dimen/_14sdp"
+
+                                        />
+
+                                </RelativeLayout>
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+</RelativeLayout>

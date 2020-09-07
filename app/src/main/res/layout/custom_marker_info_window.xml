@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="@dimen/_200sdp"
+    android:layout_height="@dimen/_200sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bgorange"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+   <!-- <ImageView
+        android:id="@+id/img_issue"
+        android:layout_width="@dimen/_163sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_12sdp"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/issueDetailsLayout"
+        android:layout_width="@dimen/_163sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_78sdp"
+        android:layout_centerHorizontal="true"
+        android:background="#99000000">
+
+
+
+        <TextView
+            android:id="@+id/txt_issue_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp" />
+
+    </RelativeLayout>-->
+
+
+    <ImageView
+        android:id="@+id/img_issue"
+        android:layout_width="@dimen/_145sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/background"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_12sdp"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/issueDetailsLayout"
+        android:layout_width="@dimen/_145sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_78sdp"
+        android:layout_centerHorizontal="true"
+        android:background="#99000000">
+
+
+
+        <TextView
+            android:id="@+id/txt_issue_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:padding="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8sdp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txt_issue_title"
+        android:layout_width="@dimen/_157sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_issue"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:maxLines="2"
+        android:maxEms="20"/>
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_60sdp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_animation"
+
+        />
+
+
+    <ImageView
+        android:id="@+id/img_play"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_40sdp"
+        app:srcCompat="@drawable/ic_play_button"
+        android:visibility="gone"
+
+        />
+
+
+</RelativeLayout>

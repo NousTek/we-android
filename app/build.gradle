@@ -1,0 +1,141 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.we.beyond"
+        minSdkVersion 24
+        targetSdkVersion 29
+        versionCode 39
+        versionName "0.4.8"
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            zipAlignEnabled true
+
+            proguardFile 'proguard/proguard-eventbus.pro'
+            proguardFile 'proguard/proguard-gson.pro'
+            proguardFile 'proguard/proguard-project.txt'
+            proguardFile 'proguard/proguard-rxjava.pro'
+            proguardFile 'proguard/proguard-square-okhttp3.pro'
+            proguardFile 'proguard/proguard-square-okio.pro'
+            proguardFile 'proguard/proguard-square-picasso.pro'
+            proguardFile 'proguard/proguard-square-retrofit2.pro'
+            proguardFile 'proguard/proguard-support-v7-appcompat.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    //scalable dp
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
+
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    //retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
+
+    //text input layout
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha01'
+
+    //dialog
+    implementation 'com.github.f0ris.sweetalert:library:1.6.2'
+
+    //store data (shared pref)
+    implementation 'com.white:easysp:1.0.0'
+
+    //set profile image
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    //timeline
+    implementation 'com.github.vipulasri:timelineview:1.1.2'
+
+    //maps
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.firebase:firebase-database:19.2.0'
+    implementation 'com.google.android.libraries.places:places:2.1.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //shimmer effect while loading screen
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    //tag layout
+    implementation 'co.lujun:androidtagview:1.1.4'
+
+    //exo player
+    implementation 'com.google.android.exoplayer:exoplayer:2.7.3'
+
+    //crop image view
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    //compress video
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.3.1'
+
+    //compress image
+    implementation 'id.zelory:compressor:3.0.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+
+
+    // Recommended: Add the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+
+    // Add the Firebase SDK for Crashlytics.
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
+
+    //zoom image view
+    implementation 'com.bogdwellers:pinchtozoom:0.1'
+
+    //digest utils
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.14'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    app:cardCornerRadius="@dimen/_15sdp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <ImageView
+            android:id="@+id/img_campaign"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:src="@drawable/background"
+            android:scaleType="centerCrop"
+           />
+
+
+
+        <ImageView
+            android:id="@+id/img_play"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_35sdp"
+            app:srcCompat="@drawable/ic_play_button"
+            android:visibility="gone"
+
+            />
+
+
+
+        <ImageView
+            android:id="@+id/img_campaign_icon"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            app:srcCompat="@drawable/ic_campaign"
+            android:layout_toRightOf="@+id/img_campaign"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+
+            />
+
+        <TextView
+            android:id="@+id/txt_campaign_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C a m p a i g n"
+            android:textColor="#FDA549"
+            android:textSize="@dimen/_8sdp"
+            android:layout_toRightOf="@+id/img_campaign_icon"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textAllCaps="true"
+            />
+
+        <TextView
+            android:id="@+id/txt_campaign_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#DE000000"
+            android:textSize="@dimen/_12sdp"
+            android:layout_toRightOf="@+id/img_campaign"
+            android:layout_below="@+id/txt_campaign_text_title"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:minLines="1"
+            />
+
+        <TextView
+            android:id="@+id/txt_campaign_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#595959"
+            android:textSize="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/img_campaign"
+            android:layout_below="@+id/txt_campaign_title"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:minLines="1"
+            android:maxEms="30"
+            />
+
+        <ImageView
+            android:id="@+id/img_clock_icon"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            app:srcCompat="@drawable/ic_clock"
+            android:layout_alignBottom="@+id/img_campaign"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/img_campaign"
+
+            />
+
+
+        <TextView
+            android:id="@+id/txt_campaign_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#595959"
+            android:textSize="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/img_clock_icon"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_alignBottom="@+id/img_campaign"
+            />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

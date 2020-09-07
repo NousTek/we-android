@@ -1,0 +1,152 @@
+<resources>
+    <string name="app_name">WE</string>
+    <string name="error_title">Something Went Wrong !</string>
+    <string name="error_message">Please try after sometime</string>
+    <string name="no_internet_title"></string>
+    <string name="no_internet_sub_title">No internet connection!</string>
+
+    <string name="default_notification_channel_id">12345</string>
+
+    //Splash activity
+    <string name="splash_logo">WE</string>
+    <string name="splash_details_title">Collective Change</string>
+    <string name="splash_details_sub_title">Collective Evolution</string>
+
+    //Login Activity
+    <string name="login_welcome">Welcome !</string>
+    <string name="login_details">Login to access your account</string>
+    <string name="login_email_hint">Email or mobile</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_forgot_password">Forgot Password ?</string>
+    <string name="login">LOGIN</string>
+    <string name="or">OR</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="login_issue"><font color='#99000000'>Have an issue ? </font><font color='#5A40BA'>POST ON WHATSAPP</font> </string>
+
+    //Registration Activity
+    <string name="registration_title">Registration</string>
+    <string name="registration_for_hint">Registration for</string>
+    <string name="registration_first_name_hint">First Name</string>
+    <string name="registration_second_name_hint">Last Name</string>
+    <string name="registration_organization_name_hint">Organization Name</string>
+    <string name="registration_select_city_hint">Select City</string>
+    <string name="registration_select_area_hint">Select Area</string>
+    <string name="registration_email_hint">Email Address</string>
+    <string name="registration_mobile_hint">Mobile Number</string>
+    <string name="registration_password_hint">Password</string>
+    <string name="registration_retype_password_hint">ReType Password</string>
+    <string name="terms_condition">I Accept the terms and conditions</string>
+    <string name="register_button">REGISTER</string>
+    <string name="helper_text_registration_for">Assistive text</string>
+    <string name="helper_text_email">Optional if you have mobile</string>
+    <string name="helper_text_mobile">Optional if you have email address</string>
+
+    //Dashboard Activity
+    <string name="dashboard_title">Dashboard</string>
+    <string name="dashboard_issues">Issues</string>
+    <string name="dashboard_gathering">Gathering</string>
+    <string name="dashboard_connect">Connect</string>
+    <string name="dashboard_heatmap">Heatmap</string>
+    <string name="dashboard_near_by_me">My Neighbours</string>
+    <string name="dashboard_leaderborad">Leaderboard</string>
+    <string name="dashboard_profile">Profile</string>
+    <string name="dashboard_submit">Submit</string>
+    <string name="dashboard_create">Create</string>
+    <string name="dashboard_publish">Publish</string>
+    <string name="dashboard_issue_posted_title">Issues Posted</string>
+    <string name="dashboard_issue_resolved_title">Issues Resolved</string>
+    <string name="dashboard_gatherings_nearby_title">Gatherings Nearby</string>
+    <string name="dashboard_new_info_published_title">Connect Published</string>
+    <string name="dashboard_card_radius">NEARBY IN Past 30 DAYS</string>
+    <string name="dashboard_gatherings_up_coming">UPCOMING IN 30 DAYS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    //Categories Activity
+    <string name="categories_title">Select Categories</string>
+    <string name="category_select_button">Finished</string>
+    <string name="category_welcome_title">Welcome to</string>
+    <string name="category_we_title">WE</string>
+    <string name="category_welcome_description">\'We\' is a platform that empowers individuals and communities to get their issues addressed and
+               eventually solved by the authorities and the communities. So go on, be the change and lets make the world a better place !</string>
+    <string name="category_select_title">Select issues that you care about : </string>
+
+
+    //submit an issue activity
+    <string name="submit_issue_title">Submit an Issue</string>
+    <string name="issue_description_title">Issue Title</string>
+    <string name="issue_description_details">Issue Details</string>
+
+    //near by issue activity
+    <string name="near_by_issue_title">Issues</string>
+    <string name="submit_issue_button">submit an issue</string>
+
+    //filter activity
+    <string name="filter_title">Filter</string>
+
+    //add location activity
+    <string name="add_location_title">Select Location</string>
+
+    //publish connect activity
+    <string name="publish_connect_title">Publish Connect</string>
+    <string name="publish_connection_category">Category</string>
+    <string name="connect_description_title">Connect Title</string>
+    <string name="connect_description_details">Connect Details</string>
+
+    //connect issue list activity
+    <string name="connect_title">Connect</string>
+    <string name="publish_connect_button">publish connect</string>
+
+    //create gathering activity
+    <string name="create_gathering_title">Create a Gathering</string>
+    <string name="gathering_description_title">Gathering Title</string>
+    <string name="gathering_description_details">Gathering Details</string>
+    <string name="gathering_date_time">Date &amp; Time</string>
+    <string name="gathering_issue_location_hint">Type Venue Address &amp; Attach Location Details</string>
+
+    //gathering activity
+    <string name="gathering_title">Upcoming Gathering</string>
+    <string name="create_gathering_button">Create a Gathering</string>
+
+    //create campaign activity
+    <string name="create_campaign_title">Create a Campaign</string>
+    <string name="campaign_description_title">Campaign Title</string>
+    <string name="campaign_description_details">Campaign Details</string>
+    <string name="campaign_date_time">Date &amp; Time</string>
+    <string name="campaign_issue_location_hint">Type Venue Address &amp; Attach Location Details</string>
+
+
+    //profile activity
+    <string name="profile_title">Profile</string>
+    <string name="reported_resolution_title">Reported Resolution</string>
+    <string name="my_issues_title">My Issues</string>
+    <string name="my_resolution_title">My Resolution</string>
+    <string name="my_gathering_title">My Gatherings</string>
+    <string name="my_campaign_title">My Campaign</string>
+    <string name="my_connect_title">My Connect</string>
+    <string name="my_activities_title">My Activities</string>
+
+    //reported resolved activity
+    <string name="reported_resolved_title">Report Resolved</string>
+    <string name="resolved_button">Resolved</string>
+    <string name="resolved_by">Resolved by</string>
+    <string name="resolved_date_time">Resolution date &amp; time</string>
+    <string name="resolved_details">Resolution Details</string>
+
+    //notification activity
+    <string name="notification_title">Notification</string>
+
+    //heat map activity
+    <string name="heat_map_title">Heatmap</string>
+
+    //change password activity
+    <string name="change_password_title">Change Password</string>
+    <string name="change_password_hint">Old Password</string>
+    <string name="change_password_new_hint">New Password</string>
+
+    //going activity
+    <string name="going_title">Going</string>
+
+
+</resources>

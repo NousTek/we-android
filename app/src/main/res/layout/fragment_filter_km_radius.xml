@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.filter.fragments.FilterKmRadiusFragment">
+
+    <TextView
+        android:id="@+id/txt_radius_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="K M RADIUS"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="#828282"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingLeft="@dimen/_20sdp"/>
+
+    <LinearLayout
+        android:id="@+id/sliderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100sdp"
+        android:layout_below="@+id/txt_radius_title"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+    <com.google.android.material.slider.Slider
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/slider"
+        android:value="5"
+        android:layout_gravity="center"
+        app:thumbColor="#D84C1D"
+        app:activeTrackColor="#D84C1D"
+        app:inactiveTickColor="#F5F5F5"
+        app:thumbRadius="@dimen/_6sdp"
+        android:stepSize="1"
+        android:valueFrom="0"
+        android:valueTo="10"/>
+
+    </LinearLayout>
+
+
+
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/sliderLayout"
+        android:name="com.google.android.gms.maps.SupportMapFragment">
+
+
+       <!-- <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/issue_border">
+
+            <fragment
+                android:id="@+id/autocomplete_fragment_from"
+                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </androidx.cardview.widget.CardView>-->
+
+
+    </fragment>
+
+
+
+    <ImageView
+        android:id="@+id/img_recenter"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/recenter_location"
+        android:layout_alignParentBottom="true"
+        android:outlineSpotShadowColor="#33000000"
+        />
+
+
+</RelativeLayout>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/create_background"
+        tools:context=".ui.campaign.createCampaign.CreateCampaignActivity">
+
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_30sdp"
+            app:srcCompat="@drawable/ic_back" />
+
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_toRightOf="@+id/img_back"
+            android:text="@string/create_campaign_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sdp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/login_border">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_50sdp"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+
+                    <EditText
+                        android:id="@+id/et_campaign_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:background="@drawable/issue_border"
+                        android:hint="@string/campaign_description_title"
+                        android:inputType="textCapSentences"
+                        android:maxLines="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/hint"
+                        android:textColorHint="@color/hint" />
+
+
+                    <EditText
+                        android:id="@+id/et_campaign_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:background="@drawable/issue_border"
+                        android:gravity="start"
+                        android:hint="@string/campaign_description_details"
+                        android:inputType="textCapSentences|textMultiLine"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/hint"
+                        android:textColorHint="@color/hint"
+                        android:scrollbars="vertical"
+                        android:minHeight="@dimen/_150sdp"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/et_date_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:background="@drawable/issue_border"
+                        android:drawableRight="@drawable/ic_calendar"
+                        android:focusable="false"
+                        android:hint="@string/campaign_date_time"
+                        android:inputType="textCapSentences"
+                        android:maxLines="1"
+                        android:padding="@dimen/_10sdp"
+                        android:textColor="@color/hint"
+                        android:textColorHint="@color/hint" />
+
+                    <RelativeLayout
+                        android:id="@+id/addLocationLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_120sdp"
+                        android:layout_margin="@dimen/_12sdp"
+                        android:background="@drawable/issue_border">
+
+
+                        <TextView
+                            android:id="@+id/txt_location_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_10sdp"
+                            android:hint="@string/campaign_issue_location_hint"
+                            android:textColor="@color/hint"
+                            android:textColorHint="@color/hint"
+                            android:textSize="@dimen/_13sdp"
+                            android:maxLines="3"
+                            android:ellipsize="end"
+                            />
+
+                        <TextView
+                            android:id="@+id/txt_add_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txt_location_title"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/gathering_border"
+                            android:paddingLeft="@dimen/_30sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingRight="@dimen/_30sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="Add Location"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_12sdp" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_1sdp"
+                        android:layout_below="@+id/addLocationLayout"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:background="#E0E0E0" />
+
+
+
+
+                    <TextView
+                        android:id="@+id/txt_media_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:text="Upload image / video"
+                        android:textColor="@color/submit_issue_title_color"
+                        android:textSize="@dimen/_16sdp" />
+
+                    <RelativeLayout
+                        android:id="@+id/mediaSelectionLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/media_border"
+                        android:layout_below="@+id/txt_media_title"
+                        android:layout_margin="@dimen/_30sdp"
+                        >
+
+                        <Button
+                            android:id="@+id/btn_use_camera"
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Use Camera"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14sdp"
+                            android:background="@drawable/issue_rounded_button_border"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            />
+
+                        <TextView
+                            android:id="@+id/txt_or"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="or"
+                            android:textAllCaps="true"
+                            android:textColor="#99000000"
+                            android:textSize="@dimen/_13sdp"
+                            android:layout_below="@+id/btn_use_camera"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_10sdp"/>
+
+                        <Button
+                            android:id="@+id/btn_browse_file"
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="wrap_content"
+                            android:text="Browse File"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_14sdp"
+                            android:background="@drawable/issue_rounded_button_border"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_below="@+id/txt_or"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/progressLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:layout_below="@+id/mediaSelectionLayout">
+
+                        <ProgressBar
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Processing Video To Upload ..."
+                            android:textSize="@dimen/_12sdp"
+                            android:textColor="@color/colorPrimary"
+                            android:gravity="center"
+                            />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_media"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_10sdp" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/linkGatheringLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/_12sdp"
+                        app:counterEnabled="false"
+                        app:counterMaxLength="5"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:hint="Linked Gathering"
+                        app:counterOverflowTextAppearance="@style/CounterOverFlow"
+                        app:counterTextAppearance="@style/CounterText"
+                        app:errorEnabled="true"
+                        android:textColorHint="@color/hint"
+                        app:hintTextAppearance="@style/HintText">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_link_gathering_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:inputType="textCapWords"
+
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_create"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/login_border"
+            android:backgroundTint="@color/colorPrimary"
+            android:paddingTop="8dip"
+            android:paddingBottom="8dip"
+            android:text="Create"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+
+    <RelativeLayout
+        android:id="@+id/captureOptionLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_border"
+        android:gravity="center"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#30000000"
+        >
+
+        <ImageView
+            android:id="@+id/img_close"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_close">
+            <Button
+                android:id="@+id/btn_image"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:text="Image"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:background="@drawable/issue_rounded_button_border"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+
+                />
+
+            <TextView
+                android:id="@+id/txt_media_or"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:textAllCaps="true"
+                android:textColor="#99000000"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/btn_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <Button
+                android:id="@+id/btn_video"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:text="Video"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
+                android:background="@drawable/issue_rounded_button_border"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_below="@+id/txt_media_or"
+                android:layout_marginBottom="@dimen/_20sdp"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/galleryOptionLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_border"
+        android:gravity="center"
+        android:paddingTop="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_50sdp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#30000000"
+        >
+
+        <ImageView
+            android:id="@+id/img_close_option"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_close"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_20sdp"
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_close_option">
+            <Button
+                android:id="@+id/btn_image_option"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:text="Image"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
+                android:paddingTop="@dimen/_10sdp"
+                android:background="@drawable/issue_rounded_button_border"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_20sdp"
+
+                />
+
+            <TextView
+                android:id="@+id/txt_media_or_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="or"
+                android:textAllCaps="true"
+                android:textColor="#99000000"
+                android:textSize="@dimen/_13sdp"
+                android:layout_below="@+id/btn_image_option"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <Button
+                android:id="@+id/btn_video_option"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:text="Video"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp"
+                android:background="@drawable/issue_rounded_button_border"
+                android:paddingTop="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_below="@+id/txt_media_or_option"
+                android:layout_marginBottom="@dimen/_20sdp"
+                />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    </RelativeLayout>

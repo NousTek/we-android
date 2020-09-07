@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_10sdp"
+
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_comment_profile_pic"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_7sdp"
+        android:src="@drawable/profile" />
+
+    <RelativeLayout
+        android:id="@+id/commentCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        android:layout_toRightOf="@+id/img_comment_profile_pic"
+        android:background="@drawable/list_comment_data_border"
+        android:paddingBottom="@dimen/_10sdp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColor="#000"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_flag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@drawable/card_border"
+                android:backgroundTint="#8CC048"
+                android:padding="5dp"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/txt_comment_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_name"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:textColor="#99000000"
+                android:textSize="@dimen/_12sdp"
+
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_media"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_comment_description"
+                android:visibility="gone"
+                />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/commentOptionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/commentCard"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_weight="1.5"
+            android:textColor="#99000000"
+            android:textSize="@dimen/_8sdp" />
+
+<!--
+        <TextView
+            android:id="@+id/txt_comment_reply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:gravity="end"
+            android:text="Reply"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_10sdp"
+
+            />-->
+
+        <TextView
+            android:id="@+id/txt_comment_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:text="Like"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/txt_comment_already_liked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:text="Liked"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/txt_resolution_approved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:text="Approve"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_10sdp"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/img_more"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            app:srcCompat="@drawable/ic_more" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/moreLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent_background"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/card_border"
+            android:layout_margin="@dimen/_20sdp"
+            android:visibility="visible"
+            >
+            <ImageView
+                android:id="@+id/img_close"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:src="@drawable/ic_close"
+                android:layout_alignParentRight="true"
+                android:layout_margin="@dimen/_10sdp"/>
+
+            <TextView
+                android:id="@+id/txt_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="More"
+                android:textColor="#99000000"
+                android:gravity="center"
+                android:layout_margin="@dimen/_10sdp"
+                android:textSize="@dimen/_12sdp"/>
+
+            <TextView
+                android:id="@+id/txt_report_abuse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Report Abuse"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_below="@+id/txt_more"
+                android:textSize="@dimen/_12sdp"/>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/txt_report_abuse"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:background="#E0E0E0" />
+
+
+            <TextView
+                android:id="@+id/txt_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_below="@+id/view1"
+                android:textSize="@dimen/_12sdp"/>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"
+                android:layout_below="@+id/txt_edit"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="#E0E0E0" />
+
+
+
+            <TextView
+                android:id="@+id/txt_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_below="@+id/view3"
+                android:textSize="@dimen/_12sdp"/>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

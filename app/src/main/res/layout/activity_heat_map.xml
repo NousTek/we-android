@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/screen_background"
+    tools:context=".ui.HeatMapActivity">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        app:srcCompat="@drawable/ic_back" />
+
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/heat_map_title"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@+id/img_back"
+        android:textSize="@dimen/_16sdp"/>
+
+
+    <LinearLayout
+        android:id="@+id/mapTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        android:layout_below="@+id/txt_title"
+        android:weightSum="3">
+
+
+        <Button
+            android:id="@+id/btn_map"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:background="@drawable/card_border"
+            android:backgroundTint="@color/button_background"
+            android:layout_margin="@dimen/_5sdp"
+            android:text="Map"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_hybrid"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/card_border"
+            android:backgroundTint="@color/transparent"
+            android:text="Hybrid"
+            android:textAllCaps="false"
+            android:textColor="@color/issue_posted_color" />
+
+        <Button
+            android:id="@+id/btn_satellite"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/card_border"
+            android:backgroundTint="@color/transparent"
+            android:text="Satellite"
+            android:textAllCaps="false"
+            android:textColor="@color/issue_posted_color" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/near_by_issue_background"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_below="@+id/mapTypeLayout">
+
+
+
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
+
+
+    </RelativeLayout>
+
+
+
+    <ImageView
+        android:id="@+id/img_recenter"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:src="@drawable/recenter_location"
+        android:layout_alignParentBottom="true"
+        android:outlineSpotShadowColor="#33000000"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/issueDescriptionLayout"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_shapeorange"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/img_issue"
+            android:layout_width="@dimen/_163sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/background"
+            android:scaleType="centerCrop"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_12sdp"
+           />
+
+        <TextView
+            android:id="@+id/txt_issue_title"
+            android:layout_width="@dimen/_167sdp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_issue"
+            android:layout_centerHorizontal="true"
+            android:textSize="@dimen/_8sdp"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:maxLines="2"
+            android:maxEms="20"/>
+
+
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginLeft="@dimen/_80sdp"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/progress_animation"
+
+            />
+
+
+    </RelativeLayout>
+
+
+
+
+    </RelativeLayout>

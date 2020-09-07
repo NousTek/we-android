@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background"
+    tools:context=".ui.filter.FilterActivity">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        app:srcCompat="@drawable/ic_back" />
+
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_toRightOf="@+id/img_back"
+        android:text="@string/filter_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_title"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/login_border">
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <RelativeLayout
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="35"
+                        android:background="@drawable/filter_border"
+                        android:orientation="vertical">
+
+
+                        <RelativeLayout
+                            android:id="@+id/sortByLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_40sdp"
+                            android:padding="@dimen/_20sdp"
+                            >
+
+                            <TextView
+                                android:id="@+id/txt_sort_by_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Sort By"
+                                android:textSize="@dimen/_10sdp"
+                                android:textColor="#29282C" />
+
+                            <TextView
+                                android:id="@+id/txt_sort_by"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txt_sort_by_title"
+                                android:text="Sort By"
+                                android:textSize="@dimen/_8sdp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="gone"
+                                />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/categoryLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_20sdp"
+                            >
+
+                        <TextView
+                            android:id="@+id/txt_category_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Category"
+                            android:textColor="#29282C"
+                            android:textSize="@dimen/_10sdp"
+                            />
+
+                            <TextView
+                                android:id="@+id/txt_category"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txt_category_title"
+                                android:text="2 selected"
+                                android:textSize="@dimen/_8sdp"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="gone"
+                                />
+
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/radiusLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_20sdp"
+                            >
+
+                        <TextView
+                            android:id="@+id/txt_km_radius_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Km Radius"
+                            android:textColor="#29282C"
+                            android:textSize="@dimen/_10sdp"
+                            />
+
+
+                            <TextView
+                                android:id="@+id/txt_km_radius"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="5 Km"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_below="@+id/txt_km_radius_title"
+                                android:visibility="gone"
+                                android:textSize="@dimen/_8sdp"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="65"
+                        android:orientation="vertical">
+
+
+                        <FrameLayout
+                            android:id="@+id/filterFrameLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <!--<LinearLayout
+                    android:id="@+id/tabMainLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="#F1F1F1"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabSelectedTextColor="#29282C"
+                        app:tabIndicatorColor="#29282C"
+                        app:tabGravity="fill"
+                        app:tabInlineLabel="false"
+                        app:tabIndicatorGravity="bottom"
+                        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                        >
+
+                    </com.google.android.material.tabs.TabLayout>
+                </LinearLayout>
+
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/tabMainLayout"
+                    >
+
+                </androidx.viewpager.widget.ViewPager>-->
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+
+</RelativeLayout>
