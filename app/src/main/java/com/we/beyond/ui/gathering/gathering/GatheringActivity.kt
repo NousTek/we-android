@@ -596,7 +596,7 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
                 val sweetAlertDialog = SweetAlertDialog(this , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
                 sweetAlertDialog.contentText = "There are no upcoming gatherings currently in this area."
-                sweetAlertDialog.show()
+//                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {
                     sweetAlertDialog.dismissWithAnimation()

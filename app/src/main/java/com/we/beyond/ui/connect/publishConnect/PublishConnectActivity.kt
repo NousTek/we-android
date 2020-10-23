@@ -330,7 +330,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     ConstantMethods.showWarning(
                         context,
                         "",
-                        "You can not upload more than 1 video."
+                        "You cannot upload more than 1 video."
                     )
                 }
             } catch (e: Exception) {
@@ -371,7 +371,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     ConstantMethods.showWarning(
                         context,
                         "",
-                        "You can not upload more than 1 video."
+                        "You cannot upload more than 1 video."
                     )
                 }
             } catch (e: Exception) {
@@ -594,11 +594,13 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                 connectionCategoryLayout!!.isErrorEnabled = false
             }
 
-            if (connectTitle!!.text.isEmpty()) {
+            if (connectTitle!!.text.trim().isEmpty()) {
                 ConstantMethods.showWarning(this, "Title", "Please Enter Title")
+                return
             }
-            if (connectDetails!!.text.isEmpty()) {
+            if (connectDetails!!.text.trim().isEmpty()) {
                 ConstantMethods.showWarning(this, "Details", "Please Enter Connection Details")
+                return
             }
             if (connectCategoryId.isEmpty()) {
                 connectionCategoryLayout!!.error = "Please Select Connection Category"
@@ -611,6 +613,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     "Please Upload Photo / Video",
                     "You need to attach at least 1 photo or video to this connect to publish"
                 )
+                return
             }
 
             for (i in 0 until mediaPojo.size) {

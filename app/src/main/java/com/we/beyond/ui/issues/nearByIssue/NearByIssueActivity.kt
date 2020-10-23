@@ -1043,11 +1043,11 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
         if (nearByIssueDetails.data.size == 0) {
 
 
-            ConstantMethods.showWarning(
+            /*ConstantMethods.showWarning(
                 this,
                 "",
                 "There are no issues found in this area for selected categories."
-            )
+            )*/
 
             noContent!!.visibility = View.VISIBLE
             noContent!!.text = "There are no issues found in this area for selected categories."
@@ -1090,11 +1090,11 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
         if (nearByIssueDetails.data.size == 0) {
 
 
-            ConstantMethods.showWarning(
+            /*ConstantMethods.showWarning(
                 this,
                 "",
                 "There are no issues found in this area for selected categories."
-            )
+            )*/
 
             noContent!!.visibility = View.VISIBLE
             noContent!!.text = "There are no issues found in this area for selected categories."
@@ -1170,11 +1170,11 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
 
             if(nearByIssueArray!!.size == 0)
             {
-                ConstantMethods.showWarning(
+                /*ConstantMethods.showWarning(
                     this,
                     "",
                     "There are no issues found in this area for selected categories."
-                )
+                )*/
 
                 noContent!!.visibility = View.VISIBLE
                 noContent!!.text = "There are no issues found in this area for selected categories."

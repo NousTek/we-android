@@ -153,6 +153,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_12sdp"
+        android:padding="@dimen/_7sdp"
         android:textColor="@color/black"
         android:layout_centerInParent="true"
         android:visibility="gone"

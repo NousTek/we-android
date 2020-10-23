@@ -1059,14 +1059,17 @@
                                     android:id="@+id/issuesLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_issue"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/issues" />
+                                        android:src="@drawable/ic_submit_issue" />
 
                                     <TextView
                                         android:id="@+id/txt_issue"
@@ -1077,12 +1080,11 @@
                                         android:text="@string/dashboard_issues"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp" />
-
+                                    </LinearLayout>
                                     <Button
                                         android:id="@+id/btn_submit"
                                         android:layout_width="wrap_content"
                                         android:layout_height="@dimen/_25sdp"
-                                        android:layout_below="@+id/txt_issue"
                                         android:layout_alignParentEnd="true"
                                         android:layout_marginTop="@dimen/_10sdp"
                                         android:background="@drawable/rounded_color_border"
@@ -1092,6 +1094,7 @@
                                         android:paddingRight="@dimen/_10sdp"
                                         android:paddingBottom="@dimen/_5sdp"
                                         android:text="@string/dashboard_submit"
+                                        android:visibility="invisible"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/_10sdp" />
 
@@ -1111,13 +1114,17 @@
                                     android:id="@+id/gatheringLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_gathering"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/gathering" />
+                                        android:src="@drawable/ic_create_gathering" />
 
                                     <TextView
                                         android:id="@+id/txt_gathering"
@@ -1128,12 +1135,11 @@
                                         android:text="@string/dashboard_gathering"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp" />
-
+                                    </LinearLayout>
                                     <Button
                                         android:id="@+id/btn_create"
                                         android:layout_width="wrap_content"
                                         android:layout_height="@dimen/_25sdp"
-                                        android:layout_below="@+id/txt_gathering"
                                         android:layout_alignParentEnd="true"
                                         android:layout_marginTop="@dimen/_10sdp"
                                         android:background="@drawable/rounded_color_border"
@@ -1142,6 +1148,7 @@
                                         android:paddingRight="@dimen/_10sdp"
                                         android:paddingBottom="@dimen/_5sdp"
                                         android:text="@string/dashboard_create"
+                                        android:visibility="invisible"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/_10sdp" />
 
@@ -1161,13 +1168,17 @@
                                     android:id="@+id/connectLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_connect"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/connect" />
+                                        android:src="@drawable/ic_publish_article" />
 
                                     <TextView
                                         android:id="@+id/txt_connect"
@@ -1180,12 +1191,11 @@
                                         android:textSize="@dimen/_14sdp"
 
                                         />
-
+                                    </LinearLayout>
                                     <Button
                                         android:id="@+id/btn_publish"
                                         android:layout_width="wrap_content"
                                         android:layout_height="@dimen/_25sdp"
-                                        android:layout_below="@+id/txt_connect"
                                         android:layout_alignParentEnd="true"
                                         android:layout_marginTop="@dimen/_10sdp"
                                         android:background="@drawable/rounded_color_border"
@@ -1194,6 +1204,7 @@
                                         android:paddingRight="@dimen/_10sdp"
                                         android:paddingBottom="@dimen/_5sdp"
                                         android:text="@string/dashboard_publish"
+                                        android:visibility="invisible"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/_10sdp"
 
@@ -1217,13 +1228,17 @@
                                     android:id="@+id/leaderboardLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_leaderboard"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/leaderboard" />
+                                        android:src="@drawable/ic_leaderboard" />
 
                                     <TextView
                                         android:id="@+id/txt_leaderboard"
@@ -1234,9 +1249,8 @@
                                         android:text="@string/dashboard_leaderborad"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp"
-
                                         />
-
+                                    </LinearLayout>
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -1254,13 +1268,17 @@
                                     android:id="@+id/profileLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_profile"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/profile" />
+                                        android:src="@drawable/ic_profile" />
 
                                     <TextView
                                         android:id="@+id/txt_profile"
@@ -1271,9 +1289,8 @@
                                         android:text="@string/dashboard_profile"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp"
-
                                         />
-
+                                    </LinearLayout>
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -1298,14 +1315,17 @@
                                     android:id="@+id/issuesPostedLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_issue_posted"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/issues" />
+                                        android:src="@drawable/ic_view_all_issues" />
 
                                     <TextView
                                         android:id="@+id/txt_issue_posted"
@@ -1313,10 +1333,10 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@+id/img_issue_posted"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:text="All Issues Posted"
+                                        android:text="@string/txt_view_all_issues"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp" />
-
+                                    </LinearLayout>
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -1334,13 +1354,17 @@
                                     android:id="@+id/gatheringOverallLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_gathering_overall"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/gathering" />
+                                        android:src="@drawable/ic_view_all_gatherings" />
 
                                     <TextView
                                         android:id="@+id/txt_gathering_oveall"
@@ -1348,11 +1372,11 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@+id/img_gathering_overall"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:text="All NearBy Gatherings"
+                                        android:text="@string/txt_view_all_nearby_gatherings"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp" />
 
-
+                                    </LinearLayout>
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
 
@@ -1369,13 +1393,18 @@
                                     android:id="@+id/connectOverAllLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
 
                                     <ImageView
                                         android:id="@+id/img_connect_overAll"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/connect" />
+                                        android:src="@drawable/ic_view_all_article" />
 
                                     <TextView
                                         android:id="@+id/txt_connect_overAll"
@@ -1383,13 +1412,11 @@
                                         android:layout_height="wrap_content"
                                         android:layout_below="@+id/img_connect_overAll"
                                         android:layout_marginTop="@dimen/_5sdp"
-                                        android:text="All Connect Published"
+                                        android:text="@string/txt_view_all_articles"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp"
-
                                         />
-
-
+                                    </LinearLayout>
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -1401,18 +1428,21 @@
                                 android:padding="@dimen/_10sdp"
                                 app:cardCornerRadius="@dimen/_15sdp"
                                 app:cardElevation="@dimen/_10sdp">
-
                                 <RelativeLayout
                                     android:id="@+id/heatMapLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_heatmap"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/heatmap" />
+                                        android:src="@drawable/ic_locate_issues" />
 
                                     <TextView
                                         android:id="@+id/txt_heatmap"
@@ -1423,9 +1453,8 @@
                                         android:text="@string/dashboard_heatmap"
                                         android:textColor="@color/dashboard_menu_text"
                                         android:textSize="@dimen/_14sdp"
-
                                         />
-
+                                </LinearLayout>
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
 
@@ -1441,13 +1470,17 @@
                                     android:id="@+id/nearByMeLayout"
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_100sdp"
-                                    android:layout_margin="@dimen/_10sdp">
-
+                                    android:layout_marginLeft="@dimen/_10sdp">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:layout_centerVertical="true">
                                     <ImageView
                                         android:id="@+id/img_nearByMe"
                                         android:layout_width="@dimen/_20sdp"
                                         android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/profile" />
+                                        android:src="@drawable/ic_neighbourhood" />
 
                                     <TextView
                                         android:id="@+id/txt_nearByMe"
@@ -1460,7 +1493,7 @@
                                         android:textSize="@dimen/_14sdp"
 
                                         />
-
+                                    </LinearLayout>
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
 

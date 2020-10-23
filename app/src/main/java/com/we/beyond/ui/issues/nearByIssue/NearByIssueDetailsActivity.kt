@@ -129,6 +129,8 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
     var delete: TextView? = null
     var reportAbuse: TextView? = null
     var edit: TextView? = null
+    var editDivider:View?=null
+    var deleteDivider: View?=null
     var supportText: TextView? = null
     var resolvedText: TextView? = null
     var commentTitle: TextView? = null
@@ -1971,7 +1973,15 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                 issueId = nearByIssueDetails.data._id
 
                 nearByIssuesData = nearByIssueDetails
-
+                val loggedInUserId = EasySP.init(this).getString(ConstantEasySP.USER_ID)
+                if (loggedInUserId == nearByIssuesData!!.data.user._id) {
+                    editDivider=findViewById(R.id.view3)
+                    editDivider!!.visibility=View.VISIBLE
+                    deleteDivider=findViewById(R.id.view2)
+                    deleteDivider!!.visibility=View.VISIBLE
+                    edit!!.visibility=View.VISIBLE
+                    delete!!.visibility=View.VISIBLE
+                }
                 userId = nearByIssueDetails.data.user._id
 
                 if (nearByIssueDetails.data.likeByUser != null && nearByIssueDetails.data.likeByUser) {

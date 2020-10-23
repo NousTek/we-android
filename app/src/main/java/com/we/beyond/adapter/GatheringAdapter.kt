@@ -548,7 +548,7 @@ class GatheringAdapter(
                         ConstantMethods.showWarning(
                             context,
                             "",
-                            "You can not abuse your gathering."
+                            "You cannot abuse your gathering."
                         )
                     } else {
 

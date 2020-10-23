@@ -261,7 +261,7 @@ class NotificationActivity : AppCompatActivity() , NotificationPresenter.INotifi
                 val sweetAlertDialog = SweetAlertDialog(this , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
                 sweetAlertDialog.contentText = "No Notification found."
-                sweetAlertDialog.show()
+//                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {
                     sweetAlertDialog.dismissWithAnimation()

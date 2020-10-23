@@ -82,6 +82,7 @@ class IssueCategoriesAdapter(
                 EasySP.init(context).put("categoryId", selectedCategory)
 
             }
+            return
         }
       holder.progressBar.visibility = View.VISIBLE
         Picasso.with(context)
@@ -149,6 +150,7 @@ class IssueCategoriesAdapter(
                 .into(viewArray[i].img_category ,object  : Callback{
                     override fun onSuccess() {
                         viewArray[position].progressBar.visibility = View.GONE
+                        viewArray[i].img_category.setColorFilter(ContextCompat.getColor(context, R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY)
                     }
 
                     override fun onError() {
@@ -176,6 +178,7 @@ class IssueCategoriesAdapter(
             .into(viewArray[position].img_category,object  : Callback{
             override fun onSuccess() {
                 viewArray[position].progressBar.visibility = View.GONE
+                viewArray[position].img_category.setColorFilter(ContextCompat.getColor(context, R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY)
             }
 
             override fun onError() {

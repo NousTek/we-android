@@ -892,7 +892,7 @@ class ConnectCommentsAdapter(
                     ConstantMethods.showWarning(
                         context,
                         "",
-                        "You cant not abuse approved resolution"
+                        "You cantnot abuse approved resolution"
                     )
                 } else if (selectedPositionId == commentDetails!![position]._id && commentDetails!![position].commentType.equals(
                         "resolution",
@@ -1113,7 +1113,7 @@ class ConnectCommentsAdapter(
                     ConstantMethods.showWarning(
                         context,
                         "",
-                        "You cant not edit approved resolution"
+                        "You cannot edit approved resolution"
                     )
                 } else if (selectedPositionId == commentDetails!![position]._id && commentDetails!![position].commentType.equals(
                         "resolution",
