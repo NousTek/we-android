@@ -83,7 +83,7 @@
     <Button
         android:id="@+id/btn_update"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/login_border"
         android:backgroundTint="@color/button_background"

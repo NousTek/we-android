@@ -425,18 +425,18 @@
   -->
 
 
-    <Button
+    <TextView
         android:id="@+id/btn_create"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:background="@drawable/login_border"
         android:backgroundTint="@color/colorPrimary"
         android:paddingTop="8dip"
         android:paddingBottom="8dip"
         android:text="Create"
-        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/_15sdp" />
 

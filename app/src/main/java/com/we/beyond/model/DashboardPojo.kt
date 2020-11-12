@@ -11,6 +11,7 @@ data class DashboardData(
     var resolvedIssueCount : Int,
     var upcomingGatheringCount : Int,
     var publishedConnectCount : Int,
+    var allIssuesCount : Int,
     var user : DashboardUserData
 )
 

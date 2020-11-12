@@ -180,12 +180,13 @@
 
                 <Button
                     android:id="@+id/btn_login"
-                    android:layout_width="@dimen/_150sdp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_forgot_password"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_20sdp"
-                    android:textAllCaps="false"
+                    android:layout_marginRight="@dimen/_12sdp"
                     android:background="@drawable/button_fill_border"
                     android:text="@string/login"
                     android:textColor="@color/white"
@@ -202,28 +203,137 @@
                     android:textColor="@color/login_hint"
                     android:textSize="@dimen/_12sdp" />
 
-                <Button
-                    android:id="@+id/btn_create_account"
-                    android:layout_width="@dimen/_150sdp"
+                <LinearLayout
+                    android:id="@+id/socialMediaContainer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_or"
-                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginRight="@dimen/_12sdp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/fbBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/fb_btn_bg"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="f"
+                            android:layout_toLeftOf="@+id/fbTitleTV"
+                            android:layout_marginRight="12dp"
+                            android:layout_centerVertical="true"
+                            android:textSize="26sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/fbTitleTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Facebook"
+                            android:textColor="#DEFFFFFF"
+                            android:gravity="center"
+                            android:layout_centerInParent="true"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        <com.facebook.login.widget.LoginButton
+                            android:id="@+id/fb_connect"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_alignParentBottom="true"
+                            android:textSize="15dp"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/googleBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/google_btn_bg"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Google"
+                            android:gravity="center"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@drawable/ic_google_icon"
+                            android:textColor="#DE000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_create_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/socialMediaContainer"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:background="@drawable/button_empty_border"
-                    android:text="@string/create_account"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/_12sdp" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_signup_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/txt_need_an_account"
+                        android:textColor="@color/color_registration_txt"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/text_signup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="7dp"
+                        android:text="@string/txt_sign_up"
+                        android:textColor="#499CFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
 
-                <TextView
-                    android:id="@+id/txt_issue"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btn_create_account"
                     android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
-                    android:gravity="center"
-                    android:text="@string/login_issue" />
+                    android:background="@color/wa_container_bg">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+                    <TextView
+                        android:id="@+id/txt_issue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_centerVertical="true"
+                        android:textColor="#DE000000"
+                        android:drawableLeft="@drawable/ic_whatsapp"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="center"
+                        android:text="@string/login_issue" />
+                    <TextView
+                        android:id="@+id/txt_post_on_wa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/txt_issue"
+                        android:textStyle="bold"
+                        android:text="@string/txt_post_on_whatsapp"
+                        android:textColor="#DE000000"
+                        android:textSize="14sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
 
 
             </RelativeLayout>

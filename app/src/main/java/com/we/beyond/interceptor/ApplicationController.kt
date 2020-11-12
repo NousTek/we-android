@@ -3,6 +3,7 @@ package com.we.beyond.interceptor
 import android.content.Context
 
 import androidx.multidex.MultiDexApplication
+import com.facebook.FacebookSdk
 import com.we.beyond.util.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -57,6 +58,7 @@ class ApplicationController : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
+        FacebookSdk.sdkInitialize(applicationContext)
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1)
         val okkHttpBuilder: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(MyInterceptor(context))

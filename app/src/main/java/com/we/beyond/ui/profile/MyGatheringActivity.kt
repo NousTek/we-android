@@ -519,7 +519,7 @@ class MyGatheringActivity : AppCompatActivity() , MyGatheringPresenter.IMyGather
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
                     sweetAlertDialog.contentText = "There are no past gatherings."
-                    sweetAlertDialog.show()
+//                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {
                         sweetAlertDialog.dismissWithAnimation()
@@ -632,7 +632,7 @@ class MyGatheringActivity : AppCompatActivity() , MyGatheringPresenter.IMyGather
                         val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                         sweetAlertDialog.titleText = ""
                         sweetAlertDialog.contentText = "There are no past gatherings."
-                        sweetAlertDialog.show()
+//                        sweetAlertDialog.show()
                         sweetAlertDialog.setCancelable(false)
                         sweetAlertDialog.setConfirmClickListener {
                             sweetAlertDialog.dismissWithAnimation()

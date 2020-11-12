@@ -65,7 +65,7 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:text="Done"
         android:backgroundTint="@color/button_background"
         android:background="@drawable/login_border"

@@ -176,10 +176,10 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
 
         if (isEdit) {
-            submit!!.text = "update"
+            submit!!.text = "Update"
 
         } else {
-            submit!!.text = "submit"
+            submit!!.text = "Submit"
         }
 
         println("campaign data $isEdit")

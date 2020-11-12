@@ -126,13 +126,27 @@ class CommentAdapter(
 
             }
 
-
             /** It show and hide text view depends on condition */
             var mediaStatusArray = ArrayList<MediaUploadingPojo>()
 
             val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
             println("user id $userId comment id ${userIssueId}")
             if (userId != null && userId.isNotEmpty()) {
+                if (userId != commentDetails!![position].user._id)
+                {
+                    holder.delete.visibility=View.GONE
+                    holder.divider1.visibility=View.GONE
+                    holder.edit.visibility=View.GONE
+                    holder.divider2.visibility=View.GONE
+                }
+                else
+                {
+                    holder.delete.visibility=View.VISIBLE
+                    holder.divider1.visibility=View.VISIBLE
+                    holder.edit.visibility=View.VISIBLE
+                    holder.divider2.visibility=View.VISIBLE
+                }
+
                 if (!isResolved) {
                     if (userId.equals(userIssueId, ignoreCase = true)) {
                         if (commentDetails!![position].commentType.equals(
@@ -1746,7 +1760,8 @@ class CommentAdapter(
         var moreReply = itemView.img_reply_more!!
         var reportAbuse = itemView.txt_report_abuse!!
         var edit = itemView.txt_edit!!
-
+        var divider1= itemView.view1!!
+        var divider2= itemView.view2!!
     }
 
 

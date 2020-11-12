@@ -14,17 +14,17 @@ object ConstantFonts
 
     var raleway_semibold : Typeface = Typeface.createFromAsset(
         ApplicationController.context.assets,
-        "fonts/raleway_semibold.ttf"
+        "fonts/poppins_semibold.ttf"
     )
 
     var raleway_regular : Typeface = Typeface.createFromAsset(
         ApplicationController.context.assets,
-        "fonts/raleway_regular.ttf"
+        "fonts/poppins_regular.ttf"
     )
 
     var raleway_medium : Typeface = Typeface.createFromAsset(
         ApplicationController.context.assets,
-        "fonts/raleway_medium.ttf"
+        "fonts/poppins_medium.ttf"
     )
 
     var number_semibold : Typeface = Typeface.createFromAsset(

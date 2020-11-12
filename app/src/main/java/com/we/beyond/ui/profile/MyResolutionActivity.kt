@@ -245,7 +245,7 @@ class MyResolutionActivity : AppCompatActivity(), MyResolutionPresenter.IMyResol
                 val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
                 sweetAlertDialog.contentText = "There are no resolutions found."
-                sweetAlertDialog.show()
+//                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {
                     sweetAlertDialog.dismissWithAnimation()

@@ -491,13 +491,14 @@ class MyIssuesActivity : AppCompatActivity(), MyIssuesPresenter.IMyIssuesView,
                 )*/
 
                 noContent!!.visibility = View.VISIBLE
+                issuesRecycler!!.visibility=View.GONE
                 noContent!!.text = "There are no issues resolved."
 
                 try {
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
                     sweetAlertDialog.contentText = "There are no issues resolved."
-                    sweetAlertDialog.show()
+//                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {
                         sweetAlertDialog.dismissWithAnimation()
@@ -516,13 +517,13 @@ class MyIssuesActivity : AppCompatActivity(), MyIssuesPresenter.IMyIssuesView,
                 )*/
                 noContent!!.visibility = View.VISIBLE
                 noContent!!.text = "There are no issues posted."
-
+                issuesRecycler!!.visibility=View.GONE
 
                 try {
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
                     sweetAlertDialog.contentText =  "There are no issues posted."
-                    sweetAlertDialog.show()
+//                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {
                         sweetAlertDialog.dismissWithAnimation()
@@ -539,7 +540,7 @@ class MyIssuesActivity : AppCompatActivity(), MyIssuesPresenter.IMyIssuesView,
 
 
             noContent!!.visibility = View.GONE
-
+            issuesRecycler!!.visibility=View.VISIBLE
             issueArray!!.addAll(nearByIssueDetails.data)
 
             issuesAdapter = MyIssuesAdapter(this, issueArray!!)

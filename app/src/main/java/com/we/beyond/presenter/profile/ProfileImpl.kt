@@ -389,14 +389,14 @@ class ProfileImpl (profile : ProfilePresenter.IProfileView) : ProfilePresenter.I
                SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
            sweetAlertDialog.titleText = "Success!"
            sweetAlertDialog.contentText = "Successfully updated profile."
-           sweetAlertDialog.show()
+//           sweetAlertDialog.show()
            sweetAlertDialog.setCancelable(false)
            sweetAlertDialog.setConfirmClickListener {
                sweetAlertDialog.dismissWithAnimation()
 
-               profile.onUpdateSuccessfully()
+//               profile.onUpdateSuccessfully()
            }
-
+           profile.onUpdateSuccessfully()
        } catch (e: Exception) {
            e.printStackTrace()
        }

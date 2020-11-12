@@ -895,11 +895,26 @@ class SubmitAnIssueActivity : AppCompatActivity(),
     }
 
 
+    private fun shouldShowConfirmationAlert(): Boolean
+    {
+        val categoryId = EasySP.init(this).getString("categoryId")
+        val issueTitle = EasySP.init(this).getString("issueTitle")
+        val issueDetails = EasySP.init(this).getString("issueDetails")
+        val latlong = EasySP.init(this).getString(ConstantEasySP.LATLONG_POJO)
+        val address = EasySP.init(this).getString("locationAddress")
+        val city = EasySP.init(this).getString("city")
+        val media = EasySP.init(this).getString(ConstantEasySP.UPLOADED_MEDIA)
+        return  (!categoryId!!.isEmpty() || !issueTitle!!.isEmpty() || !issueDetails!!.isEmpty() || !latlong!!.isEmpty() || !address!!.isEmpty() || !city!!.isEmpty() ||  ! media!!.isEmpty())
+    }
     /** It goes back to previous activity of fragment   */
     override fun onBackPressed() {
-        super.onBackPressed()
-
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-
+        if(shouldShowConfirmationAlert())
+        {
+            ConstantMethods.showAlert(this, "", "Are you sure you want to discard this issue?")
+        }
+        else {
+            super.onBackPressed()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
     }
 }

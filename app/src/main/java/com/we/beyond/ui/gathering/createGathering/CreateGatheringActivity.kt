@@ -81,7 +81,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
     /** init button */
     var useCamera: Button? = null
     var useGallery: Button? = null
-    var create: Button? = null
+    var create: TextView? = null
     /* var image : Button?=null
      var video : Button?=null
      var imageGallery : Button?=null
@@ -195,11 +195,11 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
 
         if(isEdit) {
-            create!!.text = "update"
+            create!!.text = "Update"
 
         }
         else{
-            create!!.text = "create"
+            create!!.text = "Create"
         }
 
         println("campaign data $isEdit")

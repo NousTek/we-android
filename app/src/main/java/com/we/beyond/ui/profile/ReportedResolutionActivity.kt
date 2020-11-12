@@ -248,7 +248,7 @@ class ReportedResolutionActivity : AppCompatActivity(),
                 val sweetAlertDialog = SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
                 sweetAlertDialog.contentText = "There are no reported resolutions found."
-                sweetAlertDialog.show()
+//                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {
                     sweetAlertDialog.dismissWithAnimation()

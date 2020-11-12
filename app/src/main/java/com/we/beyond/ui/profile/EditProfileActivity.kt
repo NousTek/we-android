@@ -120,9 +120,9 @@ class EditProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
     /** On successfully update data, it go back to the activity */
     override fun onUpdateSuccessfully() {
         try {
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-            finish()
-
+           /* overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            finish()*/
+            Toast.makeText(this, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
 
         } catch (e: Exception) {
             e.printStackTrace()

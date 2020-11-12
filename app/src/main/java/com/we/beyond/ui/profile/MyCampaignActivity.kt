@@ -512,7 +512,7 @@ class MyCampaignActivity : AppCompatActivity() , MyCampaignPresenter.IMyCampaign
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
                     sweetAlertDialog.contentText = "There are no past campaigns."
-                    sweetAlertDialog.show()
+//                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {
                         sweetAlertDialog.dismissWithAnimation()
@@ -538,7 +538,7 @@ class MyCampaignActivity : AppCompatActivity() , MyCampaignPresenter.IMyCampaign
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
                     sweetAlertDialog.contentText = "There are no upcoming campaigns."
-                    sweetAlertDialog.show()
+//                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {
                         sweetAlertDialog.dismissWithAnimation()
@@ -633,7 +633,7 @@ class MyCampaignActivity : AppCompatActivity() , MyCampaignPresenter.IMyCampaign
                         val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                         sweetAlertDialog.titleText = ""
                         sweetAlertDialog.contentText = "There are no past campaigns."
-                        sweetAlertDialog.show()
+//                        sweetAlertDialog.show()
                         sweetAlertDialog.setCancelable(false)
                         sweetAlertDialog.setConfirmClickListener {
                             sweetAlertDialog.dismissWithAnimation()
@@ -658,7 +658,7 @@ class MyCampaignActivity : AppCompatActivity() , MyCampaignPresenter.IMyCampaign
                         val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                         sweetAlertDialog.titleText = ""
                         sweetAlertDialog.contentText = "There are no upcoming campaigns."
-                        sweetAlertDialog.show()
+//                        sweetAlertDialog.show()
                         sweetAlertDialog.setCancelable(false)
                         sweetAlertDialog.setConfirmClickListener {
                             sweetAlertDialog.dismissWithAnimation()

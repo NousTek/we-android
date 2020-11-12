@@ -3,12 +3,24 @@ package com.we.beyond.ui.login
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.facebook.*
+import com.facebook.login.LoginBehavior
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.facebook.login.widget.LoginButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.iid.FirebaseInstanceId
@@ -25,7 +37,9 @@ import com.we.beyond.util.ConstantMethods
 import com.we.beyond.util.Constants
 import com.white.easysp.EasySP
 import org.apache.commons.codec.digest.DigestUtils
-import kotlin.Exception
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.*
 
 /**
  * this activity for login the app
@@ -46,6 +60,7 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
     var forgotPasswordText: TextView? = null
     var orText: TextView? = null
     var issueText: TextView? = null
+    var issuePostOnWAText: TextView? = null
     var forgotTitle: TextView? = null
 
     /** init text input edit text */
@@ -63,20 +78,34 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
 
     /** init button */
     var login: Button? = null
-    var createAccount: Button? = null
+    var createAccount: LinearLayout? = null
+    var googleBtn: LinearLayout? = null
+    var fbBtn: RelativeLayout? = null
     var forgotPassword: Button? = null
+    var txtSignupInfo: TextView? = null
+    var txtSignup: TextView? = null
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    private val RC_SIGN_IN = 9001
+    lateinit var callbackManager: CallbackManager
+    private val EMAIL = "email"
+    lateinit var loginButton : LoginButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         ConstantMethods.hideKeyBoard(this, this)
 
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_login_temp)
 
         FirebaseMessaging.getInstance().isAutoInitEnabled = true
 
         loginPresenter = LoginImpl(this)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestProfile()
+            .build()
 
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         /** initialize ids of elements */
         initElementsWithIds()
 
@@ -85,8 +114,6 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
 
         /** initialize onclick listeners */
         initWithListener()
-
-
     }
 
     /**
@@ -126,6 +153,12 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             finish()
+        }
+        googleBtn!!.setOnClickListener {
+            performGoogleSignIn()
+        }
+        fbBtn!!.setOnClickListener {
+            performFBLogin()
         }
 
         /** call function for post the data */
@@ -212,9 +245,60 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
             }
         }
 
+        loginButton.setOnClickListener {
+            loginButton.setReadPermissions(listOf(EMAIL))
+            callbackManager = CallbackManager.Factory.create()
+
+            /*loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
+                override fun onSuccess(loginResult: LoginResult?) {
+                    Log.d("MainActivity", "Facebook token: " + loginResult!!.accessToken.token)
+                }
+
+                override fun onCancel() { // App code
+                }
+
+                override fun onError(exception: FacebookException) { // App code
+                }
+            })*/
+            callbackManager = CallbackManager.Factory.create()
+            LoginManager.getInstance().registerCallback(callbackManager,
+                object : FacebookCallback<LoginResult?> {
+                    override fun onSuccess(loginResult: LoginResult?) {
+                        if (loginResult != null) {
+                            setFacebookData(loginResult)
+                        }
+                    }
+
+                    override fun onCancel() {
+                        // App code
+                    }
+
+                    override fun onError(exception: FacebookException) {
+                        // App code
+                    }
+
+                    val accessToken = AccessToken.getCurrentAccessToken()
+                }
+            )
+        }
+    }
+    private fun performGoogleSignIn()
+    {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(
+            signInIntent, RC_SIGN_IN
+        )
     }
 
-
+    private fun performFBLogin()
+    {
+        val permissions: MutableList<String> =
+            ArrayList()
+        permissions.add("email")
+        permissions.add("public_profile")
+        loginButton.setPermissions(permissions)
+        loginButton.performClick()
+    }
     private fun appInstalledOrNot(uri: String): Boolean {
         val pm = packageManager
         try {
@@ -329,7 +413,8 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         close = findViewById(R.id.img_close)
 
         /** ids of text view */
-
+        loginButton = findViewById(R.id.fb_connect)
+        loginButton.loginBehavior = LoginBehavior.WEB_VIEW_ONLY
         weLogo = findViewById(R.id.img_we_logo)
         weLogo!!.typeface = ConstantFonts.abys_regular
 
@@ -352,7 +437,9 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         orText!!.typeface = ConstantFonts.raleway_regular
 
         issueText = findViewById(R.id.txt_issue)
-        issueText!!.typeface = ConstantFonts.raleway_semibold
+        issueText!!.typeface = ConstantFonts.raleway_regular
+        issuePostOnWAText=findViewById(R.id.txt_post_on_wa)
+        issuePostOnWAText!!.typeface = ConstantFonts.raleway_semibold
 
         forgotTitle = findViewById(R.id.txt_forgot_title)
         forgotTitle!!.typeface = ConstantFonts.raleway_semibold
@@ -381,10 +468,111 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         login!!.typeface = ConstantFonts.raleway_semibold
 
         createAccount = findViewById(R.id.btn_create_account)
-        createAccount!!.typeface = ConstantFonts.raleway_semibold
-
+        googleBtn=findViewById(R.id.googleBtn)
+        fbBtn=findViewById(R.id.fbBtn)
+        txtSignupInfo=findViewById(R.id.txt_signup_info)
+        txtSignup=findViewById(R.id.text_signup)
+        txtSignup!!.typeface = ConstantFonts.raleway_semibold
+        txtSignupInfo!!.typeface = ConstantFonts.raleway_regular
         forgotPassword = findViewById(R.id.btn_forgot_password)
         forgotPassword!!.typeface = ConstantFonts.raleway_semibold
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN) {
+            val task =
+                GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account = completedTask.getResult(
+                ApiException::class.java
+            )
+            // Signed in successfully
+            val googleId = account?.id ?: ""
+            Log.i("Google ID",googleId)
+
+            val googleFirstName = account?.givenName ?: ""
+            Log.i("Google First Name", googleFirstName)
+
+            val googleLastName = account?.familyName ?: ""
+            Log.i("Google Last Name", googleLastName)
+
+            val googleEmail = account?.email ?: ""
+            Log.i("Google Email", googleEmail)
+
+            val googleProfilePicURL = account?.photoUrl.toString()
+            Log.i("Google Profile Pic URL", googleProfilePicURL)
+
+            val googleIdToken = account?.idToken ?: ""
+            Log.i("Google ID Token", googleIdToken)
+
+            showLoggedInUser("$googleFirstName $googleLastName")
+
+        } catch (e: ApiException) {
+            // Sign in was unsuccessful
+            Log.e(
+                "failed code=", e.statusCode.toString()
+            )
+        }
+    }
+
+    private fun setFacebookData(loginResult: LoginResult) {
+        val request = GraphRequest.newMeRequest(
+            loginResult.accessToken
+        ) { jsonObject: JSONObject?, response: GraphResponse ->
+            // Application code
+            try {
+                Log.i("Response", response.toString())
+                var id = ""
+                val token = AccessToken.getCurrentAccessToken()
+                val email = response.jsonObject.getString("email")
+                val firstName = response.jsonObject.getString("first_name")
+                val lastName = response.jsonObject.getString("last_name")
+                showLoggedInUser("$firstName $lastName")
+                val profile = Profile.getCurrentProfile()
+                if (profile != null) {
+                    id = profile.id
+                    val link = profile.linkUri.toString()
+                    Log.i("Link", link)
+
+                }
+                if (Profile.getCurrentProfile() != null) {
+                    Log.i(
+                        "Login",
+                        "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(
+                            200,
+                            200
+                        )
+                    )
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        val parameters = Bundle()
+        parameters.putString("fields", "id,email,first_name,last_name,gender")
+        request.parameters = parameters
+        request.executeAsync()
+    }
+
+    private fun showLoggedInUser(userName : String)
+    {
+        val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+        sweetAlertDialog.titleText = ""
+        sweetAlertDialog.contentText = "Login as $userName"
+//        sweetAlertDialog.show()
+        sweetAlertDialog.setCancelable(false)
+        sweetAlertDialog.setConfirmClickListener {
+            sweetAlertDialog.dismissWithAnimation()
+        }
+        goToCategoriesScreen()
     }
 }

@@ -18,7 +18,7 @@
     <color name="issue_resolved">#8CC048</color>
     <color name="gathering_color">#249cb9</color>
     <color name="new_info_color">#ff2994</color>
-
+    <color name="fb_btn_color">#3b5998</color>
 
     //Login activity
     <color name="login_welcome_text">#DE000000</color>
@@ -60,6 +60,7 @@
 
     //badges text color
     <color name="badges_color">#999999</color>
-
+    <color name="wa_container_bg">#324CAF50</color>
+    <color name="color_registration_txt">#80344256</color>
 
 </resources>

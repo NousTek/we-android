@@ -151,7 +151,8 @@
         <RelativeLayout
             android:id="@+id/setHomeLocationLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
+            android:minHeight="@dimen/_40sdp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginRight="@dimen/_12sdp"
             android:background="@drawable/home_location_border"
@@ -169,9 +170,10 @@
             <TextView
                 android:id="@+id/txt_location_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="Set Home Location"
                 android:textColor="@color/hint"
+                android:layout_centerVertical="true"
                 android:textColorHint="@color/login_hint"
                 android:textSize="@dimen/_13sdp"
                 android:paddingLeft="@dimen/_10sdp"
@@ -244,11 +246,12 @@
     <Button
         android:id="@+id/btn_update"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/login_border"
         android:backgroundTint="@color/button_background"
         android:text="Update"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/_15sdp"
 

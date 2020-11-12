@@ -27,7 +27,11 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.we.beyond.ui.leaderBoard.LeaderBoardActivity
 import com.we.beyond.R
@@ -113,6 +117,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
     var newInfoPublishedCount : TextView?=null
     var newInfoPublishedTitle : TextView?=null
     var newInfoPublishedKm : TextView?=null
+    var allIssuesCount : TextView?=null
     var hello : TextView?=null
     var name : TextView?=null
     var nearByMe : TextView?=null
@@ -146,12 +151,13 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
     var mPermissionsGranted = false
 
     var notificationBell : Boolean = false
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-
+        firebaseAnalytics = Firebase.analytics
         /** hide the keyboard when this activity open up */
         ConstantMethods.hideKeyBoard(this,this)
 
@@ -444,7 +450,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             issueResolvedCount!!.text = summary.data.resolvedIssueCount.toString()
             gatheringsNearByCount!!.text = summary.data.upcomingGatheringCount.toString()
             newInfoPublishedCount!!.text = summary.data.publishedConnectCount.toString()
-
+            allIssuesCount!!.text = summary.data.allIssuesCount!!.toString()
             selectedCategotyId.addAll(summary.data.user.categories)
 
             EasySP.init(context).remove(ConstantEasySP.ISSUE_SELECTED_CATEGORY_ID)
@@ -551,8 +557,6 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             intent.putExtra("dashboard",true)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
-
         }
 
         /** It opens SubmitAnIssueActivity when click on it */
@@ -562,7 +566,10 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             intent.putExtra("dashboard",true)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
+            firebaseAnalytics.logEvent("submit_issue") {
+                param("button_name", "Submit issue")
+                param("action_triggered", "user wants to submit issue")
+            }
         }
 
         /** It opens NearByIssueActivity when click on it */
@@ -615,7 +622,10 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             //intent.putExtra("gathering",true)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
+            firebaseAnalytics.logEvent("share_image") {
+                param("button_name", "Create gathering")
+                param("action_triggered", "user wants to create gatherings")
+            }
         }
 
         /** It opens GatheringActivity when click on it */
@@ -852,7 +862,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
         newInfoPublishedKm = findViewById(R.id.txt_new_info_published_km)
         newInfoPublishedKm!!.typeface = ConstantFonts.raleway_semibold
-
+        allIssuesCount =findViewById(R.id.txtIssueCnt)
+        allIssuesCount!!.typeface = ConstantFonts.raleway_semibold
         hello = findViewById(R.id.txt_hello)
         hello!!.typeface = ConstantFonts.raleway_semibold
 

@@ -212,12 +212,13 @@
     <Button
         android:id="@+id/btn_submit_an_issue"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/login_border"
         android:backgroundTint="@color/button_background"
         android:text="@string/submit_issue_button"
         android:textColor="@color/white"
+        android:textAllCaps="false"
         android:textSize="@dimen/_15sdp"
 
         />

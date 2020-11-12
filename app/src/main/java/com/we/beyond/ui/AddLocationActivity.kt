@@ -363,7 +363,7 @@ class AddLocationActivity : AppCompatActivity() ,OnMapReadyCallback
 
             mMap = googleMap!!
             mMap.clear()
-            mMap.mapType=GoogleMap.MAP_TYPE_HYBRID
+            mMap.mapType=GoogleMap.MAP_TYPE_NORMAL
 
             // Add a marker in Sydney and move the camera
             val location = LatLng(latitude, longitude)

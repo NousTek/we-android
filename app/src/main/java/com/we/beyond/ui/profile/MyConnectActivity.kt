@@ -381,7 +381,7 @@ class MyConnectActivity : AppCompatActivity() , MyConnectPresenter.IMyConnectIss
                 val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
                 sweetAlertDialog.contentText = "There are no published connect."
-                sweetAlertDialog.show()
+//                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {
                     sweetAlertDialog.dismissWithAnimation()
@@ -593,7 +593,7 @@ class MyConnectActivity : AppCompatActivity() , MyConnectPresenter.IMyConnectIss
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
                     sweetAlertDialog.contentText = "There are no published connect."
-                    sweetAlertDialog.show()
+//                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {
                         sweetAlertDialog.dismissWithAnimation()

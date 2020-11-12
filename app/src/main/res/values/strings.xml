@@ -18,10 +18,10 @@
     <string name="login_email_hint">Email or mobile</string>
     <string name="login_password_hint">Password</string>
     <string name="login_forgot_password">Forgot Password ?</string>
-    <string name="login">LOGIN</string>
+    <string name="login">Login</string>
     <string name="or">OR</string>
     <string name="create_account">CREATE ACCOUNT</string>
-    <string name="login_issue"><font color='#99000000'>Have an issue ? </font><font color='#5A40BA'>POST ON WHATSAPP</font> </string>
+    <string name="login_issue">Have an issue? </string>
 
     //Registration Activity
     <string name="registration_title">Registration</string>
@@ -43,9 +43,9 @@
 
     //Dashboard Activity
     <string name="dashboard_title">Dashboard</string>
-    <string name="dashboard_issues">Submit\nIssues</string>
-    <string name="dashboard_gathering">Create\nGathering</string>
-    <string name="dashboard_connect">Publish\nArticle</string>
+    <string name="dashboard_issues">Issues</string>
+    <string name="dashboard_gathering">Gathering</string>
+    <string name="dashboard_connect">Article</string>
     <string name="dashboard_heatmap">Locate\nIssues</string>
     <string name="dashboard_near_by_me">My\nNeighbours</string>
     <string name="dashboard_leaderborad">Leaderboard</string>
@@ -80,7 +80,7 @@
 
     //near by issue activity
     <string name="near_by_issue_title">Issues</string>
-    <string name="submit_issue_button">submit an issue</string>
+    <string name="submit_issue_button">Submit an issue</string>
 
     //filter activity
     <string name="filter_title">Filter</string>
@@ -96,7 +96,7 @@
 
     //connect issue list activity
     <string name="connect_title">Connect</string>
-    <string name="publish_connect_button">publish connect</string>
+    <string name="publish_connect_button">Publish Connect</string>
 
     //create gathering activity
     <string name="create_gathering_title">Create a Gathering</string>
@@ -150,6 +150,11 @@
     <string name="txt_view_all_issues">View All\nIssues</string>
     <string name="txt_view_all_nearby_gatherings">View All Nearby Gatherings</string>
     <string name="txt_view_all_articles">View All\nArticles</string>
+    <string name="txt_need_an_account">Need an account?</string>
+    <string name="txt_sign_up">Sign up</string>
+    <string name="txt_post_on_whatsapp">Post on Whatsapp</string>
 
+    <string name="facebook_app_id">811547289669854</string>
+    <string name="fb_login_protocol_scheme">fb811547289669854</string>
 
 </resources>

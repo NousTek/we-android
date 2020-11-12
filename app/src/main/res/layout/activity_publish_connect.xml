@@ -376,7 +376,7 @@
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/login_border"
@@ -384,7 +384,7 @@
         android:paddingTop="8dip"
         android:paddingBottom="8dip"
         android:text="Submit"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/_15sdp" />
 

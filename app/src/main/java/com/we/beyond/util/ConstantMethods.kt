@@ -470,6 +470,23 @@ object ConstantMethods {
         }
     }
 
+    fun showAlert(context: Context,title: String, message: String) {
+        try {
+            val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
+            sweetAlertDialog.titleText = title
+            sweetAlertDialog.contentText = message
+            sweetAlertDialog.show()
+            sweetAlertDialog.setCancelable(false)
+            sweetAlertDialog.setCancelClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+            }
+            sweetAlertDialog.setConfirmClickListener {
+                (context as Activity).finish()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
     /** Show error dialog  */
     fun showError(context: Context, title: String, message: String) {
         try {
