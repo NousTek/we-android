@@ -1916,7 +1916,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                 if (gatheringDetails.data.imageUrls != null && gatheringDetails.data.imageUrls.isNotEmpty()) {
                     Glide.with(this)
                         .load(gatheringDetails.data.imageUrls[0])
-                        .placeholder(R.drawable.loading_image)
+//                        .placeholder(R.drawable.loading_image)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         //.memoryPolicy(MemoryPolicy.NO_CACHE)
                         //.networkPolicy(NetworkPolicy.NO_CACHE)

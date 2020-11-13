@@ -2048,7 +2048,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                 if (nearByIssueDetails.data.imageUrls != null && nearByIssueDetails.data.imageUrls.isNotEmpty()) {
                     Glide.with(this)
                         .load(nearByIssueDetails.data.imageUrls[0])
-                        .placeholder(R.drawable.loading_image)
+//                        .placeholder(R.drawable.loading_image)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         //.memoryPolicy(MemoryPolicy.NO_CACHE)
                         //.networkPolicy(NetworkPolicy.NO_CACHE)

@@ -143,7 +143,7 @@ class MyGatheringAdapter(
 
                 Glide.with(context!!)
                     .load(gatheringList!![position].imageUrls[0])
-                    .placeholder(R.drawable.loading_image)
+//                    .placeholder(R.drawable.loading_image)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     //.memoryPolicy(MemoryPolicy.NO_CACHE)
                     //.networkPolicy(NetworkPolicy.NO_CACHE)

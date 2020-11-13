@@ -5,7 +5,9 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -40,6 +42,9 @@ import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
 import com.we.beyond.util.FileUtils
 import com.white.easysp.EasySP
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
 import java.io.File
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -192,7 +197,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         isGatheringList = intent.getBooleanExtra("gathering",false)
         issueId = intent.getStringExtra("issueId")
 
-
+        mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
 
         if(isEdit) {
             create!!.text = "Update"
@@ -237,7 +242,6 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                         )
                     )
 
-                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
                     mediaRecycler!!.adapter = mediaAdapter
                 }
             }
@@ -441,10 +445,10 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                 galleryOptionLayout!!.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_in_up))*/
 
                 try {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.type = "image/*"
-                    startActivityForResult(intent, GALLERY)
-
+//                    val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                    intent.type = "image/*"
+//                    startActivityForResult(intent, GALLERY)
+                    picImage(10-mediaAdapter!!.itemCount)
                     //galleryOptionLayout!!.visibility = View.GONE
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -454,7 +458,6 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
             }
 
         }
-
 
         /** It checks required fields are empty or not, if empty then shows the warning dialog
          * and get all required fields from user to
@@ -519,6 +522,25 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         }
 
 
+    }
+    private fun picImage(maxLimit:Int)
+    {
+        if(maxLimit>0) {
+            Matisse.from(this)
+                .choose(MimeType.ofImage())
+                .countable(true)
+                .maxSelectable(maxLimit)
+                .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(GlideEngine())
+                .showPreview(false) // Default is `true`
+                .forResult(GALLERY);
+        }
+        else
+        {
+            Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /** It converts required data to json object and
@@ -734,42 +756,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                         ConstantMethods.showError(this, "", "Please wait while media is uploading.")
                     }
                 }
-
-
-/*
-                if (details.isNotEmpty() && gatheringTitle!!.text.isNotEmpty() && gatheringDetails!!.text.isNotEmpty() && issueId!!.isNotEmpty() && getSelectedDate.isNotEmpty() && latlongArray.isNotEmpty() && imageArray.isEmpty()) {
-                    if (ConstantMethods.checkForInternetConnection(this@CreateGatheringActivity)) {
-
-                        val jsonObject = JsonObject()
-                        jsonObject.addProperty("issueId", issueId)
-                        jsonObject.addProperty("title", gatheringTitle!!.text.toString().trim())
-                        jsonObject.addProperty(
-                            "description",
-                            gatheringDetails!!.text.toString().trim()
-                        )
-                        jsonObject.addProperty(
-                            "gatheringDate",
-                            ConstantMethods.convertDateStringToServerDateFull(dateTime!!.text.toString())
-                        )
-                        jsonObject.addProperty("address", locationTitle!!.text.toString().trim())
-                        jsonObject.addProperty("city", city)
-
-                        val locationJsonArray = JsonArray()
-
-                        for (i in 0 until latlongArray.size) {
-
-                            locationJsonArray.add(latlongArray[i])
-
-                        }
-                        jsonObject.add("location", locationJsonArray)
-
-                        postDataToServer(jsonObject)
-
-                        println("post data $jsonObject")
-
-
-                    }
-                } else*/ if (details.isNotEmpty() && gatheringTitle!!.text.isNotEmpty()  && issueId!!.isNotEmpty() && dateTime!!.text.isNotEmpty() && latlongArray.isNotEmpty() && imageArray.isNotEmpty()) {
+             if (details.isNotEmpty() && gatheringTitle!!.text.isNotEmpty()  && issueId!!.isNotEmpty() && dateTime!!.text.isNotEmpty() && latlongArray.isNotEmpty() && imageArray.isNotEmpty()) {
 
                     if (ConstantMethods.checkForInternetConnection(this@CreateGatheringActivity)) {
 
@@ -904,18 +891,6 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         useGallery = findViewById(R.id.btn_browse_file)
         useGallery!!.typeface = ConstantFonts.raleway_semibold
 
-        /* image = findViewById(R.id.btn_image)
-         image!!.typeface = ConstantFonts.raleway_semibold
-
-         video = findViewById(R.id.btn_video)
-         video!!.typeface = ConstantFonts.raleway_semibold
-
-         imageGallery = findViewById(R.id.btn_image_option)
-         imageGallery!!.typeface = ConstantFonts.raleway_semibold
-
-         videoGalley = findViewById(R.id.btn_video_option)
-         videoGalley!!.typeface = ConstantFonts.raleway_semibold*/
-
         /** ids of recycler view */
         mediaRecycler = findViewById(R.id.recycler_media)
         mediaRecycler!!.layoutManager = GridLayoutManager(this, 3)
@@ -988,67 +963,11 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
         if (requestCode == GALLERY) {
             if(data!=null) {
-                mMediaUri = data!!.getData()
-                var imageStream: InputStream? = null
-                try {
-                    imageStream = context!!.getContentResolver().openInputStream(mMediaUri!!)
-
-                    /* var file1 = File(mMediaUri!!.getPath())
-                var bt: Bitmap
-                bt = BitmapFactory.decodeStream(imageStream)
-                bt = ConstantMethods.imageOrientationValidator(bt, file1.absolutePath)
-                file1 = ConstantMethods.compressImage(context, bt)*/
-
-                    //val path = RealPathUtils.getPath(context!!, mMediaUri!!)
-                    val path = FileUtils().getRealPath(context!!, mMediaUri!!)
-
-                    var file1: File? = null
-                    if (path != null) {
-                        var compressedPath = ConstantMethods.getCompressImage(context!!, path)
-                        if (compressedPath != null) {
-                            file1 = File(compressedPath)
-                        } else {
-                            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
-                        }
-
-                    } else {
-                        file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
-
-                    }
-
-
-                    var length: Long? = file1!!.length()
-                    length = length!! / 1024
-
-                    //5mb in kb
-                    /* if (length > 5120) run {
-                    ConstantMethods.showError(context,"Large Image Size","Maximum image allowed is 5 MB")
-
+                val mSelected:List<Uri> = Matisse.obtainResult(data);
+                for (i in mSelected!!.indices) {
+                    val uri = mSelected[i]
+                    getImageFilePath(uri)
                 }
-                else
-                {*/
-
-                    mediaStatusArray!!.add(
-                        MediaUploadingPojo(
-                            file1.absolutePath,
-                            "",
-                            "image",
-                            false
-                        )
-                    )
-                    val json1 = Gson().toJson(mediaStatusArray!!)
-                    EasySP.init(this).put(ConstantEasySP.UPLOADED_MEDIA,json1)
-
-                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
-                    mediaRecycler!!.adapter = mediaAdapter
-                    // }
-
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-
-
             }
 
         }
@@ -1058,16 +977,6 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         else if (requestCode == CAMERA) {
             if (mMediaUri != null) {
                 try {
-                    //var file = File(mMediaUri!!.getPath())
-
-                    /* bitmap = BitmapFactory.decodeFile(mMediaUri!!.getPath())
-
-                     bitmap =
-                         ConstantMethods.imageOrientationValidator(bitmap, mMediaUri!!.getPath())
-
-                     file = ConstantMethods.compressImage(context, bitmap)*/
-
-                    //val path = RealPathUtils.getPath(context!!,mMediaUri!!)
                     val path = FileUtils().getRealPath(context!!,mMediaUri!!)
 
                     var file1 : File?= null
@@ -1090,18 +999,6 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                     var length: Long? = file1!!.length()
                     length = length!! / 1024
 
-                    //decodeFile(picturePath);
-                    //5mb in kb
-                    /* if (length > 5120) {
-                         ConstantMethods.showError(
-                             context,
-                             "Large Image Size",
-                             "Maximum image allowed is 5 MB"
-                         )
-
-
-                     } else {
- */
 
                     mediaStatusArray!!.add(MediaUploadingPojo(file1.absolutePath,"","image",false))
 
@@ -1113,8 +1010,6 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
                     EasySP.init(context).putString("image", fileUri)
 
-                    // mediaPresenter!!.onFileUpload(context!!, file.absolutePath!!)
-                    //}
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -1171,5 +1066,60 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         EasySP.init(this).putString("gatheringDetails","")
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         // finish()
+    }
+    private var projection =
+        arrayOf(MediaStore.MediaColumns.DATA)
+    private fun getImageFilePath(uri: Uri) {
+        val cursor: Cursor =
+           contentResolver.query(uri, projection, null, null, null)!!
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val absolutePathOfImage =
+                    cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
+                absolutePathOfImage?.let { setSelectedImage(it, uri) } ?: setSelectedImage(uri.toString(), uri)
+            }
+        }
+    }
+
+    private fun setSelectedImage(filePath :String, uri: Uri)
+    {
+        val path = FileUtils().getRealPath(context!!, uri!!)
+
+        var file1: File? = null
+
+        if (path != null) {
+
+
+            val compressedPath =
+
+                ConstantMethods.getCompressImage(context!!, path)
+
+            if (compressedPath != null) {
+                file1 = File(compressedPath)
+            } else {
+                file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+            }
+
+        } else {
+            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+
+        }
+
+
+        mediaStatusArray!!.add(
+            MediaUploadingPojo(
+                file1!!.absolutePath,
+                "",
+                "image",
+                false
+            )
+        )
+
+        val json1 = Gson().toJson(mediaStatusArray!!)
+        EasySP.init(context).putString(
+            ConstantEasySP.UPLOADED_MEDIA,json1)
+
+        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+        mediaRecycler!!.adapter = mediaAdapter
     }
 }

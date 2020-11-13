@@ -1,39 +1,46 @@
 package com.we.beyond.ui.issues.submitIssue.fragments
 
 
+import android.content.ClipData
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
+import android.os.AsyncTask
+import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.we.beyond.adapter.MediaAdapter
-
-import com.we.beyond.R
-import com.we.beyond.util.ConstantFonts
-import com.we.beyond.util.ConstantMethods
-import java.io.File
-import android.graphics.Bitmap
-import android.content.pm.PackageManager
-import android.os.*
-import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.arthenica.mobileffmpeg.FFmpeg
 import com.google.gson.Gson
+import com.we.beyond.R
+import com.we.beyond.RealPathUtils
+import com.we.beyond.adapter.MediaAdapter
 import com.we.beyond.model.MediaUploadingPojo
 import com.we.beyond.model.NearByIssueByIdDetailsPojo
 import com.we.beyond.presenter.issues.submitIssue.SubmitIssueImpl
 import com.we.beyond.presenter.issues.submitIssue.SubmitIssuePresenter
-import com.white.easysp.EasySP
-import java.io.InputStream
-import com.arthenica.mobileffmpeg.FFmpeg
-import com.we.beyond.RealPathUtils
 import com.we.beyond.util.ConstantEasySP
+import com.we.beyond.util.ConstantFonts
+import com.we.beyond.util.ConstantMethods
 import com.we.beyond.util.FileUtils
-import kotlin.collections.ArrayList
+import com.white.easysp.EasySP
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
+import java.io.File
+import java.io.InputStream
 
 /** It is used to select media to submit an issue */
 class IssueMediaFragment : Fragment(),
@@ -42,7 +49,8 @@ class IssueMediaFragment : Fragment(),
     /** initialize implementors */
     var issuePresenter: SubmitIssueImpl? = null
 
-
+    private var projection =
+        arrayOf(MediaStore.MediaColumns.DATA)
     /** init text view */
     var mediaTitle: TextView? = null
     var or: TextView? = null
@@ -95,6 +103,7 @@ class IssueMediaFragment : Fragment(),
     var isVideoSelected: Boolean = false
 
     var mMediaUri: Uri? = null
+    var mclipData: ClipData?=null
     var compressedFile: File? = null
     var RequestPermissionCode = 1
 
@@ -138,7 +147,7 @@ class IssueMediaFragment : Fragment(),
         /** Get all stored data using intent and assign it respectively */
         val getIntentData = arguments!!.getString("issueData")
         issueData = Gson().fromJson(getIntentData, NearByIssueByIdDetailsPojo::class.java)
-
+        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
         if (issueData != null) {
 
 
@@ -153,7 +162,7 @@ class IssueMediaFragment : Fragment(),
                         )
                     )
 
-                    mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+//                    mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
                     mediaRecycler!!.adapter = mediaAdapter
                 }
             }
@@ -169,7 +178,7 @@ class IssueMediaFragment : Fragment(),
                         )
                     )
 
-                    mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+//                    mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
                     mediaRecycler!!.adapter = mediaAdapter
                 }
             }
@@ -297,10 +306,8 @@ class IssueMediaFragment : Fragment(),
         imageGallery!!.setOnClickListener {
 
             try {
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "image/*"
-                startActivityForResult(intent, GALLERY_IMAGE)
 
+                pickMedia(10-mediaAdapter!!.itemCount, MimeType.ofImage(), GALLERY_IMAGE)
                 galleryOptionLayout!!.visibility = View.GONE
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -315,44 +322,10 @@ class IssueMediaFragment : Fragment(),
             try {
                 galleryOptionLayout!!.visibility = View.GONE
 
-                if (!isVideoSelected) {
-                    /* if(mediaStatusArray!!.size == 0)
-                {*/
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.setType("video/*")
-                    startActivityForResult(intent, GALLERY_VIDEO)
-                } else {
-                    ConstantMethods.showWarning(
-                        context!!,
-                        "",
-                        "You can not upload more than 1 video."
-                    )
-                }
-                // }
-                /* else {
-                     for (i in 0 until mediaStatusArray!!.size) {
-                         if (mediaStatusArray!![i].mimeType.contains("video")) {
-                             if (mediaStatusArray!!.size > 1) {
-                                 ConstantMethods.showWarning(
-                                     context!!,
-                                     "",
-                                     "You can not upload more than 1 video."
-                                 )
-                             } else {
-
-                                 val intent = Intent(Intent.ACTION_GET_CONTENT)
-                                 intent.setType("video/*")
-                                 startActivityForResult(intent, GALLERY_VIDEO)
-
-
-                             }
-                         }
-                     }
-
-
-                 }*/
-                 }
-                 */
+                if(mediaAdapter!=null && !mediaAdapter!!.isVideoAvailable())
+                    pickMedia(1, MimeType.ofVideo(), GALLERY_VIDEO)
+                else
+                    Toast.makeText(activity, "You cannot upload more than one video", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -383,7 +356,25 @@ class IssueMediaFragment : Fragment(),
 
 
     }
-
+    private fun pickMedia(maxLimit:Int, mimeType : Set<MimeType>, requestCode: Int)
+    {
+        if(maxLimit>0) {
+            Matisse.from(this)
+                .choose(mimeType)
+                .countable(true)
+                .maxSelectable(maxLimit)
+                .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(GlideEngine())
+                .showPreview(false) // Default is `true`
+                .forResult(requestCode);
+        }
+        else
+        {
+            Toast.makeText(activity, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun goToNextScreen() {
 
@@ -425,6 +416,7 @@ class IssueMediaFragment : Fragment(),
 
         /** ids of recycler view */
         mediaRecycler = v.findViewById(R.id.recycler_media)
+        mediaRecycler!!.isNestedScrollingEnabled=false
         mediaRecycler!!.layoutManager = GridLayoutManager(context!!, 3)
 
         /** ids of relative layout*/
@@ -449,106 +441,43 @@ class IssueMediaFragment : Fragment(),
         var bitmap: Bitmap
 
 
-        if (requestCode == GALLERY_IMAGE) {
+        if (requestCode == GALLERY_IMAGE ) {
+            if(mediaAdapter!!.itemCount<10)
+            {
             if (data != null) {
-                mMediaUri = data.getData()
-                var imageStream: InputStream? = null
-                try {
-                    imageStream = context!!.getContentResolver().openInputStream(mMediaUri!!)
-
-                    /* var file1 = File(mMediaUri!!.getPath())
-                var bt: Bitmap
-                bt = BitmapFactory.decodeStream(imageStream)
-                bt = ConstantMethods.imageOrientationValidator(bt, file1.absolutePath)
-                file1 = ConstantMethods.compressImage(context!!, bt)*/
-
-                   // val path = RealPathUtils.getPath(context!!, mMediaUri!!)
-                    val path = FileUtils().getRealPath(context!!, mMediaUri!!)
-
-                    var file1: File? = null
-
-                    if (path != null) {
-
-
-                             val compressedPath =
-
-                                    ConstantMethods.getCompressImage(context!!, path)
-
-                        if (compressedPath != null) {
-                            file1 = File(compressedPath)
-                        } else {
-                            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
-                        }
-
-                    } else {
-                        file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
-
-                    }
-
-
-                    var length: Long? = file1!!.length()
-                    length = length!! / 1024
-
-                    //5mb in kb
-                    /* if (length > 5120) run {
-                         ConstantMethods.showError(
-                             context!!,
-                             "Large Image Size",
-                             "Maximum image allowed is 5 MB"
-                         )
-
-                     }
-                     else {*/
-
-                    mediaStatusArray!!.add(
-                        MediaUploadingPojo(
-                            file1.absolutePath,
-                            "",
-                            "image",
-                            false
-                        )
-                    )
-
-                    val json1 = Gson().toJson(mediaStatusArray!!)
-                    EasySP.init(context).putString(
-                        ConstantEasySP.UPLOADED_MEDIA,json1)
-
-                    mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
-                    mediaRecycler!!.adapter = mediaAdapter
-                    //}
-
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                val mSelected:List<Uri> = Matisse.obtainResult(data);
+                for (i in mSelected!!.indices) {
+                    val uri = mSelected[i]
+                    getImageFilePath(uri)
                 }
+
+            }
+            }
+            else
+            {
+                Toast.makeText(activity, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
             }
 
         } else if (requestCode == GALLERY_VIDEO) {
             if (data != null) {
                 try {
 
-                    val uri: Uri = Uri.parse(data!!.data.toString())
+                    val mSelected:List<Uri> = Matisse.obtainResult(data)
+                    val uri: Uri = mSelected[0]
 
                     if (uri != null) {
-                       // val path = RealPathUtils.getPath(context!!, uri)
                         val path = FileUtils().getRealPath(context!!, uri)
-
                         val mimeType = ""
                         if (path != null) {
                             file = File(path)
-//                    mimeType = ConstantsMethods.getMimeType(path)
                         } else {
                             file = RealPathUtils.getFile(context!!, uri)!!
-//                    mimeType = ConstantsMethods.getMimeType(file.getPath())
                         }
 
                         isVideoSelected = true
 
                         var length: Long? = file!!.length()
                         length = length!! / 1024
-
-                        //decodeFile(picturePath);
-                        //100mb in kb
                         if (length!! > 102400) {
                             ConstantMethods.showError(
                                 context!!,
@@ -590,22 +519,7 @@ class IssueMediaFragment : Fragment(),
             // if(data!=null) {
             if (mMediaUri != null) {
                 try {
-                    // var file = File(mMediaUri!!.getPath())
-
-
-                    /*  bitmap = BitmapFactory.decodeFile(mMediaUri!!.getPath())
-
-
-                bitmap =
-                   ConstantMethods.imageOrientationValidator(bitmap, mMediaUri!!.getPath())
-
-
-                file = ConstantMethods.compressImage(context!!, bitmap)*/
-
-                  //  val path = RealPathUtils.getPath(context!!, mMediaUri!!)
                     val path = FileUtils().getRealPath(context!!, mMediaUri!!)
-
-
                     var file1: File? = null
                     if (path != null) {
                         var compressedPath = ConstantMethods.getCompressImage(context!!, path)
@@ -621,50 +535,8 @@ class IssueMediaFragment : Fragment(),
 
                     }
 
-                    /* bitmap = BitmapFactory.decodeFile(file1!!.path)
-
-
-                     bitmap =
-                         ConstantMethods.imageOrientationValidator(bitmap, file1!!.path)
-
-
-                     file1 = ConstantMethods.compressImage(context!!, bitmap)
-*/
-
-
-                    /*   val sourceDirectory = File(
-                       Environment.getExternalStorageDirectory().toString() +"/"+ resources.getString(R.string.app_name) +"/"
-                   )
-
-                   if (!sourceDirectory.exists()) {
-                       sourceDirectory.mkdirs()
-                   }
-
-                   val targetFilePath =
-                       Environment.getExternalStorageDirectory().toString() +"/"+ resources.getString(R.string.app_name)+"/"*/
-
-
-                    //  val finalPath = ConstantMethods.copyFile(file.path, file.name, targetFilePath)
-                    /* val finalPath = ConstantMethods.copyFile(file.path, file.name, targetFilePath)
-
-                 println("file path intenal $finalPath")*/
-
                     var length: Long? = file1!!.length()
                     length = length!! / 1024
-
-                    //decodeFile(picturePath);
-                    //5mb in kb
-                    /* if (length > 5120) {
-                         ConstantMethods.showError(
-                             context!!,
-                             "Large Image Size",
-                             "Maximum image allowed is 5 MB"
-                         )
-
-
-                     } else {*/
-
-
                     mediaStatusArray!!.add(
                         MediaUploadingPojo(
                             file1!!.absolutePath,
@@ -682,17 +554,12 @@ class IssueMediaFragment : Fragment(),
 
                     EasySP.init(context!!).putString("image", fileUri)
 
-
-                    // mediaPresenter!!.onFileUpload(context!!, file.absolutePath!!)
-                    // }
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
 
             }
-            //}
         } else if (requestCode == VIDEO) {
             if (data != null) {
                 try {
@@ -710,107 +577,6 @@ class IssueMediaFragment : Fragment(),
                     val columnIndex = cursor.getColumnIndex(filePathColumn[0])
                     picturePath = cursor.getString(columnIndex)
                     cursor.close()
-                    // Log.e("picture path",picturePath);
-
-/*
-                val ffmpeg = FFmpeg.getInstance(context)
-                ffmpeg.loadBinary(object : LoadBinaryResponseHandler() {
-
-                })
-
-                val targetFile = Environment.getExternalStorageDirectory().toString() + "/"
-                val fileTarget = File(targetFile, "We.mp4")
-
-                val file = File(picturePath)
-
-
-                val command = arrayOf(
-                    "-y",
-                    "-i",
-                    file.path,
-                    "-s",
-                    "720x480",
-                    "-r",
-                    "30",
-                    "-c:v",
-                    "libx264",
-                    "-preset",
-                    "ultrafast",
-                    "-c:a",
-                    "copy",
-                    "-me_method",
-                    "zero",
-                    "-tune",
-                    "fastdecode",
-                    "-tune",
-                    "zerolatency",
-                    "-strict",
-                    "-2",
-                    "-pix_fmt",
-                    "yuv420p",
-                    fileTarget.toString()
-                )
-
-                "-y -i ${file.path} -s 720x480 -r 30 -c:v libx264 -preset ultrafast -c:a copy -me_method zero -tune fastdecode -tune zerolatency -strict -2
-                -pix_fmt yuv420p ${filetarget}"
-
-                ffmpeg!!.execute(command, object : ExecuteBinaryResponseHandler() {
-
-                    override fun onStart() {
-                        super.onStart()
-
-                        progressLayout!!.visibility = View.VISIBLE
-
-                    }
-
-                    override fun onFinish() {
-                        super.onFinish()
-
-                        isVideoSelected = true
-
-                        progressLayout!!.visibility = View.GONE
-
-                        var length: Long? = fileTarget.length()
-                        length = length!! / 1024
-
-                        //decodeFile(picturePath);
-                        //100mb in kb
-                        if (length!! > 102400) {
-                            ConstantMethods.showError(
-                                context!!,
-                                "Large Video Size",
-                                "Maximum video allowed is 100 MB"
-                            )
-
-                        } else {
-
-                            mediaStatusArray!!.add(
-                                MediaUploadingPojo(
-                                    fileTarget.absolutePath,
-                                    "",
-                                    "video",
-                                    false
-                                )
-                            )
-
-
-                            val videosSet = HashSet<String>()
-                            for (i in 0 until mediaArray!!.size) {
-                                videosSet.add(mediaArray!![i])
-                            }
-
-                            // mimeTypeArray!!.add("video")
-
-                            mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!)
-                            mediaRecycler!!.adapter = mediaAdapter
-
-                            EasySP.init(context!!).putString("video", fileUri)
-
-                        }
-                    }
-
-
-                })*/
 
                     val targetFile = Environment.getExternalStorageDirectory().toString() + "/"
                     val fileTarget = File(targetFile, "We${System.currentTimeMillis()}.mp4")
@@ -832,52 +598,6 @@ class IssueMediaFragment : Fragment(),
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-
-
-/*
-                if(r == 0) {
-                    isVideoSelected = true
-
-                    progressLayout!!.visibility = View.GONE
-
-                    var length: Long? = fileTarget.length()
-                    length = length!! / 1024
-
-                    //decodeFile(picturePath);
-                    //100mb in kb
-                    if (length!! > 102400) {
-                        ConstantMethods.showError(
-                            context!!,
-                            "Large Video Size",
-                            "Maximum video allowed is 100 MB"
-                        )
-
-                    } else {
-
-                        mediaStatusArray!!.add(
-                            MediaUploadingPojo(
-                                fileTarget.absolutePath,
-                                "",
-                                "video",
-                                false
-                            )
-                        )
-
-
-                        val videosSet = java.util.HashSet<String>()
-                        for (i in 0 until mediaArray!!.size) {
-                            videosSet.add(mediaArray!![i])
-                        }
-
-                        // mimeTypeArray!!.add("video")
-
-                        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!)
-                        mediaRecycler!!.adapter = mediaAdapter
-
-                        EasySP.init(context!!).putString("video", fileUri)
-
-                    }
-                }*/
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -963,6 +683,61 @@ class IssueMediaFragment : Fragment(),
         }
 
 
+    }
+
+
+    private fun getImageFilePath(uri: Uri) {
+        val cursor: Cursor =
+            activity!!.contentResolver.query(uri, projection, null, null, null)!!
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val absolutePathOfImage =
+                    cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
+                absolutePathOfImage?.let { setSelectedImage(it, uri) } ?: setSelectedImage(uri.toString(), uri)
+            }
+        }
+    }
+
+    private fun setSelectedImage(filePath :String, uri: Uri)
+    {
+        val path = FileUtils().getRealPath(context!!, uri!!)
+
+        var file1: File? = null
+
+        if (path != null) {
+
+
+            val compressedPath =
+
+                ConstantMethods.getCompressImage(context!!, path)
+
+            if (compressedPath != null) {
+                file1 = File(compressedPath)
+            } else {
+                file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+            }
+
+        } else {
+            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+
+        }
+
+
+        mediaStatusArray!!.add(
+            MediaUploadingPojo(
+                file1!!.absolutePath,
+                "",
+                "image",
+                false
+            )
+        )
+
+        val json1 = Gson().toJson(mediaStatusArray!!)
+        EasySP.init(context).putString(
+            ConstantEasySP.UPLOADED_MEDIA,json1)
+
+        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+        mediaRecycler!!.adapter = mediaAdapter
     }
 
     /** It is runtime permission result

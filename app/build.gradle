@@ -125,7 +125,7 @@ dependencies {
 
     // Add the Firebase SDK for Crashlytics.
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-
+    implementation 'com.zhihu.android:matisse:0.5.3-beta3'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
     //zoom image view

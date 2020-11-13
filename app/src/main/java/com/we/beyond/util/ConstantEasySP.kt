@@ -14,6 +14,8 @@ object ConstantEasySP {
     var SELECTED_GATHERING_ADDRESS = "gatheringAddress"
     var ISSUE_ID = "issueId"
     var ISSUE_NUMBER = "issueNumber"
+    var ISSUE_IMAGE_URL = "issueImageUrl"
+    var ISSUE_VIDEO_URL = "issueVideoUrl"
     var ISSUE_TITLE = "issueTitle"
     var GATHERING_ID = "gatheringId"
     var GATHERING_NUMBER = "gatheringNumber"

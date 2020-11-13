@@ -1174,7 +1174,7 @@ class ReportedResolutionDetailsActivity : AppCompatActivity(),
                 if (issueDetails.data.issue.imageUrls != null && issueDetails.data.issue.imageUrls.isNotEmpty()) {
                     Glide.with(this)
                         .load(issueDetails.data.issue.imageUrls[0])
-                        .placeholder(R.drawable.loading_image)
+//                        .placeholder(R.drawable.loading_image)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         //.memoryPolicy(MemoryPolicy.NO_CACHE)
                         //.networkPolicy(NetworkPolicy.NO_CACHE)

@@ -5,7 +5,9 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.AsyncTask
@@ -45,6 +47,9 @@ import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
 import com.we.beyond.util.FileUtils
 import com.white.easysp.EasySP
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
 import kotlinx.android.synthetic.main.activity_report_resolved.*
 import java.io.File
 import java.io.InputStream
@@ -58,7 +63,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
     /** init context */
     var context: Context = this
-
+    private var projection =
+        arrayOf(MediaStore.MediaColumns.DATA)
     /** init adapter */
     var mediaAdapter: MediaAdapter? = null
     var userTypeAdapter: ResolvedIssueUserAdapter? = null
@@ -670,10 +676,7 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
         imageGallery!!.setOnClickListener {
 
             try {
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "image/*"
-                startActivityForResult(intent, GALLERY_IMAGE)
-
+                pickMedia(10-mediaAdapter!!.itemCount, MimeType.ofImage(), GALLERY_IMAGE)
                 galleryOptionLayout!!.visibility = View.GONE
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -686,20 +689,11 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
         videoGalley!!.setOnClickListener {
 
             try {
-                if (!isVideoSelected) {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.setType("video/*")
-                    startActivityForResult(intent, GALLERY_VIDEO)
-
-
-                    galleryOptionLayout!!.visibility = View.GONE
-                } else {
-                    ConstantMethods.showWarning(
-                        context!!,
-                        "",
-                        "You can not upload more than 1 video."
-                    )
-                }
+                galleryOptionLayout!!.visibility = View.GONE
+                if(mediaAdapter!=null && !mediaAdapter!!.isVideoAvailable())
+                    pickMedia(1, MimeType.ofVideo(), GALLERY_VIDEO)
+                else
+                    Toast.makeText(this, "You cannot upload more than one video", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -1620,6 +1614,7 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
         /** ids of recycler view */
         mediaRecycler = findViewById(R.id.recycler_media)
+        mediaRecycler!!.isNestedScrollingEnabled=false
         mediaRecycler!!.layoutManager = GridLayoutManager(this, 3)
 
         userTypeRecycler = findViewById(R.id.recycler_resolved_by)
@@ -1652,64 +1647,28 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
 
         if (requestCode == GALLERY_IMAGE) {
-            mMediaUri = data!!.getData()
-            var imageStream: InputStream? = null
-            try {
-                imageStream = context.getContentResolver().openInputStream(mMediaUri!!)
-
-                /*var file1 = File(mMediaUri!!.getPath())
-                var bt: Bitmap
-                bt = BitmapFactory.decodeStream(imageStream)
-                bt = ConstantMethods.imageOrientationValidator(bt, file1.absolutePath)
-                file1 = ConstantMethods.compressImage(context, bt)*/
-
-                //val path = RealPathUtils.getPath(context!!,mMediaUri!!)
-                val path = FileUtils().getRealPath(context, mMediaUri!!)
-
-                var file1: File? = null
-                if (path != null) {
-                    var compressedPath = ConstantMethods.getCompressImage(context, path)
-                    if (compressedPath != null) {
-                        file1 = File(compressedPath)
-                    } else {
-                        file1 = RealPathUtils.getFile(context, mMediaUri!!)
+            if(mediaAdapter!!.itemCount<10)
+            {
+                if (data != null) {
+                    val mSelected:List<Uri> = Matisse.obtainResult(data)
+                    for (i in mSelected!!.indices) {
+                        val uri = mSelected[i]
+                        getImageFilePath(uri)
                     }
 
-                } else {
-                    file1 = RealPathUtils.getFile(context, mMediaUri!!)
-
                 }
-
-
-                var length: Long? = file1!!.length()
-                length = length!! / 1024
-
-                //5mb in kb
-                /* if (length > 5120) run {
-                     ConstantMethods.showError(context,"Large Image Size","Maximum image allowed is 5 MB")
-
-                 }
-                 else
-                 {*/
-
-                imageArrayList!!.add(mMediaUri!!.path!!)
-
-                mediaStatusArray!!.add(MediaUploadingPojo(file1.absolutePath, "", "image", false))
-
-                mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
-                mediaRecycler!!.adapter = mediaAdapter
-                // }
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }
+            else
+            {
+                Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
             }
 
 
         } else if (requestCode == GALLERY_VIDEO) {
             try {
 
-                val uri: Uri = Uri.parse(data!!.data.toString())
+                val mSelected:List<Uri> = Matisse.obtainResult(data)
+                val uri: Uri = mSelected[0]
 
                 if (uri != null) {
                     //val path = RealPathUtils.getPath(context, uri)
@@ -2186,7 +2145,79 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
         super.onBackPressed()
 
         finish()
+    }
+
+    private fun pickMedia(maxLimit:Int, mimeType : Set<MimeType>, requestCode: Int)
+    {
+        if(maxLimit>0) {
+            Matisse.from(this)
+                .choose(mimeType)
+                .countable(true)
+                .maxSelectable(maxLimit)
+                .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(GlideEngine())
+                .showPreview(false) // Default is `true`
+                .forResult(requestCode);
+        }
+        else
+        {
+            Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getImageFilePath(uri: Uri) {
+        val cursor: Cursor =
+            contentResolver.query(uri, projection, null, null, null)!!
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val absolutePathOfImage =
+                    cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
+                absolutePathOfImage?.let { setSelectedImage(it, uri) } ?: setSelectedImage(uri.toString(), uri)
+            }
+        }
+    }
+
+    private fun setSelectedImage(filePath :String, uri: Uri)
+    {
+        val path = FileUtils().getRealPath(context!!, uri!!)
+
+        var file1: File? = null
+
+        if (path != null) {
 
 
+            val compressedPath =
+
+                ConstantMethods.getCompressImage(context!!, path)
+
+            if (compressedPath != null) {
+                file1 = File(compressedPath)
+            } else {
+                file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+            }
+
+        } else {
+            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+
+        }
+
+
+        mediaStatusArray!!.add(
+            MediaUploadingPojo(
+                file1!!.absolutePath,
+                "",
+                "image",
+                false
+            )
+        )
+
+        val json1 = Gson().toJson(mediaStatusArray!!)
+        EasySP.init(context).putString(
+            ConstantEasySP.UPLOADED_MEDIA,json1)
+
+        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+        mediaRecycler!!.adapter = mediaAdapter
     }
 }

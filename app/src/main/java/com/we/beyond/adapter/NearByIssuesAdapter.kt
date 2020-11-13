@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.we.beyond.Interface.OnDeleteListener
 import com.we.beyond.Interface.OnLikeDislikeListener
@@ -216,7 +217,7 @@ class NearByIssuesAdapter(
                 Glide.with(context)
                     .load(nearByIssueDetails!![position].imageUrls[0])
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.loading_image)
+//                    .placeholder(R.drawable.loading_image)
                     //.memoryPolicy(MemoryPolicy.NO_CACHE)
                     //.networkPolicy(NetworkPolicy.NO_CACHE)
                     //.resize(400, 400)  // optional
@@ -481,6 +482,16 @@ class NearByIssuesAdapter(
 
                     EasySP.init(context)
                         .putString(ConstantEasySP.ISSUE_ID, nearByIssueDetails!![position]._id)
+                    val imageUrlJson = Gson().toJson(
+                        nearByIssueDetails!![position].imageUrls!!
+                    )
+                    val videoUrlJson = Gson().toJson(
+                        nearByIssueDetails!![position].videoUrlThumbnails!!
+                    )
+                    EasySP.init(context)
+                        .putString(ConstantEasySP.ISSUE_IMAGE_URL, imageUrlJson)
+                    EasySP.init(context)
+                        .putString(ConstantEasySP.ISSUE_VIDEO_URL, videoUrlJson)
                     EasySP.init(context)
                         .putInt(
                             ConstantEasySP.ISSUE_NUMBER,

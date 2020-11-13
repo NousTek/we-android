@@ -65,7 +65,7 @@ class CampaignAdapter(
         } else {
             Picasso.with(context)
                 .load(campaignDetails!![position].imageUrls[0])
-                .placeholder(R.drawable.loading_image)
+//                .placeholder(R.drawable.loading_image)
                 //.memoryPolicy(MemoryPolicy.NO_CACHE)
                 //.networkPolicy(NetworkPolicy.NO_CACHE)
                 //.resize(400, 400)  // optional

@@ -158,7 +158,7 @@ class ConnectAdapter(
             if (connectDetails!![position].imageUrls != null && connectDetails!![position].imageUrls.isNotEmpty()) {
                 Glide.with(context)
                     .load(connectDetails!![position].imageUrls[0])
-                    .placeholder(R.drawable.loading_image)
+//                    .placeholder(R.drawable.loading_image)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     //.memoryPolicy(MemoryPolicy.NO_CACHE)
                     //.networkPolicy(NetworkPolicy.NO_CACHE)

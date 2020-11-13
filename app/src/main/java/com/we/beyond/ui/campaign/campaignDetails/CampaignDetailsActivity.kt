@@ -971,7 +971,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
                     Glide.with(this)
                         .load(campaignDetails.data.imageUrls[0])
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.loading_image)
+//                        .placeholder(R.drawable.loading_image)
                         //.memoryPolicy(MemoryPolicy.NO_CACHE)
                         //.networkPolicy(NetworkPolicy.NO_CACHE)
                         //.resize(400, 400)  // optional

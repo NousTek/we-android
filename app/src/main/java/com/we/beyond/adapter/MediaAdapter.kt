@@ -73,6 +73,11 @@ class MediaAdapter(
 
     override fun getItemCount(): Int {
         return mediaList!!.size
+        /*if (mediaList != null) {
+            return mediaList!!.size.coerceAtMost(10)
+        } else {
+            return 10
+        }*/
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -572,6 +577,17 @@ class MediaAdapter(
 
     }
 
+    fun isVideoAvailable():Boolean
+    {
+        var isVideoAvailable:Boolean=false
+        if(mediaList!=null) {
+            for (item in mediaList!!) {
+                if (item.mimeType.contains("video"))
+                    isVideoAvailable = true
+            }
+        }
+        return isVideoAvailable
+    }
 
 
     @Throws(Throwable::class)

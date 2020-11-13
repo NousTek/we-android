@@ -2,7 +2,9 @@ package com.we.beyond.ui.connect.publishConnect
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.AsyncTask
@@ -38,6 +40,9 @@ import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
 import com.we.beyond.util.FileUtils
 import com.white.easysp.EasySP
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
 import java.io.File
 
 /**
@@ -50,7 +55,8 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
     var publishConnectPresenter: PublishConnectImpl? = null
     var mediaPresenter: MediaImpl? = null
     var context: Context = this
-
+    private var projection =
+        arrayOf(MediaStore.MediaColumns.DATA)
     /** init image view */
     var back: ImageView? = null
     var closeGallery: ImageView? = null
@@ -183,7 +189,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
         }
 
         println("campaign data $isEdit")
-
+        mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
         if (connectDetailsData != null) {
 
             connectCategoryId = connectDetailsData!!.data.connectCategory._id
@@ -198,7 +204,6 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
             connectCategory!!.setText(connectDetailsData!!.data.connectCategory.name)
 
-
             if (connectDetailsData!!.data.imageUrls != null && connectDetailsData!!.data.imageUrls.isNotEmpty()) {
                 for (i in 0 until connectDetailsData!!.data.imageUrls.size) {
                     mediaStatusArray!!.add(
@@ -210,7 +215,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                         )
                     )
 
-                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
+//                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
                     mediaRecycler!!.adapter = mediaAdapter
                 }
             }
@@ -227,7 +232,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                         )
                     )
 
-                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
+//                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
                     mediaRecycler!!.adapter = mediaAdapter
                 }
             }
@@ -343,10 +348,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
         imageGallery!!.setOnClickListener {
 
             try {
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "image/*"
-                startActivityForResult(intent, GALLERY_IMAGE)
-
+                pickMedia(10-mediaAdapter!!.itemCount, MimeType.ofImage(), GALLERY_IMAGE)
                 galleryOptionLayout!!.visibility = View.GONE
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -359,21 +361,11 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
         videoGalley!!.setOnClickListener {
 
             try {
-                if (!isVideoSelected) {
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.setType("video/*")
-                    startActivityForResult(intent, GALLERY_VIDEO)
-
-
-                    galleryOptionLayout!!.visibility = View.GONE
-
-                } else {
-                    ConstantMethods.showWarning(
-                        context,
-                        "",
-                        "You cannot upload more than 1 video."
-                    )
-                }
+                galleryOptionLayout!!.visibility = View.GONE
+                if(mediaAdapter!=null && !mediaAdapter!!.isVideoAvailable())
+                    pickMedia(1, MimeType.ofVideo(), GALLERY_VIDEO)
+                else
+                    Toast.makeText(this, "You cannot upload more than one video", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -430,6 +422,26 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
             }
         })
+    }
+
+    private fun pickMedia(maxLimit:Int, mimeType : Set<MimeType>, requestCode: Int)
+    {
+        if(maxLimit>0) {
+            Matisse.from(this)
+                .choose(mimeType)
+                .countable(true)
+                .maxSelectable(maxLimit)
+                .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(GlideEngine())
+                .showPreview(false) // Default is `true`
+                .forResult(requestCode);
+        }
+        else
+        {
+            Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /** It get all required fields from the class to update an article, converts to json object
@@ -631,29 +643,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                 }
             }
 
-
-            /*  if (category.isNotEmpty() && connectTitle!!.text.isNotEmpty() && connectDetails!!.text.isNotEmpty() && connectCategoryId.isNotEmpty() && imageArray.isEmpty() && mediaPojo.size == 0) {
-                  if (ConstantMethods.checkForInternetConnection(this@PublishConnectActivity)) {
-                      val jsonObject = JsonObject()
-                      jsonObject.addProperty("title", connectTitle!!.text.toString().trim())
-                      jsonObject.addProperty("description", connectDetails!!.text.toString().trim())
-                      jsonObject.addProperty("connectCategoryId", connectCategoryId)
-
-                      try {
-                          if (ConstantMethods.checkForInternetConnection(context)) {
-                              postDataToServer(jsonObject)
-                          }
-                      }
-                      catch ( e : Exception)
-                      {
-                          e.printStackTrace()
-                      }
-
-                      println("post data $jsonObject")
-
-
-                  }
-              } else*/ if (category.isNotEmpty() && connectTitle!!.text.isNotEmpty() && connectDetails!!.text.isNotEmpty() && connectCategoryId.isNotEmpty() && imageArray.isNotEmpty() && videoArray.isNotEmpty()) {
+         if (category.isNotEmpty() && connectTitle!!.text.isNotEmpty() && connectDetails!!.text.isNotEmpty() && connectCategoryId.isNotEmpty() && imageArray.isNotEmpty() && videoArray.isNotEmpty()) {
 
                 if (ConstantMethods.checkForInternetConnection(this@PublishConnectActivity)) {
                     val jsonObject = JsonObject()
@@ -816,64 +806,26 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
 
         if (requestCode == GALLERY_IMAGE) {
-            if (data != null) {
-                try {
-
-
-                    mMediaUri = data.getData()
-
-                    //val path = RealPathUtils.getPath(context!!, mMediaUri!!)
-                    val path = FileUtils().getRealPath(context, mMediaUri!!)
-
-                    var file1: File? = null
-                    if (path != null) {
-                        var compressedPath = ConstantMethods.getCompressImage(context, path)
-                        if (compressedPath != null) {
-                            file1 = File(compressedPath)
-                        } else {
-                            file1 = RealPathUtils.getFile(context, mMediaUri!!)
-                        }
-
-                    } else {
-                        file1 = RealPathUtils.getFile(context, mMediaUri!!)
-
+            if(mediaAdapter!!.itemCount<10)
+            {
+                if (data != null) {
+                    val mSelected:List<Uri> = Matisse.obtainResult(data)
+                    for (i in mSelected!!.indices) {
+                        val uri = mSelected[i]
+                        getImageFilePath(uri)
                     }
 
-
-                    var length: Long? = file1!!.length()
-                    length = length!! / 1024
-
-
-
-                    mediaStatusArray!!.add(
-                        MediaUploadingPojo(
-                            file1.absolutePath,
-                            "",
-                            "image",
-                            false
-                        )
-                    )
-
-                    val json1 = Gson().toJson(mediaStatusArray!!)
-                    EasySP.init(this).put(ConstantEasySP.UPLOADED_MEDIA, json1)
-
-                    mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
-                    mediaRecycler!!.adapter = mediaAdapter
-                    // }
-
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
-
-
             }
-
+            else
+            {
+                Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
+            }
         } else if (requestCode == GALLERY_VIDEO) {
             if (data != null) {
                 try {
-
-                    val uri: Uri = Uri.parse(data!!.data.toString())
+                    val mSelected:List<Uri> = Matisse.obtainResult(data)
+                    val uri: Uri = mSelected[0]
 
                     if (uri != null) {
                         //val path = RealPathUtils.getPath(context!!, uri)
@@ -1179,6 +1131,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         /** ids of recycler view */
         mediaRecycler = findViewById(R.id.recycler_media)
+        mediaRecycler!!.isNestedScrollingEnabled=false
         mediaRecycler!!.layoutManager = GridLayoutManager(this, 3)
 
         /** ids of text input layout */
@@ -1284,5 +1237,59 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
 
+    }
+
+    private fun getImageFilePath(uri: Uri) {
+        val cursor: Cursor =
+            contentResolver.query(uri, projection, null, null, null)!!
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val absolutePathOfImage =
+                    cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
+                absolutePathOfImage?.let { setSelectedImage(it, uri) } ?: setSelectedImage(uri.toString(), uri)
+            }
+        }
+    }
+
+    private fun setSelectedImage(filePath :String, uri: Uri)
+    {
+        val path = FileUtils().getRealPath(context!!, uri!!)
+
+        var file1: File? = null
+
+        if (path != null) {
+
+
+            val compressedPath =
+
+                ConstantMethods.getCompressImage(context!!, path)
+
+            if (compressedPath != null) {
+                file1 = File(compressedPath)
+            } else {
+                file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+            }
+
+        } else {
+            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+
+        }
+
+
+        mediaStatusArray!!.add(
+            MediaUploadingPojo(
+                file1!!.absolutePath,
+                "",
+                "image",
+                false
+            )
+        )
+
+        val json1 = Gson().toJson(mediaStatusArray!!)
+        EasySP.init(context).putString(
+            ConstantEasySP.UPLOADED_MEDIA,json1)
+
+        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+        mediaRecycler!!.adapter = mediaAdapter
     }
 }

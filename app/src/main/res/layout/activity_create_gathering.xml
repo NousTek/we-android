@@ -189,6 +189,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:gravity="start"
                     android:text="Upload image"
+                    android:visibility="gone"
                     android:textColor="@color/submit_issue_title_color"
                     android:textSize="@dimen/_14sdp" />
 
@@ -196,6 +197,7 @@
                     android:id="@+id/mediaSelectionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/media_border"
                     android:layout_below="@+id/txt_media_title"
                     android:layout_margin="@dimen/_30sdp"
@@ -250,6 +252,7 @@
                     android:id="@+id/recycler_media"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="invisible"
                     android:layout_marginTop="@dimen/_10sdp" />
 
 
