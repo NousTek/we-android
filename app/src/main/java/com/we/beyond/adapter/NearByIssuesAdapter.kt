@@ -486,7 +486,7 @@ class NearByIssuesAdapter(
                         nearByIssueDetails!![position].imageUrls!!
                     )
                     val videoUrlJson = Gson().toJson(
-                        nearByIssueDetails!![position].videoUrlThumbnails!!
+                        nearByIssueDetails!![position].videoUrls!!
                     )
                     EasySP.init(context)
                         .putString(ConstantEasySP.ISSUE_IMAGE_URL, imageUrlJson)

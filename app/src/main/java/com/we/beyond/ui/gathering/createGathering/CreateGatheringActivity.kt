@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.StrictMode
 import android.provider.MediaStore
+import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +27,7 @@ import com.google.gson.reflect.TypeToken
 import com.we.beyond.adapter.MediaAdapter
 import com.we.beyond.R
 import com.we.beyond.RealPathUtils
+import com.we.beyond.adapter.IssueMediaAdapter
 import com.we.beyond.model.GatheringDetails
 import com.we.beyond.model.LatLongSelectedPojo
 import com.we.beyond.model.MediaUploadingPojo
@@ -172,7 +174,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         initWithListener()
 
         /** get Shared data */
-        getSharedData()
+//        getSharedData()
 
         /* if (ConstantMethods.checkPermission(context)) {
              val mydir =
@@ -249,7 +251,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
         }
         else{
-            getSharedData()
+//            getSharedData()
         }
 
 
@@ -268,8 +270,27 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         connectDetailsText = EasySP.init(this).getString("gatheringDetails")
         getSelectedDate = EasySP.init(this).getString(ConstantEasySP.GATHERING_DATE)
         issueId = EasySP.init(this).getString(ConstantEasySP.ISSUE_ID)
+        val imageUrls = EasySP.init(this).getString(ConstantEasySP.ISSUE_IMAGE_URL)
+        val videoUrls = EasySP.init(this).getString(ConstantEasySP.ISSUE_VIDEO_URL)
+        var imageArray = ArrayList<String>()
+        var videoArray = ArrayList<String>()
+        val type = object : TypeToken<ArrayList<String>>() {
 
+        }.type
 
+        try {
+            imageArray = Gson().fromJson<ArrayList<String>>(imageUrls, type)
+            videoArray = Gson().fromJson<ArrayList<String>>(videoUrls, type)
+            val mediaList: List<String> = imageArray + videoArray
+            if(mediaList!=null && mediaList!!.isNotEmpty())
+            {
+                val mediaAdapter : IssueMediaAdapter = IssueMediaAdapter(context!!, mediaList, false)
+                mediaRecycler!!.adapter = mediaAdapter
+                mediaRecycler!!.visibility= View.VISIBLE
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         if (issueTitle != null && issueTitle!!.isNotEmpty()) {
             linkIssueTitle = findViewById(R.id.et_link_issue_title)
             linkIssueTitle!!.setText(issueTitle)
