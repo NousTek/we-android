@@ -127,7 +127,14 @@ class GatheringAdapter(
             /** It set data to views */
             holder.gatheringTitle.text = gatheringList!![position].title
             holder.gatheringTitle.typeface = ConstantFonts.raleway_medium
-
+            if(gatheringList!![position].goingList!=null && gatheringList!![position].goingList.isNotEmpty())
+            {
+                holder.gatheringGoingTV.text=gatheringList!![position].goingList.size.toString()+ " people going to the gathering"
+            }
+            else
+            {
+                holder.gatheringGoingTV.visibility=View.GONE
+            }
             /** It opens LocationActivity and stores location coordinates */
             holder.locationLayout.setOnClickListener {
                 val intent = Intent(context, LocationActivity::class.java)
@@ -732,6 +739,7 @@ class GatheringAdapter(
         var gatheringLocation = itemView.txt_gathering_location!!
         var gatheringDate = itemView.txt_gathering_date!!
         var gatheringDescription = itemView.txt_gathering_description!!
+        var gatheringGoingTV=itemView.txt_gathering_count!!
         var subscribe = itemView.txt_subscribe_title!!
         var reportAbuse = itemView.txt_report_abuse!!
         var goingTitle = itemView.txt_resolve_title!!

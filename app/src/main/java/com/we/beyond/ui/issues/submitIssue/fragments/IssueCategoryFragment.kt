@@ -19,6 +19,7 @@ import com.we.beyond.model.CategoriesPojo
 import com.we.beyond.model.NearByIssueByIdDetailsPojo
 import com.we.beyond.presenter.dashboard.CategoriesImpl
 import com.we.beyond.presenter.dashboard.CategoryPresenter
+import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
 import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
 
@@ -61,7 +62,8 @@ class IssueCategoryFragment : Fragment() , CategoryPresenter.ICategoriesView {
         categoryImage = ArrayList()
         categoryId = ArrayList()
         categorySelected = ArrayList()
-
+        val submitActivity= activity as SubmitAnIssueActivity
+        submitActivity.shouldEnableNextBtn(false)
         categoriesPresenter = CategoriesImpl(this)
 
         /** initialize ids of elements */
@@ -160,7 +162,7 @@ class IssueCategoryFragment : Fragment() , CategoryPresenter.ICategoriesView {
                 shimmer_view_container!!.stopShimmerAnimation()
                 shimmer_view_container!!.visibility = View.GONE
 
-                categoriesAdapter = IssueCategoriesAdapter(context!!, categoryName!!, categories.data,categoryId!!)
+                categoriesAdapter = IssueCategoriesAdapter(activity!!, categoryName!!, categories.data,categoryId!!)
                 categoriesRecycler!!.adapter = categoriesAdapter
 
             }

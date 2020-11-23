@@ -50,9 +50,9 @@
 
     <ImageView
         android:id="@+id/img_pin"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:src="@drawable/set_location"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_icn_location_picker"
         android:layout_centerInParent="true"
         android:outlineSpotShadowColor="#33000000"
         />

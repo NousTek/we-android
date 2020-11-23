@@ -10,6 +10,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.we.beyond.R
 import com.we.beyond.model.Categories
+import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
 import com.we.beyond.util.ConstantFonts
 import com.white.easysp.EasySP
 import kotlinx.android.synthetic.main.categories_item.view.*
@@ -111,7 +112,11 @@ class IssueCategoriesAdapter(
 
         /** Select and un select the category item depends on condition */
         holder.cardview.setOnClickListener {
-
+            if(context is SubmitAnIssueActivity) {
+                val submitActivity = context as SubmitAnIssueActivity
+                submitActivity.shouldEnableNextBtn(true)
+                submitActivity.shouldDisableDescriptionIcon(true)
+            }
             setSelected(position)
 
             val selectedCategory = categoryId!![position]

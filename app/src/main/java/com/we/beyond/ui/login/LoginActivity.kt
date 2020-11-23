@@ -102,6 +102,7 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         loginPresenter = LoginImpl(this)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestProfile()
             .build()
 
@@ -248,19 +249,6 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         loginButton.setOnClickListener {
             loginButton.setReadPermissions(listOf(EMAIL))
             callbackManager = CallbackManager.Factory.create()
-
-            /*loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
-                override fun onSuccess(loginResult: LoginResult?) {
-                    Log.d("MainActivity", "Facebook token: " + loginResult!!.accessToken.token)
-                }
-
-                override fun onCancel() { // App code
-                }
-
-                override fun onError(exception: FacebookException) { // App code
-                }
-            })*/
-            callbackManager = CallbackManager.Factory.create()
             LoginManager.getInstance().registerCallback(callbackManager,
                 object : FacebookCallback<LoginResult?> {
                     override fun onSuccess(loginResult: LoginResult?) {
@@ -386,6 +374,29 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
 
     }
 
+    private fun postFbDataToServer(jsonObject: JsonObject) {
+        try {
+            if (ConstantMethods.checkForInternetConnection(this)) {
+                ConstantMethods.showProgessDialog(this, "Please Wait...")
+                loginPresenter!!.onFbLogin(this@LoginActivity, jsonObject)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun postGoogleDataToServer(jsonObject: JsonObject) {
+        try {
+            if (ConstantMethods.checkForInternetConnection(this)) {
+                ConstantMethods.showProgessDialog(this, "Please Wait...")
+                loginPresenter!!.onGoogleLogin(this@LoginActivity, jsonObject)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
 
     /**
      * after success of login api,
@@ -401,6 +412,17 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
 
     override fun goToCategoriesScreen() {
         intent = Intent(this, CategoriesActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        finish()
+    }
+
+    override fun registerExternalUser(email :String, firstName:String, lastName:String) {
+        intent = Intent(this, RegistrationActivity::class.java)
+        intent.putExtra(Constants.EXTERNAL_USER_FIRST_NAME, firstName)
+        intent.putExtra(Constants.EXTERNAL_USER_LAST_NAME, lastName)
+        intent.putExtra(Constants.EXTERNAL_USER_EMAIL, email)
+        intent.putExtra(Constants.IS_EXTERNAL_USER, true)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         finish()
@@ -507,14 +529,13 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
 
             val googleEmail = account?.email ?: ""
             Log.i("Google Email", googleEmail)
-
             val googleProfilePicURL = account?.photoUrl.toString()
             Log.i("Google Profile Pic URL", googleProfilePicURL)
 
             val googleIdToken = account?.idToken ?: ""
             Log.i("Google ID Token", googleIdToken)
 
-            showLoggedInUser("$googleFirstName $googleLastName")
+            getGoogleAccountDataToPost(googleIdToken)
 
         } catch (e: ApiException) {
             // Sign in was unsuccessful
@@ -531,12 +552,12 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
             // Application code
             try {
                 Log.i("Response", response.toString())
-                var id = ""
+                var id = response.jsonObject.getString("id")
                 val token = AccessToken.getCurrentAccessToken()
                 val email = response.jsonObject.getString("email")
                 val firstName = response.jsonObject.getString("first_name")
                 val lastName = response.jsonObject.getString("last_name")
-                showLoggedInUser("$firstName $lastName")
+//                showLoggedInUser("$firstName $lastName")
                 val profile = Profile.getCurrentProfile()
                 if (profile != null) {
                     id = profile.id
@@ -553,6 +574,7 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
                         )
                     )
                 }
+                getFbAccountDataToPost(token!!.token, id)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
@@ -574,5 +596,49 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
             sweetAlertDialog.dismissWithAnimation()
         }
         goToCategoriesScreen()
+    }
+
+
+    private fun getFbAccountDataToPost(fbToken: String, fbId: String) {
+        try {
+            var refreshedToken = EasySP.init(this).getString("token")
+
+            if (refreshedToken!!.length == 1) {
+                refreshedToken = FirebaseInstanceId.getInstance().token
+            }
+
+            if (ConstantMethods.checkForInternetConnection(this@LoginActivity)) {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty("token", fbToken)
+                jsonObject.addProperty("userId", fbId)
+                jsonObject.addProperty("deviceToken", refreshedToken)
+                jsonObject.addProperty("deviceType", "android")
+                postFbDataToServer(jsonObject)
+
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
+    private fun getGoogleAccountDataToPost(fbToken: String) {
+        try {
+            var refreshedToken = EasySP.init(this).getString("token")
+
+            if (refreshedToken!!.length == 1) {
+                refreshedToken = FirebaseInstanceId.getInstance().token
+            }
+
+            if (ConstantMethods.checkForInternetConnection(this@LoginActivity)) {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty("token", fbToken)
+                jsonObject.addProperty("deviceToken", refreshedToken)
+                jsonObject.addProperty("deviceType", "android")
+                postGoogleDataToServer(jsonObject)
+
+            }
+        } catch (e: Exception) {
+
+        }
     }
 }

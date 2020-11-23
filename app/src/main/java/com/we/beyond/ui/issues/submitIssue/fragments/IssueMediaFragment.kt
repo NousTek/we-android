@@ -31,6 +31,7 @@ import com.we.beyond.model.MediaUploadingPojo
 import com.we.beyond.model.NearByIssueByIdDetailsPojo
 import com.we.beyond.presenter.issues.submitIssue.SubmitIssueImpl
 import com.we.beyond.presenter.issues.submitIssue.SubmitIssuePresenter
+import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
 import com.we.beyond.util.ConstantEasySP
 import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
@@ -439,12 +440,14 @@ class IssueMediaFragment : Fragment(),
         super.onActivityResult(requestCode, resultCode, data)
 
         var bitmap: Bitmap
-
+        val submitActivity= activity as SubmitAnIssueActivity
 
         if (requestCode == GALLERY_IMAGE ) {
             if(mediaAdapter!!.itemCount<10)
             {
             if (data != null) {
+                    submitActivity!!.shouldEnableNextBtn(true)
+                submitActivity!!.shouldDisableCategoryIcon(true)
                 val mSelected:List<Uri> = Matisse.obtainResult(data);
                 for (i in mSelected!!.indices) {
                     val uri = mSelected[i]
@@ -461,7 +464,8 @@ class IssueMediaFragment : Fragment(),
         } else if (requestCode == GALLERY_VIDEO) {
             if (data != null) {
                 try {
-
+                    submitActivity!!.shouldEnableNextBtn(true)
+                    submitActivity!!.shouldDisableCategoryIcon(true)
                     val mSelected:List<Uri> = Matisse.obtainResult(data)
                     val uri: Uri = mSelected[0]
 

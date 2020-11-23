@@ -127,7 +127,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
     implementation 'com.zhihu.android:matisse:0.5.3-beta3'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
-
+    implementation 'androidx.core:core-ktx:1.0.0'
     //zoom image view
     implementation 'com.bogdwellers:pinchtozoom:0.1'
     implementation platform('com.google.firebase:firebase-bom:26.0.0')

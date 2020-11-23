@@ -56,7 +56,7 @@
     <string name="dashboard_issue_posted_title">Issues Posted</string>
     <string name="dashboard_issue_resolved_title">Issues Resolved</string>
     <string name="dashboard_gatherings_nearby_title">Gatherings Nearby</string>
-    <string name="dashboard_new_info_published_title">Connect Published</string>
+    <string name="dashboard_new_info_published_title">Article Published</string>
     <string name="dashboard_card_radius">NEARBY IN Past 30 DAYS</string>
     <string name="dashboard_gatherings_up_coming">UPCOMING IN 30 DAYS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -89,14 +89,14 @@
     <string name="add_location_title">Select Location</string>
 
     //publish connect activity
-    <string name="publish_connect_title">Publish Connect</string>
+    <string name="publish_connect_title">Publish Article</string>
     <string name="publish_connection_category">Category</string>
-    <string name="connect_description_title">Connect Title</string>
-    <string name="connect_description_details">Connect Details</string>
+    <string name="connect_description_title">Article Title</string>
+    <string name="connect_description_details">Article Details</string>
 
     //connect issue list activity
     <string name="connect_title">Connect</string>
-    <string name="publish_connect_button">Publish Connect</string>
+    <string name="publish_connect_button">Publish Article</string>
 
     //create gathering activity
     <string name="create_gathering_title">Create a Gathering</string>
@@ -124,7 +124,7 @@
     <string name="my_resolution_title">My Resolution</string>
     <string name="my_gathering_title">My Gatherings</string>
     <string name="my_campaign_title">My Campaign</string>
-    <string name="my_connect_title">My Connect</string>
+    <string name="my_connect_title">My Article</string>
     <string name="my_activities_title">My Activities</string>
 
     //reported resolved activity
@@ -156,5 +156,5 @@
 
     <string name="facebook_app_id">811547289669854</string>
     <string name="fb_login_protocol_scheme">fb811547289669854</string>
-
+    <string name="server_client_id">427490854376-maqmnhntq5ughmmi5te5jj33vv388q2j.apps.googleusercontent.com</string>
 </resources>

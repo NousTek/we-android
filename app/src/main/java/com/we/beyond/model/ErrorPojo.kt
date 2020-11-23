@@ -4,5 +4,6 @@ data class ErrorPojo
     (
     var statusCode : Int,
     var error : String,
-    var message : String
+    var message : String,
+    var data : ExternalUserInfo
 )

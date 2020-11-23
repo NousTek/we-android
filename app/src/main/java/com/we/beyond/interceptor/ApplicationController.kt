@@ -6,6 +6,7 @@ import androidx.multidex.MultiDexApplication
 import com.facebook.FacebookSdk
 import com.we.beyond.util.Constants
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
@@ -27,7 +28,8 @@ class ApplicationController : MultiDexApplication() {
 
         object Dev {
             //val BASE_URL = "http://WeTest-env.m8vkwfpfid.ap-south-1.elasticbeanstalk.com/"
-           val BASE_URL = "https://www.weapp.mobi/"
+//           val BASE_URL = "https://www.weapp.mobi/"
+            val BASE_URL = "https://dev-api.weapp.mobi/"
            // val BASE_URL = "http://weapplive-env-prod.xfaj3epmdm.ap-south-1.elasticbeanstalk.com/"
             val NAME = "dev"
         }
@@ -59,9 +61,12 @@ class ApplicationController : MultiDexApplication() {
         super.onCreate()
         context = applicationContext
         FacebookSdk.sdkInitialize(applicationContext)
+        val logging = HttpLoggingInterceptor()
+        logging.level = HttpLoggingInterceptor.Level.BODY
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1)
         val okkHttpBuilder: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor(MyInterceptor(context))
+            .addInterceptor(logging)
             .connectTimeout(600, TimeUnit.SECONDS)
             .readTimeout(600, TimeUnit.SECONDS)
             .build()

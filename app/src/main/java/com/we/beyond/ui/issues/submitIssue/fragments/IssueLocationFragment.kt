@@ -32,6 +32,7 @@ import com.we.beyond.interceptor.ApplicationController
 import com.we.beyond.model.LatLongPojo
 import com.we.beyond.model.LatLongSelectedPojo
 import com.we.beyond.model.NearByIssueByIdDetailsPojo
+import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
 import com.we.beyond.util.ConstantEasySP
 import com.we.beyond.util.Constants
 import com.white.easysp.EasySP
@@ -75,7 +76,8 @@ class IssueLocationFragment : Fragment() ,OnMapReadyCallback{
         /** array initialization */
         latlongArray = ArrayList()
         latlongArray!!.clear()
-
+        val submitActivity= activity as SubmitAnIssueActivity
+        submitActivity!!.shouldEnableNextBtn(false)
         /** ui initialization */
         recenterLocation = v.findViewById(R.id.img_recenter)
 
@@ -341,7 +343,11 @@ class IssueLocationFragment : Fragment() ,OnMapReadyCallback{
             var geocoder: Geocoder = Geocoder(context, Locale.getDefault())
             var addresses: ArrayList<Address> =
                 geocoder.getFromLocation(latitude, longitude, 1) as ArrayList<Address>
-
+            if(addresses!=null && addresses!!.isNotEmpty())
+            {
+                val submitActivity= activity as SubmitAnIssueActivity
+                submitActivity!!.shouldEnableNextBtn(true)
+            }
             address = addresses.get(0).getAddressLine(0)
             var title: String = addresses.get(0).featureName
 

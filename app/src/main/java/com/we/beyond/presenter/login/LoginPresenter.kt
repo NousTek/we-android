@@ -12,7 +12,7 @@ interface LoginPresenter
 
         fun goToNextScreen()
         fun goToCategoriesScreen()
-
+        fun registerExternalUser(email :String, firstName:String, lastName:String)
     }
 
     /** this interface is working for calling login and forgot password api respectively */
@@ -21,6 +21,7 @@ interface LoginPresenter
 
         fun onLogin(context: Context, jsonObject: JsonObject)
         fun onForgotPassword(context: Context, jsonObject: JsonObject)
-
+        fun onFbLogin(context: Context, jsonObject: JsonObject)
+        fun onGoogleLogin(context: Context, jsonObject: JsonObject)
     }
 }

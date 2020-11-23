@@ -23,5 +23,8 @@ object Constants
     var USER_ID = "userId"
     var CONSTANT_URI ="constantUri"
     var CROPPED_URI ="cropUri"
-
+    var EXTERNAL_USER_FIRST_NAME="externalUserFirstName"
+    var EXTERNAL_USER_LAST_NAME="externalUserLastName"
+    var EXTERNAL_USER_EMAIL="externalUserName"
+    var IS_EXTERNAL_USER="isExternalUser"
 }

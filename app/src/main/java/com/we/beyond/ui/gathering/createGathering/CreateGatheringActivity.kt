@@ -487,7 +487,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         create!!.setOnClickListener {
             try {
 
-                val media = EasySP.init(this).getString(ConstantEasySP.UPLOADED_MEDIA)
+               /* val media = EasySP.init(this).getString(ConstantEasySP.UPLOADED_MEDIA)
 
                 val type = object : TypeToken<ArrayList<MediaUploadingPojo>>() {
 
@@ -497,7 +497,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                     mediaPojo = Gson().fromJson<ArrayList<MediaUploadingPojo>>(media, type)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                }
+                }*/
 
                 if (linkIssueTitle!!.text!!.isEmpty())
                 {
@@ -511,9 +511,9 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                     ConstantMethods.showWarning(this,"Date And Time", "Please Select Date And Time")
                 } else if (locationTitle!!.text.isEmpty()) {
                     ConstantMethods.showWarning(this,"Location", "Please Select Gathering Location")
-                }else if (media!!.isEmpty()) {
+                }/*else if (media!!.isEmpty()) {
                     ConstantMethods.showWarning(this,"Please Upload Photo", "You need to attach at least 1 photo to this gathering to post")
-                }
+                }*/
 
                 else {
 
@@ -744,7 +744,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
             else {
 
-                val type = object : TypeToken<ArrayList<MediaUploadingPojo>>() {
+               /* val type = object : TypeToken<ArrayList<MediaUploadingPojo>>() {
 
                 }.type
                 var mediaPojo = ArrayList<MediaUploadingPojo>()
@@ -752,8 +752,32 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                     mediaPojo = Gson().fromJson<ArrayList<MediaUploadingPojo>>(media, type)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                }
+                }*/
+                val imageUrls = EasySP.init(this).getString(ConstantEasySP.ISSUE_IMAGE_URL)
+                val videoUrls = EasySP.init(this).getString(ConstantEasySP.ISSUE_VIDEO_URL)
+                var imageArray = ArrayList<String>()
+                var videoArray = ArrayList<String>()
+                val type = object : TypeToken<ArrayList<String>>() {
 
+                }.type
+                var mediaList: List<String>
+                try {
+                    imageArray = Gson().fromJson<ArrayList<String>>(imageUrls, type)
+                    videoArray = Gson().fromJson<ArrayList<String>>(videoUrls, type)
+                    mediaList= imageArray + videoArray
+                    if(mediaList!=null && mediaList!!.isNotEmpty())
+                    {
+                        val mediaAdapter : IssueMediaAdapter = IssueMediaAdapter(context!!, mediaList, false)
+                        mediaRecycler!!.adapter = mediaAdapter
+                        mediaRecycler!!.visibility= View.VISIBLE
+                        for (i in mediaList.indices) {
+                                count++
+                                    imageArray.add(mediaList[i])
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
                 var latLongPojo: LatLongSelectedPojo =
                     Gson().fromJson(latlong, LatLongSelectedPojo::class.java)
@@ -763,20 +787,9 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                 latlongArray.add(latLongPojo.longitude.toString())
 
 
-                val imageArray = ArrayList<String>()
+//                val imageArray = ArrayList<String>()
 
-                for (i in 0 until mediaPojo.size) {
-                    if (mediaPojo[i].isUpload) {
-                        count++
 
-                        if (mediaPojo[i].mimeType.contains("image")) {
-                            imageArray.add(mediaPojo[i].serverUrl)
-                        }
-
-                    } else {
-                        ConstantMethods.showError(this, "", "Please wait while media is uploading.")
-                    }
-                }
              if (details.isNotEmpty() && gatheringTitle!!.text.isNotEmpty()  && issueId!!.isNotEmpty() && dateTime!!.text.isNotEmpty() && latlongArray.isNotEmpty() && imageArray.isNotEmpty()) {
 
                     if (ConstantMethods.checkForInternetConnection(this@CreateGatheringActivity)) {
@@ -816,10 +829,10 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
 
                         jsonObject.add("imageUrls", imageJsonArray)
+                        postDataToServer(jsonObject)
 
 
-
-                        if (count == mediaPojo.size) {
+                       /* if (count == mediaPojo.size) {
 
                             postDataToServer(jsonObject)
                         } else {
@@ -829,7 +842,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                                 "Please wait",
                                 "Please wait media uploading."
                             )
-                        }
+                        }*/
 
                     }
 

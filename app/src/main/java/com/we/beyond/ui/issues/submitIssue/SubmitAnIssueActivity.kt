@@ -4,6 +4,7 @@ package com.we.beyond.ui.issues.submitIssue
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -196,7 +197,13 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                 descriptionImage!!.setImageResource(R.drawable.describelight)
                 mediaImage!!.setImageResource(R.drawable.imagelight)
                 locationImage!!.setImageResource(R.drawable.locationlight)
-
+                val categoryId = EasySP.init(this@SubmitAnIssueActivity).getString("categoryId")
+                val issueTitle = EasySP.init(this@SubmitAnIssueActivity).getString("issueTitle")
+                val issueDetails = EasySP.init(this@SubmitAnIssueActivity).getString("issueDetails")
+                val latlong = EasySP.init(this@SubmitAnIssueActivity).getString(ConstantEasySP.LATLONG_POJO)
+                val address = EasySP.init(this@SubmitAnIssueActivity).getString("locationAddress")
+                val city = EasySP.init(this@SubmitAnIssueActivity).getString("city")
+                val media = EasySP.init(this@SubmitAnIssueActivity).getString(ConstantEasySP.UPLOADED_MEDIA)
                 var imageView: ImageView? = null
                 var resId = 0
                 var nextButtonText = "Next"
@@ -205,17 +212,30 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                     0 -> {
                         imageView = mediaImage
                         resId = R.drawable.image
+                        if(media!=null && media.isNotEmpty())
+                        shouldEnableNextBtn(true)
+                        else
+                            shouldEnableNextBtn(false)
                     }
                     1 -> {
                         imageView = categoryImage
                         resId = R.drawable.category
+                        if(categoryId!=null && categoryId.isNotEmpty())
+                            shouldEnableNextBtn(true)
+                        else
+                            shouldEnableNextBtn(false)
                     }
                     2 -> {
                         imageView = descriptionImage
                         resId = R.drawable.describe
+                        if(issueDetails!=null && issueDetails.isNotEmpty() && issueTitle!=null && issueTitle.isNotEmpty())
+                            shouldEnableNextBtn(true)
+                        else
+                            shouldEnableNextBtn(false)
                     }
 
                     3 -> {
+                        shouldEnableNextBtn(false)
                         if (isEdit) {
 
                             nextButtonText = "Update"
@@ -228,7 +248,6 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                             imageView = locationImage
                             resId = R.drawable.location
                         }
-
                     }
                 }
                 imageView!!.setImageResource(resId)
@@ -809,6 +828,11 @@ class SubmitAnIssueActivity : AppCompatActivity(),
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        EasySP.init(this).put("categoryId", "")
+    }
+
     /** It takes the json object as input and send to onIssueCreated function of issue presenter */
     private fun postDataToServer(jsonObject: JsonObject) {
         try {
@@ -880,7 +904,9 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         descriptionImage = findViewById(R.id.img_description_step_icon)
         mediaImage = findViewById(R.id.img_media_step_icon)
         locationImage = findViewById(R.id.img_location_step_icon)
-
+        shouldDisableDescriptionIcon(false)
+        shouldDisableCategoryIcon(false)
+        shouldDisableLocationIcon(false)
         /** ids of text view */
         submitIssueTitle = findViewById(R.id.txt_submit_issue_title)
         submitIssueTitle!!.typeface = ConstantFonts.raleway_semibold
@@ -891,9 +917,89 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         /** ids of button */
         next = findViewById(R.id.btn_next)
         next!!.typeface = ConstantFonts.raleway_semibold
-
+        shouldEnableNextBtn(false)
     }
 
+    fun shouldDisableDescriptionIcon(shouldEnable: Boolean)
+    {
+        if(!isEdit)
+        {
+            if(shouldEnable) {
+                descriptionImage!!.isEnabled = true
+                descriptionImage!!.alpha =1f
+            }
+            else
+            {
+                descriptionImage!!.isEnabled = false
+                descriptionImage!!.alpha =0.5f
+            }
+        }
+        else
+        {
+            descriptionImage!!.isEnabled = true
+            descriptionImage!!.alpha =1f
+        }
+
+    }
+    fun shouldDisableCategoryIcon(shouldEnable: Boolean)
+    {
+        if(!isEdit)
+        {
+            if(shouldEnable) {
+                categoryImage!!.isEnabled = true
+                categoryImage!!.alpha =1f
+            }
+            else
+            {
+                categoryImage!!.isEnabled = false
+                categoryImage!!.alpha =0.5f
+            }
+        }
+        else
+        {
+            categoryImage!!.isEnabled = true
+            categoryImage!!.alpha =1f
+        }
+
+    }
+    fun shouldDisableLocationIcon(shouldEnable: Boolean)
+    {
+        if(!isEdit)
+        {
+            if(shouldEnable) {
+                locationImage!!.isEnabled = true
+                locationImage!!.alpha =1f
+            }
+            else
+            {
+                locationImage!!.isEnabled = false
+                locationImage!!.alpha =0.5f
+            }
+        }
+        else
+        {
+            locationImage!!.isEnabled = true
+            locationImage!!.alpha =1f
+        }
+    }
+
+     fun shouldEnableNextBtn(shouldEnable:Boolean)
+    {
+        if(!isEdit) {
+            if (shouldEnable) {
+                next!!.isEnabled = true
+                next!!.alpha = 1f
+            } else {
+                next!!.isEnabled = false
+                next!!.alpha = 0.5f
+            }
+        }
+        else
+        {
+            next!!.isEnabled = true
+            next!!.alpha = 1f
+        }
+    }
 
     private fun shouldShowConfirmationAlert(): Boolean
     {
@@ -917,4 +1023,5 @@ class SubmitAnIssueActivity : AppCompatActivity(),
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
     }
+
 }

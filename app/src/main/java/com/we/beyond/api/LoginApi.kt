@@ -24,4 +24,15 @@ interface LoginApi
     @POST("api/auth/forgetPassword")
     fun forgotPassword(@Body jsonObject: JsonObject): Single<ForgotPasswordPojo>
 
+    @Headers(
+        "Content-Type: application/json"
+    )
+    @POST("/api/auth/login/facebook")
+    fun loginWithFacebook(@Body jsonObject: JsonObject): Single<LoginPojo>
+
+    @Headers(
+        "Content-Type: application/json"
+    )
+    @POST("/api/auth/login/google")
+    fun loginWithGoogle(@Body jsonObject: JsonObject): Single<LoginPojo>
 }

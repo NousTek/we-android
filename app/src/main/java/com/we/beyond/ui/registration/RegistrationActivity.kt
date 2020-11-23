@@ -7,7 +7,6 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Paint
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -16,7 +15,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
@@ -27,7 +25,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.we.beyond.R
 import com.we.beyond.model.LatLongSelectedPojo
-import com.we.beyond.model.RegistrationPojo
 import com.we.beyond.model.UserTypes
 import com.we.beyond.presenter.registration.RegistrationImpl
 import com.we.beyond.presenter.registration.RegistrationPresenter
@@ -36,6 +33,7 @@ import com.we.beyond.ui.login.LoginActivity
 import com.we.beyond.util.ConstantEasySP
 import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
+import com.we.beyond.util.Constants
 import com.white.easysp.EasySP
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.regex.Pattern
@@ -49,7 +47,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
     var registrationPojo: ArrayList<UserTypes>? = null
     //var areaPojo : ArrayList<RegistrationPojo>?=null
 
-
+    var isExternalUserRegistration: Boolean?=false
     /** init image view */
     var back: ImageView? = null
     var close: ImageView? = null
@@ -113,7 +111,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
-
+        isExternalUserRegistration=intent.getBooleanExtra(Constants.IS_EXTERNAL_USER, false)
         userTypeList = ArrayList()
         //citiesList = ArrayList()
         registrationPojo = ArrayList()
@@ -245,7 +243,25 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
         mobileNumberLayout = findViewById(R.id.MobileNumberLayout)
         passwordLayout = findViewById(R.id.PasswordLayout)
         retypePasswordLayout = findViewById(R.id.RetypePasswordLayout)
-
+        if(isExternalUserRegistration!!)
+        {
+            val emailId=intent.getStringExtra(Constants.EXTERNAL_USER_EMAIL)
+            val userFirstName=intent.getStringExtra(Constants.EXTERNAL_USER_FIRST_NAME)
+            val userLastName=intent.getStringExtra(Constants.EXTERNAL_USER_LAST_NAME)
+            if(emailId!=null && emailId.isNotEmpty())
+            {
+                email!!.setText(emailId)
+                email!!.isEnabled=false
+            }
+            if(userFirstName!=null && userFirstName.isNotEmpty())
+            {
+                firstName!!.setText(userFirstName)
+            }
+            if(userLastName!=null && userLastName.isNotEmpty())
+            {
+                secondName!!.setText(userLastName)
+            }
+        }
 
     }
 
@@ -283,8 +299,10 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
                     firstNameLayout!!.visibility = View.VISIBLE
                     secondNameLayout!!.visibility = View.VISIBLE
                     organizationNameLayout!!.visibility = View.GONE
-                    firstName!!.text!!.clear()
-                    secondName!!.text!!.clear()
+                    if(!isExternalUserRegistration!!) {
+                        firstName!!.text!!.clear()
+                        secondName!!.text!!.clear()
+                    }
 
                 } else {
                     println("type other")
@@ -322,7 +340,8 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
         checkBoxText!!.setOnClickListener {
             moreInfoLayout!!.visibility = View.VISIBLE
             moreInfoLayout!!.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_up))
-            webView!!.loadUrl("http://www.dropouts.in/privacypolicy/privacyweapp.html")
+//            webView!!.loadUrl("http://www.dropouts.in/privacypolicy/privacyweapp.html")
+            webView!!.loadUrl("https://legal.weapp.mobi/terms.html")
         }
 
         /** close the layout with animation */

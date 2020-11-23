@@ -36,7 +36,8 @@ data class GatheringData(
     var gatheringNumber : Int,
     var createdAt : String,
     var updatedAt : String,
-    var _v : Int
+    var _v : Int,
+    var goingList : ArrayList<GatheringGoingList>
 )
 
 data class GatheringIssueDetails(

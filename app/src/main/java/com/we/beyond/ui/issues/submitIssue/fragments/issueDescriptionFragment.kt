@@ -10,10 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import com.google.gson.Gson
 
 import com.we.beyond.R
 import com.we.beyond.model.NearByIssueByIdDetailsPojo
+import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
 import com.we.beyond.util.ConstantFonts
 import com.white.easysp.EasySP
 
@@ -37,7 +40,8 @@ class IssueDescriptionFragment : Fragment() {
         val v= inflater.inflate(R.layout.fragment_description, container, false)
 
         activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
+        val submitActivity= activity as SubmitAnIssueActivity
+        submitActivity.shouldEnableNextBtn(false)
 
         /** initialize ids of elements */
         initElementsWithIds(v)
@@ -129,13 +133,42 @@ class IssueDescriptionFragment : Fragment() {
         /** ids of text view */
         issueDescriptionTitle = v.findViewById(R.id.txt_description_title)
         issueDescriptionTitle!!.typeface = ConstantFonts.raleway_semibold
-
+        val submitActivity = activity as SubmitAnIssueActivity
         /** ids of edit text */
         issueTitle = v.findViewById(R.id.et_issue_title)
         issueTitle!!.typeface = ConstantFonts.raleway_semibold
-
+        issueTitle!!.addTextChangedListener(
+            issueTitle!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (issueDetails!!.text != null && issueDetails!!.text.isNotEmpty() && issueTitle!!.text != null && issueTitle!!.text.isNotEmpty()) {
+                        submitActivity!!.shouldEnableNextBtn(true)
+                        submitActivity!!.shouldDisableLocationIcon(true)
+                    }
+                    else
+                    {
+                        submitActivity!!.shouldEnableNextBtn(false)
+                        submitActivity!!.shouldDisableLocationIcon(false)
+                    }
+                }
+            }
+        )
         issueDetails = v.findViewById(R.id.et_issue_details)
         issueDetails!!.typeface = ConstantFonts.raleway_semibold
+        issueDetails!!.addTextChangedListener(
+            issueDetails!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (issueDetails!!.text != null && issueDetails!!.text.isNotEmpty() && issueTitle!!.text != null && issueTitle!!.text.isNotEmpty()) {
+                        submitActivity!!.shouldEnableNextBtn(true)
+                        submitActivity!!.shouldDisableLocationIcon(true)
+                    }
+                    else
+                    {
+                        submitActivity!!.shouldEnableNextBtn(false)
+                        submitActivity!!.shouldDisableLocationIcon(false)
+                    }
+                }
+            }
+        )
     }
 
 
