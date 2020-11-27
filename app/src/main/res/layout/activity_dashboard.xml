@@ -80,7 +80,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="Hello"
                     android:textColor="#99000000"
-                    android:textSize="@dimen/_14sdp" />
+                    android:textSize="@dimen/_13sdp" />
 
                 <TextView
                     android:id="@+id/txt_name"
@@ -742,7 +742,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_issues"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_submit"
@@ -793,7 +793,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_connect"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
 
                                         />
 
@@ -849,7 +849,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_leaderborad"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
 
                                         />
 
@@ -893,7 +893,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="All Issues Posted"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
 
                                 </RelativeLayout>
 
@@ -927,7 +927,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_gathering"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
 
                                     <Button
                                         android:id="@+id/btn_create"
@@ -977,7 +977,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_heatmap"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
 
                                         />
 
@@ -1012,7 +1012,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_profile"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
 
                                         />
 
@@ -1079,7 +1079,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_issues"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
                                     </LinearLayout>
                                     <Button
                                         android:id="@+id/btn_submit"
@@ -1134,7 +1134,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_gathering"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
                                     </LinearLayout>
                                     <Button
                                         android:id="@+id/btn_create"
@@ -1188,7 +1188,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_connect"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
 
                                         />
                                     </LinearLayout>
@@ -1248,7 +1248,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_leaderborad"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
                                         />
                                     </LinearLayout>
                                 </RelativeLayout>
@@ -1288,7 +1288,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_profile"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
                                         />
                                     </LinearLayout>
                                 </RelativeLayout>
@@ -1346,7 +1346,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/txt_view_all_issues"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
                                 </RelativeLayout>
 
                             </androidx.cardview.widget.CardView>
@@ -1395,7 +1395,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/txt_view_all_nearby_gatherings"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp" />
+                                        android:textSize="@dimen/_13sdp" />
 
                                 </RelativeLayout>
                             </androidx.cardview.widget.CardView>
@@ -1434,7 +1434,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/txt_view_all_articles"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
                                         />
                                     </LinearLayout>
                                 </RelativeLayout>
@@ -1472,7 +1472,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_heatmap"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
                                         />
                                 </LinearLayout>
                                 </RelativeLayout>
@@ -1510,7 +1510,7 @@
                                         android:layout_marginTop="@dimen/_5sdp"
                                         android:text="@string/dashboard_near_by_me"
                                         android:textColor="@color/dashboard_menu_text"
-                                        android:textSize="@dimen/_14sdp"
+                                        android:textSize="@dimen/_13sdp"
 
                                         />
                                     </LinearLayout>

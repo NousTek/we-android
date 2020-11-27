@@ -68,13 +68,19 @@
         android:layout_height="@dimen/_40sdp"
         android:text="Done"
         android:backgroundTint="@color/button_background"
-        android:background="@drawable/login_border"
+        android:layout_margin="10dp"
+        android:layout_above="@+id/transparentView"
+        android:background="@drawable/btn_background"
         android:id="@+id/btnDone"
         android:textColor="@color/white"
         android:textSize="@dimen/_13sdp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
-
+        <View
+            android:id="@+id/transparentView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"/>
     </RelativeLayout>
 </RelativeLayout>

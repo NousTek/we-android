@@ -43,11 +43,12 @@
 
     //Dashboard Activity
     <string name="dashboard_title">Dashboard</string>
-    <string name="dashboard_issues">Issues</string>
+    <string name="dashboard_issues">Issue</string>
     <string name="dashboard_gathering">Gathering</string>
     <string name="dashboard_connect">Article</string>
     <string name="dashboard_heatmap">Locate\nIssues</string>
     <string name="dashboard_near_by_me">My\nNeighbours</string>
+    <string name="title_near_by_me">My Neighbours</string>
     <string name="dashboard_leaderborad">Leaderboard</string>
     <string name="dashboard_profile">Profile</string>
     <string name="dashboard_submit">Submit</string>
@@ -148,7 +149,7 @@
     //going activity
     <string name="going_title">Going</string>
     <string name="txt_view_all_issues">View All\nIssues</string>
-    <string name="txt_view_all_nearby_gatherings">View All Nearby Gatherings</string>
+    <string name="txt_view_all_nearby_gatherings">View All Gatherings</string>
     <string name="txt_view_all_articles">View All\nArticles</string>
     <string name="txt_need_an_account">Need an account?</string>
     <string name="txt_sign_up">Sign up</string>

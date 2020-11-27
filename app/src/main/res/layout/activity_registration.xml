@@ -57,11 +57,12 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/registrationForLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:layout_marginRight="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     app:counterEnabled="false"
+                    android:minHeight="@dimen/_60sdp"
                     app:counterMaxLength="5"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:hint="@string/registration_title"
@@ -74,7 +75,8 @@
                     <AutoCompleteTextView
                         android:id="@+id/dropdown_registration_for"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_40sdp"
                         android:editable="false"
                         />
 
@@ -271,7 +273,8 @@
                 <RelativeLayout
                     android:id="@+id/setHomeLocationLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_40sdp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_40sdp"
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:layout_marginRight="@dimen/_12sdp"
                     android:background="@drawable/home_location_border"
@@ -412,14 +415,21 @@
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/login_border"
+            android:layout_margin="10dp"
+            android:layout_above="@+id/transparentView"
+            android:background="@drawable/btn_background"
             android:backgroundTint="@color/button_background"
             android:text="@string/register_button"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
 
             />
+        <View
+            android:id="@+id/transparentView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"/>
     </RelativeLayout>
 
 

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_toRightOf="@+id/img_back"
-        android:text="@string/dashboard_near_by_me"
+        android:text="@string/title_near_by_me"
         android:textColor="@color/white"
         android:textSize="@dimen/_16sdp" />
 

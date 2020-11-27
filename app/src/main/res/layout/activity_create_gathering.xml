@@ -129,7 +129,8 @@
                 <RelativeLayout
                     android:id="@+id/addLocationLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_120sdp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/_120sdp"
                     android:layout_margin="@dimen/_12sdp"
                     android:background="@drawable/issue_border">
 
@@ -154,6 +155,7 @@
                         android:layout_below="@+id/txt_location_title"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="7dp"
                         android:background="@drawable/gathering_border"
                         android:paddingLeft="@dimen/_30sdp"
                         android:paddingTop="@dimen/_10sdp"
@@ -432,15 +434,21 @@
         android:id="@+id/btn_create"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_40sdp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:background="@drawable/login_border"
+        android:layout_margin="10dp"
+        android:layout_above="@+id/transparentView"
+        android:background="@drawable/btn_background"
         android:backgroundTint="@color/colorPrimary"
         android:paddingTop="8dip"
         android:paddingBottom="8dip"
         android:text="Create"
         android:textColor="@color/white"
         android:textSize="@dimen/_15sdp" />
-
+    <View
+        android:id="@+id/transparentView"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent"/>
 </RelativeLayout>

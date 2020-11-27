@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/screen_background"
     tools:context=".ui.dashboard.CategoriesActivity">
 
@@ -11,8 +11,8 @@
         android:id="@+id/img_back"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_20sdp"
         app:srcCompat="@drawable/ic_back" />
 
@@ -28,131 +28,124 @@
         android:textSize="@dimen/_16sdp" />
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/login_border"
-        android:layout_marginTop="@dimen/_20sdp"
         android:layout_below="@+id/txt_categories_title"
-        >
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/login_border">
 
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/checkBox"
-            android:scrollbars="none"
-            android:fillViewport="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20sdp"
-            >
-
-            <TextView
-                android:id="@+id/txt_welcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category_welcome_title"
-                android:textColor="@color/category_welcome"
-                android:textSize="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
-                />
-
-            <TextView
-                android:id="@+id/txt_we"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category_we_title"
-                android:textColor="@color/category_we_title"
-                android:textSize="@dimen/_15sdp"
-                android:layout_toRightOf="@+id/txt_welcome"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                />
-
-            <TextView
-                android:id="@+id/txt_select_category_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/category_welcome_description"
-                android:layout_below="@+id/txt_welcome"
-                android:layout_margin="@dimen/_10sdp"
-                android:textSize="@dimen/_12sdp"
-                android:lineSpacingExtra="@dimen/_3sdp"
-                android:textColor="@color/category_description"
-                />
-
-            <TextView
-                android:id="@+id/txt_select_category_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/category_select_title"
-                android:textSize="@dimen/_16sdp"
-                android:layout_below="@+id/txt_select_category_description"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
-                android:textColor="@color/category_select"
-                />
-
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_select_category_title"
-                android:layout_margin="@dimen/_10sdp"
-                >
+                android:layout_marginBottom="@dimen/_20sdp">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_category"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                <TextView
+                    android:id="@+id/txt_welcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/category_welcome_title"
+                    android:textColor="@color/category_welcome"
+                    android:textSize="@dimen/_15sdp" />
 
+                <TextView
+                    android:id="@+id/txt_we"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_toRightOf="@+id/txt_welcome"
+                    android:text="@string/category_we_title"
+                    android:textColor="@color/category_we_title"
+                    android:textSize="@dimen/_15sdp" />
+
+                <TextView
+                    android:id="@+id/txt_select_category_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_welcome"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:lineSpacingExtra="@dimen/_3sdp"
+                    android:text="@string/category_welcome_description"
+                    android:textColor="@color/category_description"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/txt_select_category_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_select_category_description"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:text="@string/category_select_title"
+                    android:textColor="@color/category_select"
+                    android:textSize="@dimen/_16sdp" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_select_category_title"
+                    android:layout_margin="@dimen/_10sdp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
         </ScrollView>
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/checkbox_selector"
-            android:text="Select All"
-            android:paddingLeft="@dimen/_8sdp"
-            android:layout_marginLeft="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:gravity="center"
-            android:checked="true"
-            android:textColor="@color/colorPrimary"
+            android:layout_above="@+id/btn_category_select"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginRight="@dimen/_20sdp"
-            android:layout_above="@+id/btn_category_select"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:button="@drawable/checkbox_selector"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_8sdp"
+            android:text="Select All"
+            android:textColor="@color/colorPrimary"
 
             />
-
-
 
 
         <Button
             android:id="@+id/btn_category_select"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/login_border"
+            android:layout_above="@+id/transparentView"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_background"
             android:backgroundTint="@color/button_background"
             android:text="@string/category_select_button"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
-            android:textAllCaps="false"
-
             />
-
+        <View
+            android:id="@+id/transparentView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"/>
     </RelativeLayout>
 
-    </RelativeLayout>
+</RelativeLayout>

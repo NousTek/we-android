@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/splash_logo"
+        android:layout_centerInParent="true"
         android:textColor="#FFFFFFFF"
         android:textSize="@dimen/_100sdp"
         android:gravity="center_horizontal"
@@ -36,6 +37,7 @@
             android:text="@string/splash_details_title"
             android:textColor="#FFFFFFFF"
             android:textSize="@dimen/_13sdp"
+            android:visibility="invisible"
             android:gravity="center_horizontal"
             android:textAllCaps="true"
             android:padding="@dimen/_5sdp"
@@ -46,7 +48,7 @@
             android:layout_height="@dimen/_1sdp"
             android:background="#FFFF7749"
             android:layout_gravity="center_horizontal"
-            />
+            android:visibility="invisible"/>
 
 
         <TextView
@@ -55,6 +57,7 @@
             android:layout_height="wrap_content"
             android:text="@string/splash_details_sub_title"
             android:textColor="#FFFFFFFF"
+            android:visibility="invisible"
             android:textSize="@dimen/_14sdp"
             android:gravity="center_horizontal"
             android:textAllCaps="true"

@@ -89,9 +89,10 @@
             android:id="@+id/btn_add_location"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/login_border"
+            android:layout_margin="10dp"
+            android:layout_above="@+id/transparentView"
+            android:background="@drawable/btn_background"
             android:backgroundTint="@color/button_background"
             android:paddingTop="8dip"
             android:paddingBottom="8dip"
@@ -99,6 +100,13 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp" />
+
+        <View
+            android:id="@+id/transparentView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent"/>
     </RelativeLayout>
 
 
