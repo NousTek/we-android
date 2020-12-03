@@ -333,9 +333,8 @@ class MyResolutionActivity : AppCompatActivity(), MyResolutionPresenter.IMyResol
 
             if(myResolutionArray!!.size == 0)
             {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "",
                     "There are no resolutions found."
                 )
 

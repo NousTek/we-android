@@ -272,6 +272,8 @@ class MyGatheringActivity : AppCompatActivity() , MyGatheringPresenter.IMyGather
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {

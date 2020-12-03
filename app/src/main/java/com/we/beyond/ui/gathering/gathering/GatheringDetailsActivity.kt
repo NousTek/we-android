@@ -101,8 +101,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
     var closeAbuse: ImageView? = null
     var closeComment: ImageView? = null
     var sendComment: ImageView? = null
-
-
+    var divider3:View? =null
+    var divider4:View?=null
     /** init text view */
     var title: TextView? = null
     var issueNumber: TextView? = null
@@ -439,6 +439,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -638,9 +640,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
         campaign!!.setOnClickListener {
 
             if (gatheringData!!.data.issue.resolved) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     context,
-                    "",
                     "You cannot create campaign on resolved issues."
                 )
 
@@ -696,9 +697,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                     R.anim.slide_out_left
                 )
             } else {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "",
                     "Images not available for this gathering."
                 )
             }
@@ -723,9 +723,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                     currentDate
                 )
             ) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     context,
-                    "",
                     "The gathering date is gone.Unless you are time traveller and want to visit the gathering in past."
                 )
             } else {
@@ -921,7 +920,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
 
                 }
             } else {
-                ConstantMethods.showWarning(this, "", "You are not owner of this gathering.")
+                ConstantMethods.showToast(this, "You are not owner of this gathering.")
             }
 
 
@@ -943,9 +942,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
 
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == gatheringData!!.data.user._id) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You can not abuse your gathering."
                     )
                 } else {
@@ -1031,7 +1029,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showWarning(this, "", "You are not owner of this gathering.")
+                ConstantMethods.showToast(this,  "You are not owner of this gathering.")
             }
 
         }
@@ -1063,7 +1061,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
 
             try {
                 if (nearByGathering) {
-                    title!!.text = "Upcoming Gathering"
+                    title!!.text = "Upcoming Gatherings"
                 } else {
                     title!!.text = "Gathering"
                 }
@@ -1429,9 +1427,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                     }
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Empty Data",
                         "Please give us your comment."
                     )
                 }
@@ -1473,9 +1470,8 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                         }
 
                     } else {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Empty Data",
                             "Please give us your comment."
                         )
                     }
@@ -1859,7 +1855,15 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
             if (gatheringDetails.data != null) {
 
                 gatheringData = gatheringDetails
-
+                val loggedInUserId = EasySP.init(this).getString(ConstantEasySP.USER_ID)
+                if (loggedInUserId == gatheringDetails!!.data.user._id) {
+                    edit!!.visibility=View.VISIBLE
+                    divider3=findViewById(R.id.view3)
+                    divider3!!.visibility=View.VISIBLE
+                    delete!!.visibility=View.VISIBLE
+                    divider4=findViewById(R.id.view4)
+                    divider4!!.visibility=View.VISIBLE
+                }
                 if (gatheringDetails.data.issue.issueNumber != null) {
                     issueNumber!!.text = "# ${gatheringDetails.data.issue.issueNumber}"
                 }
@@ -2387,7 +2391,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
 
         try {
             if (nearByGathering) {
-                title!!.text = "Upcoming Gathering"
+                title!!.text = "Upcoming Gatherings"
             } else {
                 title!!.text = "Gathering"
             }

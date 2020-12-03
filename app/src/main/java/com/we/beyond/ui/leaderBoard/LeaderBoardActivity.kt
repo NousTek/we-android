@@ -46,6 +46,7 @@ class LeaderBoardActivity : AppCompatActivity(), LeaderBoardPresenter.ILeaderBoa
 
     /** init text view */
     var profileName: TextView? = null
+    var screenTitle:TextView?=null
     var leaderBoardCategories: TextView? = null
     var noContent : TextView?=null
 
@@ -95,7 +96,8 @@ class LeaderBoardActivity : AppCompatActivity(), LeaderBoardPresenter.ILeaderBoa
 
         /** assign listener to this activity */
         ((LeaderBoardActivity())).onLeaderBoardSelectedListener
-
+        screenTitle = findViewById(R.id.txt_title)
+        screenTitle!!.typeface = ConstantFonts.raleway_semibold
 
         /** fragment creation */
         leaderBoardSubmittedIssueFragment = LeaderBoardSubmittedIssueFragment()

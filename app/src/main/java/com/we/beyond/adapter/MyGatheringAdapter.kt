@@ -230,7 +230,7 @@ class MyGatheringAdapter(
 
                 if(gatheringList!![position].issue.resolved)
                 {
-                    ConstantMethods.showWarning(context,"","You cannot create campaign on resolved issues.")
+                    ConstantMethods.showToast(context,"You cannot create campaign on resolved issues.")
 
                 }
                 else {

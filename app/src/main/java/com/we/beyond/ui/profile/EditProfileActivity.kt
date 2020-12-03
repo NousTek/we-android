@@ -7,6 +7,7 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.google.android.libraries.places.api.model.Place
@@ -456,7 +457,7 @@ class EditProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
                 EasySP.init(this).putString("long", userData.data.location.coordinates[1])
 
                 homeLocation!!.text = address
-                homeLocation!!.typeface = ConstantFonts.raleway_semibold
+                homeLocation!!.typeface = ConstantFonts.raleway_regular
             }
         }
 
@@ -481,14 +482,23 @@ class EditProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
 
             if (userTypeList!!.isNotEmpty()) {
                 for (i in 0 until userTypeList!!.size) {
-                    val userTypeAdapter =
-                        ArrayAdapter<String>(
-                            this,
-                            R.layout.spinner_popup_item,
-                            userTypeList!!
-                        )
-                    userTypeAdapter.setDropDownViewResource(R.layout.spinner_popup_item)
-                    userType!!.setAdapter(userTypeAdapter)
+                    val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item, userTypeList!!
+                    ) {
+                        override fun getView(
+                            position: Int,
+                            convertView: View?,
+                            parent: ViewGroup
+                        ): View {
+                            val view = super.getView(position, convertView, parent)
+                            val text =
+                                view.findViewById<View>(android.R.id.text1) as TextView
+                            text.typeface = ConstantFonts.raleway_regular
+                            return view
+                        }
+                    }
+                    userType!!.setAdapter(adapter)
                 }
             }
         } catch (e: Exception) {
@@ -546,7 +556,7 @@ class EditProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
             if (address != null && address!!.isNotEmpty()) {
                 homeLocation = findViewById(R.id.txt_location_title)
                 homeLocation!!.text = address
-                homeLocation!!.typeface = ConstantFonts.raleway_semibold
+                homeLocation!!.typeface = ConstantFonts.raleway_regular
             }
 
 
@@ -567,21 +577,24 @@ class EditProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
 
         /** ids of edit text */
         firstName = findViewById(R.id.et_first_name)
-        firstName!!.typeface = ConstantFonts.raleway_semibold
+        firstName!!.typeface = ConstantFonts.raleway_regular
 
         secondName = findViewById(R.id.et_second_name)
-        secondName!!.typeface = ConstantFonts.raleway_semibold
+        secondName!!.typeface = ConstantFonts.raleway_regular
 
         organizationName = findViewById(R.id.et_organization_name)
-        organizationName!!.typeface = ConstantFonts.raleway_semibold
+        organizationName!!.typeface = ConstantFonts.raleway_regular
 
         /** ids of relative layout */
         locationLayout = findViewById(R.id.setHomeLocationLayout)
 
         /** ids of input  text  layout*/
         firstNameLayout = findViewById(R.id.firstNameLayout)
+        firstNameLayout!!.typeface=ConstantFonts.raleway_regular
         secondNameLayout = findViewById(R.id.secondNameLayout)
+        secondNameLayout!!.typeface=ConstantFonts.raleway_regular
         organizationNameLayout = findViewById(R.id.organizationNameLayout)
+        organizationNameLayout!!.typeface=ConstantFonts.raleway_regular
         /*cityLayout = findViewById(R.id.cityLayout)
         areaLayout = findViewById(R.id.areaLayout)*/
         userTypeLayout = findViewById(R.id.registrationForLayout)
@@ -595,7 +608,7 @@ class EditProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
          area!!.typeface = ConstantFonts.raleway_semibold*/
 
         userType = findViewById(R.id.dropdown_registration_for)
-        userType!!.typeface = ConstantFonts.raleway_semibold
+        userType!!.typeface = ConstantFonts.raleway_regular
 
         /** ids of button */
         update = findViewById(R.id.btn_update)

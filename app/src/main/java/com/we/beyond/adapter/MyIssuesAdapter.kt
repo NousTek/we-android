@@ -287,7 +287,7 @@ issueDetails: ArrayList<NearByIssues>
             holder.issueDescription.typeface = ConstantFonts.raleway_medium
 
             holder.itemView.img_already_resolved!!.setOnClickListener {
-                ConstantMethods.showWarning(context, "Issue Resolved", "Issue already resolved")
+                ConstantMethods.showToast(context,  "Issue already resolved")
             }
 
             /** It opens ReportResolvedActivity and passes below data */
@@ -358,7 +358,7 @@ issueDetails: ArrayList<NearByIssues>
             holder.itemView.img_gathering.setOnClickListener {
                 if(issueDetails!![position].resolved)
                 {
-                    ConstantMethods.showWarning(context,"","You cannot create gathering on resolved issues.")
+                    ConstantMethods.showToast(context,"You cannot create gathering on resolved issues.")
                 }
                 else {
                     println("image click")
@@ -422,7 +422,7 @@ issueDetails: ArrayList<NearByIssues>
             holder.delete.typeface = ConstantFonts.raleway_semibold
             holder.delete.setOnClickListener {
                 if (issueDetails!![position].resolved != null && issueDetails!![position].resolved) {
-                    ConstantMethods.showWarning(context,"","You cant not delete approved resolution")
+                    ConstantMethods.showToast(context,"You cannot delete approved resolution")
                 } else {
                     holder.moreLayout.visibility = View.GONE
                     holder.moreLayout.startAnimation(AnimationUtils.loadAnimation(context,R.anim.slide_out_down))

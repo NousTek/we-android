@@ -241,12 +241,12 @@ class NearByMeActivity : AppCompatActivity() , NearByMePresenter.INearByMeView {
 
 
             noContent!!.visibility = View.VISIBLE
-            noContent!!.text = "No Near By Users found."
+            noContent!!.text = "No Nearby Users found."
 
             try {
                 val sweetAlertDialog = SweetAlertDialog(this , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
-                sweetAlertDialog.contentText = "No Near By Users found."
+                sweetAlertDialog.contentText = "No Nearby Users found."
 //                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {

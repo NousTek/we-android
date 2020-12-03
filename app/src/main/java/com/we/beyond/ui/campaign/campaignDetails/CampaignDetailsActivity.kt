@@ -341,7 +341,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
                 )
             }
             else{
-                ConstantMethods.showWarning(this,"No Data","Images not available for this campaign.")
+                ConstantMethods.showToast(this, "Images not available for this campaign.")
             }
         }
 
@@ -551,7 +551,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
                 }
             }
             else{
-                ConstantMethods.showWarning(this,"","You are not owner of this campaign.")
+                ConstantMethods.showToast(this,"You are not owner of this campaign.")
             }
 
 
@@ -573,7 +573,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
 
                 val userId = EasySP.init(this).getString(ConstantEasySP.USER_ID)
                 if (userId == campaignData!!.data.user._id) {
-                    ConstantMethods.showWarning(this,"","You can not abuse your campaign.")
+                    ConstantMethods.showToast(this,"You cannot abuse your campaign.")
                 }
 
                 else {
@@ -656,7 +656,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showWarning(this,"","You are not owner of this campaign.")
+                ConstantMethods.showToast(this,"You are not owner of this campaign.")
             }
 
         }

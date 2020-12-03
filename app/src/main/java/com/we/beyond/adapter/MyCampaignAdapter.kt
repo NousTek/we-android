@@ -346,7 +346,7 @@ class MyCampaignAdapter(
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == campaignList!![position].user) {
 
-                        ConstantMethods.showWarning(context, "", "You can not abuse your campaign.")
+                        ConstantMethods.showToast(context, "You can not abuse your campaign.")
                     }
 
                 } catch (e: Exception) {

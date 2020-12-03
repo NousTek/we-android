@@ -42,7 +42,7 @@ class FilterActivity : AppCompatActivity() ,OnChangeDataFilterListener{
     var category: TextView? = null
     var radiusTitle: TextView? = null
     var radius: TextView? = null
-
+    var screenTitle:TextView?=null
     /** init image view */
     var back: ImageView? = null
 
@@ -264,7 +264,8 @@ class FilterActivity : AppCompatActivity() ,OnChangeDataFilterListener{
 
         /** id of image view */
         back = findViewById(R.id.img_back)
-
+        screenTitle = findViewById(R.id.txt_title)
+        screenTitle!!.typeface = ConstantFonts.raleway_semibold
         /** ids of layout */
         sortByLayout = findViewById(R.id.sortByLayout)
         categoryLayout = findViewById(R.id.categoryLayout)

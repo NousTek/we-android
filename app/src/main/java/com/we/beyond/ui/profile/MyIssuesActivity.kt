@@ -245,6 +245,8 @@ class MyIssuesActivity : AppCompatActivity(), MyIssuesPresenter.IMyIssuesView,
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -661,9 +663,8 @@ class MyIssuesActivity : AppCompatActivity(), MyIssuesPresenter.IMyIssuesView,
 
             if(issueArray!!.size == 0)
             {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "",
                     "There are no issues posted."
                 )
 

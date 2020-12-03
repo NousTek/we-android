@@ -393,7 +393,7 @@ class MyResolutionDetailsActivity : AppCompatActivity(),
                     R.anim.slide_out_left
                 )
             } else {
-                ConstantMethods.showWarning(this, "No Data", "Images not available for this issue.")
+                ConstantMethods.showToast(this,  "Images not available for this issue.")
             }
         }
 
@@ -412,7 +412,7 @@ class MyResolutionDetailsActivity : AppCompatActivity(),
 
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == issuesData!!.data.issue.user._id) {
-                    ConstantMethods.showWarning(context, "", "You can not abuse your issue.")
+                    ConstantMethods.showToast(context, "You cannot abuse your issue.")
                 } else {
 
                     reportAbuseLayout!!.visibility = View.VISIBLE
@@ -576,8 +576,10 @@ class MyResolutionDetailsActivity : AppCompatActivity(),
 
         try {
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-            sweetAlertDialog.titleText = "DownVote"
+            sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {

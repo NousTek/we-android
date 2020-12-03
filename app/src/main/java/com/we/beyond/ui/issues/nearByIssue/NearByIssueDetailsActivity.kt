@@ -836,7 +836,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
 
             if(nearByIssuesData!!.data.resolved)
             {
-                ConstantMethods.showWarning(context,"","You cannot create gathering on resolved issues.")
+                ConstantMethods.showToast(context,"You cannot create gathering on resolved issues.")
             }
             else {
                 EasySP.init(this).putString(ConstantEasySP.GATHERING_DATE, "")
@@ -902,7 +902,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
             val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
             if (userId == nearByIssuesData!!.data.user._id) {
                 if (nearByIssuesData!!.data.resolved) {
-                    ConstantMethods.showWarning(this, "", "You can not delete resolved issues.")
+                    ConstantMethods.showToast(this,  "You cannot delete resolved issues.")
 
                 } else {
                     println("user id ${userId} gathering user ${nearByIssuesData!!.data.user._id}")
@@ -952,7 +952,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                     }
                 }
             } else {
-                ConstantMethods.showWarning(this, "", "You are not owner of this issue.")
+                ConstantMethods.showToast(this, "You are not owner of this issue.")
             }
 
 
@@ -1018,7 +1018,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
 
         /**It opens warning dialog */
         unResolved!!.setOnClickListener {
-            ConstantMethods.showWarning(this, "Issue Resolved", "Issue already resolved")
+            ConstantMethods.showToast(this,  "Issue already resolved")
         }
 
         /**It opens ReportResolvedActivity */
@@ -1057,7 +1057,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                     R.anim.slide_out_left
                 )
             } else {
-                ConstantMethods.showWarning(this, "No Data", "Images not available for this issue.")
+                ConstantMethods.showToast(this,  "Images not available for this issue.")
             }
         }
 
@@ -1225,9 +1225,9 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
 
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == nearByIssuesData!!.data.user._id) {
-                    ConstantMethods.showWarning(context, "", "You can not abuse your issue.")
+                    ConstantMethods.showToast(context, "You cannot abuse your issue.")
                 } else if (nearByIssuesData!!.data.resolved) {
-                    ConstantMethods.showWarning(context, "", "You can not abuse resolved issues.")
+                    ConstantMethods.showToast(context,  "You cannot abuse resolved issues.")
                 } else {
 
                     reportAbuseLayout!!.visibility = View.VISIBLE
@@ -1301,7 +1301,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showWarning(this, "", "You are not owner of this issue.")
+                ConstantMethods.showToast(this,  "You are not owner of this issue.")
             }
 
         }
@@ -1488,6 +1488,8 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -1580,9 +1582,8 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                     }
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Empty Data",
                         "Please give us your comment."
                     )
                 }
@@ -1627,9 +1628,8 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                         }
 
                     } else {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Empty Data",
                             "Please give us your comment."
                         )
                     }

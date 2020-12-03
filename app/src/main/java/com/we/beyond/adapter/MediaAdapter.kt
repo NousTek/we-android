@@ -26,6 +26,9 @@ import com.we.beyond.api.FileUploadApi
 import com.we.beyond.interceptor.ApplicationController
 import com.we.beyond.model.*
 import com.we.beyond.ui.PreviewActivity
+import com.we.beyond.ui.campaign.createCampaign.CreateCampaignActivity
+import com.we.beyond.ui.connect.publishConnect.PublishConnectActivity
+import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
 import com.we.beyond.util.ConstantEasySP
 import com.we.beyond.util.ConstantMethods
 import com.white.easysp.EasySP
@@ -474,7 +477,7 @@ class MediaAdapter(
 
             }
             else{
-                ConstantMethods.showWarning(context,"No Media","Please wait media uploading")
+                ConstantMethods.showToast(context,"Please wait media uploading")
             }
         }
 
@@ -509,6 +512,30 @@ class MediaAdapter(
                                     if(mediaList!!.size == 0)
                                     {
                                         EasySP.init(context).putString(ConstantEasySP.UPLOADED_MEDIA, "")
+                                        if(context is SubmitAnIssueActivity)
+                                        {
+                                            val activity =context as SubmitAnIssueActivity
+                                            activity.shouldEnableCategoryIcon(false)
+                                            activity.shouldEnableNextBtn(false)
+                                        }
+                                        else
+                                            if(context is PublishConnectActivity)
+                                            {
+                                                val activity =context as PublishConnectActivity
+                                                if(!activity.isValidForm())
+                                                {
+                                                    activity.shouldEnabledCreateButton(false)
+                                                }
+                                            }
+                                            else
+                                                if(context is CreateCampaignActivity)
+                                                {
+                                                    val activity =context as CreateCampaignActivity
+                                                    if(!activity.isValidForm())
+                                                    {
+                                                        activity.shouldEnabledCreateButton(false)
+                                                    }
+                                                }
                                     }
                                     else {
 
@@ -560,7 +587,7 @@ class MediaAdapter(
 
                 }
                 else{
-                    ConstantMethods.showWarning(context,"No Media","Please wait media uploading")
+                    ConstantMethods.showToast(context,"Please wait media uploading")
                 }
             }
                 catch (e: Exception) {

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/create_background">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginLeft="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginRight="@dimen/_30sdp"
+        app:srcCompat="@drawable/ic_back" />
+
+
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_toRightOf="@+id/img_back"
+        android:text="@string/title_feedback"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_16sdp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txt_title"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/login_border">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/feedbackTypeLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_12sdp"
+            android:hint="@string/feedback_type"
+            android:minHeight="@dimen/_60sdp"
+            android:textColorHint="@color/login_hint"
+            app:counterEnabled="false"
+            app:counterMaxLength="5"
+            app:counterOverflowTextAppearance="@style/CounterOverFlow"
+            app:counterTextAppearance="@style/CounterText"
+            app:errorEnabled="true"
+            app:hintTextAppearance="@style/HintText">
+
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_feedbackType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:minHeight="@dimen/_40sdp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            android:id="@+id/et_issue_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/feedbackTypeLayout"
+            android:layout_margin="@dimen/_12sdp"
+            android:background="@drawable/issue_border"
+            android:gravity="start"
+            android:textSize="16sp"
+            android:hint="@string/feedback_details"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="500"
+            android:minHeight="@dimen/_150sdp"
+            android:padding="@dimen/_10sdp"
+            android:scrollbars="vertical"
+            android:textColor="@color/hint"
+            android:textColorHint="@color/hint" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_issue_details"
+            android:layout_marginLeft="18dp"
+            android:gravity="top"
+            android:text="@string/feedback_note_txt"
+            android:textColor="#83868B"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_above="@+id/transparentView"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_background"
+            android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingTop="8dip"
+            android:paddingBottom="8dip"
+            android:text="@string/dashboard_submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_15sdp" />
+
+        <View
+            android:id="@+id/transparentView"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/transparent" />
+    </RelativeLayout>
+</RelativeLayout>

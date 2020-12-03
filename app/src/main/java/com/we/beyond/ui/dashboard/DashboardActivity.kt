@@ -643,7 +643,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         issuePosted!!.setOnClickListener {
             if(issuePostedCount!!.text == "0")
             {
-                ConstantMethods.showWarning(this,"Not Found","No Issues Posted in past 30 days.")
+                ConstantMethods.showToast(this,"No issues posted in past 30 days.")
             }
             else {
                 val intent = Intent(this, SummaryDetailsActivity::class.java)
@@ -662,7 +662,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         issueResolved!!.setOnClickListener {
             if(issueResolvedCount!!.text == "0")
             {
-                ConstantMethods.showWarning(this,"Not Found","No Issues Resolved in past 30 days.")
+                ConstantMethods.showToast(this,"No issues resolved in past 30 days.")
             }
             else {
                 val intent = Intent(this, SummaryDetailsActivity::class.java)
@@ -680,7 +680,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         gatheringNearby!!.setOnClickListener {
             if(gatheringsNearByCount!!.text == "0")
             {
-                ConstantMethods.showWarning(this,"Not Found","No Gathering arranged in past 30 days.")
+                ConstantMethods.showToast(this,"No gathering arranged in past 30 days.")
             }
             else {
                 val intent = Intent(this, SummaryDetailsActivity::class.java)
@@ -698,7 +698,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         newInfoPublished!!.setOnClickListener {
             if(newInfoPublishedCount!!.text == "0")
             {
-                ConstantMethods.showWarning(this,"Not Found","No new info published in past 30 days.")
+                ConstantMethods.showToast(this,"No new info published in past 30 days.")
             }
             else {
                 val intent = Intent(this, SummaryDetailsActivity::class.java)
@@ -760,7 +760,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         pullToRefresh!!.setOnRefreshListener {
             try {
                 if (ConstantMethods.checkForInternetConnection(context)) {
-                    ConstantMethods.showProgessDialog(this, "Please Wait...")
+                    ConstantMethods.showProgessDialog(this, "Please wait...")
                     dashboardPresenter!!.getSummaryOnResume(
                         this,
                         latitude.toString(),
@@ -1245,7 +1245,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     else -> {
 
                         if (ConstantMethods.checkForInternetConnection(context)) {
-                            ConstantMethods.showProgessDialog(this, "Please Wait...")
+                            ConstantMethods.showProgessDialog(this, "Please wait...")
                             dashboardPresenter!!.getSummaryOnResume(
                                 this,
                                 latitude.toString(),

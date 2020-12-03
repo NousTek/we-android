@@ -30,6 +30,7 @@ import com.we.beyond.presenter.profile.ProfileImpl
 import com.we.beyond.presenter.profile.ProfilePresenter
 import com.we.beyond.ui.badges.BadgesActivity
 import com.we.beyond.ui.dashboard.DashboardActivity
+import com.we.beyond.ui.feedback.FeedbackActivity
 import com.we.beyond.ui.login.LoginActivity
 import com.we.beyond.util.*
 import com.white.easysp.EasySP
@@ -78,6 +79,7 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
     var myConnectTitle : TextView?=null
     var myActivitiesTitle : TextView?=null
     var changePasswordTitle : TextView?=null
+    var feedbackTitle : TextView?=null
     var logoutTitle : TextView?=null
 
     /** init progress bar */
@@ -94,6 +96,7 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
     var myConnectLayout : RelativeLayout?=null
     var myActivitiesLayout : RelativeLayout?=null
     var changePasswordLayout : RelativeLayout?=null
+    var feedbackLayout : RelativeLayout?=null
     var logout : RelativeLayout?=null
     var badgesLayout : RelativeLayout?=null
 
@@ -384,6 +387,11 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
+        feedbackLayout!!.setOnClickListener {
+            val intent = Intent(this, FeedbackActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+        }
 
         /** It remove the stored value and redirect to LOginActivity */
         logout!!.setOnClickListener {
@@ -586,6 +594,9 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
         changePasswordTitle = findViewById(R.id.txt_change_password_title)
         changePasswordTitle!!.typeface = ConstantFonts.raleway_medium
 
+        feedbackTitle=findViewById(R.id.txt_feedback_title)
+        feedbackTitle!!.typeface=ConstantFonts.raleway_medium
+
         logoutTitle = findViewById(R.id.txt_logout_title)
         logoutTitle!!.typeface = ConstantFonts.raleway_medium
 
@@ -613,6 +624,7 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
         myConnectLayout = findViewById(R.id.myConnectLayout)
         myActivitiesLayout = findViewById(R.id.myActivitiesLayout)
         changePasswordLayout = findViewById(R.id.changePasswordLayout)
+        feedbackLayout=findViewById(R.id.feedbackLayout)
         logout = findViewById(R.id.logoutLayout)
         badgesLayout = findViewById(R.id.editBadgesLayout)
 

@@ -224,7 +224,7 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
 
         /** It changes submit issue button visibility and title text depends on condition */
         if (isSelected) {
-            title!!.text = "Link An Issue"
+            title!!.text = "Link an Issue"
             submitIssue!!.visibility = View.GONE
             nearByIssuesRecycler!!.setPadding(0, 0, 0, 0)
         } else {
@@ -505,6 +505,8 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -600,9 +602,8 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
                     }
                 } else {
 
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Category",
                         "Please select at least one category"
                     )
                 }
@@ -968,7 +969,7 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
                     }
                 } else {
 
-                    ConstantMethods.showWarning(this, "Category", "Please select at least one category")
+                    ConstantMethods.showToast(this, "Please select at least one category")
                 }
             }
 

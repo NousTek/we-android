@@ -10,7 +10,7 @@
        android:id="@+id/txt_category_selection_title"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="Select the category"
+       android:text="Select the Category"
        android:textSize="@dimen/_16sdp"
        android:layout_centerHorizontal="true"
        android:textColor="@color/submit_issue_title_color"

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
@@ -16,6 +17,7 @@ import android.os.StrictMode
 import android.provider.MediaStore
 import android.view.View
 import android.widget.*
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
@@ -172,7 +174,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
         /** initialize onclick listener */
         initWithListener()
-
+        initTextChangeListener()
         /** get Shared data */
 //        getSharedData()
 
@@ -207,6 +209,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         }
         else{
             create!!.text = "Create"
+            shouldEnabledCreateButton(false)
         }
 
         println("campaign data $isEdit")
@@ -218,7 +221,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
             //campaignId = gatheringDetailsData!!.data._id
             linkIssueTitle = findViewById(R.id.et_link_issue_title)
             linkIssueTitle!!.setText(gatheringDetailsData!!.data.issue.title)
-            linkIssueTitle!!.typeface = ConstantFonts.raleway_semibold
+            linkIssueTitle!!.typeface = ConstantFonts.raleway_regular
             gatheringTitle!!.setText(gatheringDetailsData!!.data.title)
             city = gatheringDetailsData!!.data.city
             val json1 = Gson().toJson(LatLongSelectedPojo(gatheringDetailsData!!.data.location.coordinates[0].toDouble(),gatheringDetailsData!!.data.location.coordinates[1].toDouble()))
@@ -229,7 +232,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
             dateTime!!.setText(ConstantMethods.convertStringToDateStringFull(gatheringDetailsData!!.data.gatheringDate))
             locationTitle = findViewById(R.id.txt_location_title)
             locationTitle!!.text = gatheringDetailsData!!.data.address
-            locationTitle!!.typeface = ConstantFonts.raleway_semibold
+            locationTitle!!.typeface = ConstantFonts.raleway_regular
 
 
             if(gatheringDetailsData!!.data.imageUrls!= null && gatheringDetailsData!!.data.imageUrls.isNotEmpty())
@@ -257,7 +260,78 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
     }
 
+    private fun initTextChangeListener()
+    {
+        linkIssueTitle!!.addTextChangedListener(
+            linkIssueTitle!!.doOnTextChanged { text, start, count, after ->
+            run {
+                if (linkIssueTitle!!.text!!.isNotEmpty() && gatheringTitle!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty()) {
+                    shouldEnabledCreateButton(true)
+                }
+                else
+                {
+                    shouldEnabledCreateButton(false)
+                }
+            }
+        }
+    )
 
+        dateTime!!.addTextChangedListener(
+            dateTime!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (linkIssueTitle!!.text!!.isNotEmpty() && gatheringTitle!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+
+        gatheringTitle!!.addTextChangedListener(
+            gatheringTitle!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (linkIssueTitle!!.text!!.isNotEmpty() && gatheringTitle!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+
+        gatheringDetails!!.addTextChangedListener(
+            gatheringDetails!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (linkIssueTitle!!.text!!.isNotEmpty() && gatheringTitle!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+    }
+
+    private fun shouldEnabledCreateButton(shouldEnabled: Boolean)
+    {
+        if(shouldEnabled)
+        {
+            create!!.isEnabled=true
+            create!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+        }
+        else
+        {
+            create!!.isEnabled=false
+            create!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.badges_color))
+        }
+    }
     /** get all shared data and set to edit text  */
     private fun getSharedData() {
         //issueId = EasySP.init(this).getString("issueId")
@@ -294,13 +368,13 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         if (issueTitle != null && issueTitle!!.isNotEmpty()) {
             linkIssueTitle = findViewById(R.id.et_link_issue_title)
             linkIssueTitle!!.setText(issueTitle)
-            linkIssueTitle!!.typeface = ConstantFonts.raleway_semibold
+            linkIssueTitle!!.typeface = ConstantFonts.raleway_regular
         }
 
         if (address != null && address!!.isNotEmpty()) {
             locationTitle = findViewById(R.id.txt_location_title)
             locationTitle!!.text = address
-            locationTitle!!.typeface = ConstantFonts.raleway_semibold
+            locationTitle!!.typeface = ConstantFonts.raleway_regular
         }
 
         gatheringTitle = findViewById(R.id.et_gathering_title)
@@ -378,9 +452,8 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                         } else {
                             //it's before current'
                             //Toast.makeText(getApplicationContext(), "Invalid Time", Toast.LENGTH_SHORT).show()
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "",
                                 "Please select valid time for gathering."
                             )
                         }
@@ -501,16 +574,16 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
                 if (linkIssueTitle!!.text!!.isEmpty())
                 {
-                    ConstantMethods.showWarning(this,"Please Link An Issue", "You need to link an issue to this gathering to post")
+                    ConstantMethods.showToast(this, "Please Link an Issue")
                 }
                 else if (gatheringTitle!!.text.isEmpty()) {
-                    ConstantMethods.showWarning(this,"Title", "Please Enter Title")
+                    ConstantMethods.showToast(this, "Please enter title")
                 } else if (gatheringDetails!!.text.isEmpty()) {
-                    ConstantMethods.showWarning(this,"Details", "Please Enter Gathering Details")
+                    ConstantMethods.showToast(this,"Please enter gathering details")
                 } else if (dateTime!!.text.isEmpty()) {
-                    ConstantMethods.showWarning(this,"Date And Time", "Please Select Date And Time")
+                    ConstantMethods.showToast(this, "Please select date and time")
                 } else if (locationTitle!!.text.isEmpty()) {
-                    ConstantMethods.showWarning(this,"Location", "Please Select Gathering Location")
+                    ConstantMethods.showToast(this, "Please select gathering location")
                 }/*else if (media!!.isEmpty()) {
                     ConstantMethods.showWarning(this,"Please Upload Photo", "You need to attach at least 1 photo to this gathering to post")
                 }*/
@@ -599,7 +672,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                      }
  */
                 } else {
-                    ConstantMethods.showError(this, "Please wait", "Please wait media uploading.")
+                    ConstantMethods.showToast(this,  "Please wait media uploading.")
                 }
             }
 
@@ -678,9 +751,8 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
                 count = 0
 
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "Please wait",
                     "Please wait media uploading."
                 )
             }
@@ -728,18 +800,18 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
             if (linkIssueTitle!!.text!!.isEmpty())
             {
-                ConstantMethods.showWarning(this,"Please Link An Issue", "You need to link an issue to this gathering to post")
+                ConstantMethods.showToast(this, "You need to link an issue to this gathering to post")
             }
             else if (gatheringTitle!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this,"Title", "Please Enter Title")
+                ConstantMethods.showToast(this, "Please enter title")
             } else if (gatheringDetails!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this,"Details", "Please Enter Gathering Details")
+                ConstantMethods.showToast(this,"Please enter gathering details")
             } else if (dateTime!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this,"Date And Time", "Please Select Date And Time")
+                ConstantMethods.showToast(this, "Please select date and time")
             } else if (locationTitle!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this,"Location", "Please Select Gathering Location")
+                ConstantMethods.showToast(this, "Please select gathering location")
             }else if (media!!.isEmpty()) {
-                ConstantMethods.showWarning(this,"Please Upload Photo", "You need to attach at least 1 photo to this gathering to post")
+                ConstantMethods.showToast(this, "You need to attach at least 1 photo to this gathering to post")
             }
 
             else {
@@ -883,7 +955,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         locationTitle = findViewById(R.id.txt_location_title)
         locationTitle!!.text = ""
         locationTitle!!.hint = resources.getString(R.string.gathering_issue_location_hint)
-        locationTitle!!.typeface = ConstantFonts.raleway_semibold
+        locationTitle!!.typeface = ConstantFonts.raleway_regular
 
         addLocation = findViewById(R.id.txt_add_location)
         addLocation!!.typeface = ConstantFonts.raleway_semibold
@@ -904,16 +976,16 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
         /** ids of edit text */
         gatheringTitle = findViewById(R.id.et_gathering_title)
-        gatheringTitle!!.typeface = ConstantFonts.raleway_semibold
+        gatheringTitle!!.typeface = ConstantFonts.raleway_regular
 
         gatheringDetails = findViewById(R.id.et_gathering_details)
-        gatheringDetails!!.typeface = ConstantFonts.raleway_semibold
+        gatheringDetails!!.typeface = ConstantFonts.raleway_regular
 
         dateTime = findViewById(R.id.et_date_time)
-        dateTime!!.typeface = ConstantFonts.raleway_semibold
+        dateTime!!.typeface = ConstantFonts.raleway_regular
 
         linkIssueTitle = findViewById(R.id.et_link_issue_title)
-        linkIssueTitle!!.typeface = ConstantFonts.raleway_semibold
+        linkIssueTitle!!.typeface = ConstantFonts.raleway_regular
 
         /** ids of button */
         create = findViewById(R.id.btn_create)
@@ -931,7 +1003,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 
         /** ids of text input layout*/
         linkIssueLayout = findViewById(R.id.linkIssueLayout)
-
+        linkIssueLayout!!.typeface = ConstantFonts.raleway_regular
     }
 
     /** It opens respected activity */

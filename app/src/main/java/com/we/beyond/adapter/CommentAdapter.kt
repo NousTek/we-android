@@ -561,9 +561,8 @@ class CommentAdapter(
                         ignoreCase = true
                     ) && commentDetails!![position].markAsFinal
                 ) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You cannot delete approved resolution"
                     )
                 } else if (selectedPositionId == commentDetails!![position]._id && commentDetails!![position].commentType.equals(
@@ -1270,9 +1269,8 @@ class CommentAdapter(
                         ignoreCase = true
                     ) && commentDetails!![position].markAsFinal
                 ) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You cannot abuse approved resolution"
                     )
                 } else if (selectedPositionId == commentDetails!![position]._id && commentDetails!![position].commentType.equals(
@@ -1483,9 +1481,8 @@ class CommentAdapter(
                         ignoreCase = true
                     ) && commentDetails!![position].markAsFinal
                 ) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You cannot edit approved resolution"
                     )
                 } else if (selectedPositionId == commentDetails!![position]._id && commentDetails!![position].commentType.equals(

@@ -517,7 +517,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
                 organizationNameLayout!!.isErrorEnabled = false
             }
             if (locationText.isEmpty()) {
-                ConstantMethods.showWarning(this, "", "Please Select Home Location")
+                ConstantMethods.showToast(this,  "Please select home location")
             } else {
 
             }
@@ -633,17 +633,15 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
                                             postDataToServer(jsonObject)
                                         }
                                     } else {
-                                        ConstantMethods.showWarning(
+                                        ConstantMethods.showToast(
                                             this,
-                                            "Validation",
                                             "Invalid Password"
                                         )
                                     }
                                 } else {
-                                    ConstantMethods.showWarning(
+                                    ConstantMethods.showToast(
                                         this,
-                                        "",
-                                        "Please Select Home Location"
+                                        "Please select home location"
                                     )
                                 }
                             } else {
@@ -659,20 +657,18 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
                             retypePasswordLayout!!.error = "Password Mismatch"
                         }
                     } else {
-                        ConstantMethods.showWarning(this, "Error", "Please Fill Mobile Number")
+                        ConstantMethods.showToast(this,  "Please enter mobile number")
                     }
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Validation",
-                        "Please enter valid Email Address"
+                        "Please enter valid email address"
                     )
                 }
             } else {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "Error",
-                    "Please fill all the details for successful registration."
+                    "Please enter all the details for successful registration."
                 )
             }
         } catch (e: Exception) {

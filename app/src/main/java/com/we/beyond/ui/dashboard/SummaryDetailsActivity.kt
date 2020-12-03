@@ -361,6 +361,8 @@ class SummaryDetailsActivity : AppCompatActivity(),
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -825,14 +827,14 @@ class SummaryDetailsActivity : AppCompatActivity(),
 */
 
             noContent!!.visibility = View.VISIBLE
-            noContent!!.text = "There are no published connects found in this area in past 30 days."
+            noContent!!.text = "There are no published articles found in this area in past 30 days."
 
 
 
             try {
                 val sweetAlertDialog = SweetAlertDialog(this , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
-                sweetAlertDialog.contentText = "There are no published connects found in this area in past 30 days."
+                sweetAlertDialog.contentText = "There are no published articles found in this area in past 30 days."
                 sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {

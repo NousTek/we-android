@@ -2,13 +2,14 @@ package com.we.beyond.ui.issues.submitIssue
 
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -150,14 +151,14 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         submitIssueAdapter!!.addFragmentHolder(
             SubmitIssueFragmentPagerAdapter.FragmentHolder(
                 descriptionFragment!!,
-                "Describe the issue"
+                "Describe the Issue"
             )
         )
 
         submitIssueAdapter!!.addFragmentHolder(
             SubmitIssueFragmentPagerAdapter.FragmentHolder(
                 locationFragment!!,
-                "Locate the area"
+                "Locate the Area"
             )
         )
 
@@ -166,6 +167,11 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         viewPager!!.isEnabled = false
         viewPager!!.adapter = submitIssueAdapter
 
+    }
+
+    fun isLocationFragmentVisible():Boolean
+    {
+      return viewPager!!.currentItem==3
     }
 
     private fun initWithListener() {
@@ -295,7 +301,7 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                 when (viewPager!!.currentItem) {
                     1 -> {
                         if (categoryId!!.isEmpty()) {
-                            ConstantMethods.showWarning(this, "Category", "Please Select Category")
+                            ConstantMethods.showToast(this,  "Please Select Category")
                         } else {
                             viewPager!!.currentItem = selectedPageIndex + 1
                         }
@@ -303,9 +309,9 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                     }
                     2 -> {
                         if (issueTitle!!.isEmpty()) {
-                            ConstantMethods.showWarning(this, "Title", "Please enter title")
+                            ConstantMethods.showToast(this, "Please enter title")
                         } else if (issueDetails!!.isEmpty()) {
-                            ConstantMethods.showWarning(this, "Details", "Please enter details")
+                            ConstantMethods.showToast(this, "Please enter details")
                         } else {
                             viewPager!!.currentItem = selectedPageIndex + 1
                         }
@@ -320,9 +326,8 @@ class SubmitAnIssueActivity : AppCompatActivity(),
 
 
                         if (media!!.isEmpty()) {
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please Upload Photo / Video",
                                 "You need to attach at least 1 photo or video to this issue to post"
                             )
                         } else {
@@ -337,21 +342,20 @@ class SubmitAnIssueActivity : AppCompatActivity(),
             else {
                 println("position 3")
                 if (latlong!!.isEmpty()) {
-                    ConstantMethods.showWarning(this, "LatLong", "Please select location")
+                    ConstantMethods.showToast(this,  "Please select location")
                 } else if (address.isEmpty()) {
-                    ConstantMethods.showWarning(this, "Address", "Please enter address")
+                    ConstantMethods.showToast(this,  "Please enter address")
                 } else if (city.isEmpty()) {
-                    ConstantMethods.showWarning(this, "City", "Please select city")
+                    ConstantMethods.showToast(this,  "Please select city")
                 } else if (categoryId!!.isEmpty()) {
-                    ConstantMethods.showWarning(this, "Category", "Please select category")
+                    ConstantMethods.showToast(this,  "Please select category")
                 } else if (issueTitle!!.isEmpty()) {
-                    ConstantMethods.showWarning(this, "Title", "Please enter title")
+                    ConstantMethods.showToast(this,  "Please enter title")
                 } else if (issueDetails!!.isEmpty()) {
-                    ConstantMethods.showWarning(this, "Details", "Please enter details")
+                    ConstantMethods.showToast(this,  "Please enter details")
                 } else if (media!!.isEmpty()) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Please Upload Photo / Video",
                         "You need to attach at least 1 photo or video to this issue to post"
                     )
                 } else {
@@ -498,21 +502,6 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                     jsonObject.add("coordinates", latlongJsonArray)
                 }
 
-                //image array
-//                    if(!imageArray.size.equals(issueDetailsData!!.data.imageUrls.size)) {
-//                        val imageJsonArray = JsonArray()
-//
-//                        for (i in 0 until imageArray.size) {
-//
-//                            imageJsonArray.add(imageArray[i])
-//
-//                        }
-//
-//                        println("images json $imageArray")
-//                        jsonObject.add("imageUrls", imageJsonArray)
-//
-//                    }
-
                 val imageJsonArray = JsonArray()
 
                 for (i in 0 until imageArray.size) {
@@ -524,32 +513,6 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                 println("images json $imageArray")
                 jsonObject.add("imageUrls", imageJsonArray)
 
-//                    if(!imageArray.size.equals(issueDetailsData!!.data.imageUrls.size)) {
-//                        val imageJsonArray = JsonArray()
-//
-//                        for (i in 0 until imageArray.size) {
-//
-//                            imageJsonArray.add(imageArray[i])
-//
-//                        }
-//
-//                        println("images json $imageArray")
-//                        jsonObject.add("imageUrls", imageJsonArray)
-//
-//                    }
-
-//                    if(!videoArray.size.equals(issueDetailsData!!.data.videoUrls.size)) {
-//                        //video array
-//                        val videoJsonArray = JsonArray()
-//                        for (i in 0 until videoArray.size) {
-//
-//                            videoJsonArray.add(videoArray[i])
-//
-//                        }
-//                        println("video json $videoArray")
-//                        jsonObject.add("videoUrls", videoJsonArray)
-//                    }
-
                 val videoJsonArray = JsonArray()
                 for (i in 0 until videoArray.size) {
 
@@ -559,11 +522,6 @@ class SubmitAnIssueActivity : AppCompatActivity(),
                 println("video json $videoArray")
                 jsonObject.add("videoUrls", videoJsonArray)
 
-//                    if(!videoArray.size.equals(issueDetailsData!!.data.videoUrls.size)) {
-//                        //video array
-//
-//                    }
-
 
                 if (count == mediaPojo.size) {
                     postDataToServerUpdate(jsonObject)
@@ -571,9 +529,8 @@ class SubmitAnIssueActivity : AppCompatActivity(),
 
                     count = 0
 
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "",
                         "Please wait while media is uploading."
                     )
                 }
@@ -694,9 +651,8 @@ class SubmitAnIssueActivity : AppCompatActivity(),
 
                         count = 0
 
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "",
                             "Please wait while media is uploading."
                         )
                     }
@@ -741,9 +697,8 @@ class SubmitAnIssueActivity : AppCompatActivity(),
 
                         count = 0
 
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "",
                             "Please wait while media is uploading."
                         )
                     }
@@ -785,9 +740,8 @@ class SubmitAnIssueActivity : AppCompatActivity(),
 
                         count = 0
 
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "",
                             "Please wait while media is uploading."
                         )
                     }
@@ -904,9 +858,9 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         descriptionImage = findViewById(R.id.img_description_step_icon)
         mediaImage = findViewById(R.id.img_media_step_icon)
         locationImage = findViewById(R.id.img_location_step_icon)
-        shouldDisableDescriptionIcon(false)
-        shouldDisableCategoryIcon(false)
-        shouldDisableLocationIcon(false)
+        shouldEnableDescriptionIcon(false)
+        shouldEnableCategoryIcon(false)
+        shouldEnableLocationIcon(false)
         /** ids of text view */
         submitIssueTitle = findViewById(R.id.txt_submit_issue_title)
         submitIssueTitle!!.typeface = ConstantFonts.raleway_semibold
@@ -920,7 +874,7 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         shouldEnableNextBtn(false)
     }
 
-    fun shouldDisableDescriptionIcon(shouldEnable: Boolean)
+    fun shouldEnableDescriptionIcon(shouldEnable: Boolean)
     {
         if(!isEdit)
         {
@@ -941,7 +895,7 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         }
 
     }
-    fun shouldDisableCategoryIcon(shouldEnable: Boolean)
+    fun shouldEnableCategoryIcon(shouldEnable: Boolean)
     {
         if(!isEdit)
         {
@@ -962,7 +916,7 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         }
 
     }
-    fun shouldDisableLocationIcon(shouldEnable: Boolean)
+    fun shouldEnableLocationIcon(shouldEnable: Boolean)
     {
         if(!isEdit)
         {
@@ -988,10 +942,10 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         if(!isEdit) {
             if (shouldEnable) {
                 next!!.isEnabled = true
-                next!!.alpha = 1f
+                next!!!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
             } else {
                 next!!.isEnabled = false
-                next!!.alpha = 0.5f
+                next!!!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.badges_color))
             }
         }
         else
@@ -1016,11 +970,37 @@ class SubmitAnIssueActivity : AppCompatActivity(),
     override fun onBackPressed() {
         if(shouldShowConfirmationAlert())
         {
-            ConstantMethods.showAlert(this, "", "Are you sure you want to discard this issue?")
+            askUserConfirmation()
         }
         else {
             super.onBackPressed()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+    }
+
+    private fun askUserConfirmation()
+    {
+        try {
+            val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+            sweetAlertDialog.contentText = "Are you sure you want to discard this issue?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
+            sweetAlertDialog.show()
+            sweetAlertDialog.setCancelable(false)
+            sweetAlertDialog.setConfirmClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+                finish()
+            }
+
+
+            sweetAlertDialog.setCancelClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+            }
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+
         }
     }
 

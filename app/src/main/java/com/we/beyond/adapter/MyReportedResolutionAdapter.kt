@@ -605,14 +605,14 @@ class MyReportedResolutionAdapter (
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == resolutionDetails!![position].user._id) {
 
-                        ConstantMethods.showWarning(context,"","You can not abuse your resolution.")
+                        ConstantMethods.showToast(context,"You cannot abuse your resolution.")
                     }
                     else if (resolutionDetails!![position].commentType.equals(
                             "resolution",
                             ignoreCase = true
                         ) && resolutionDetails!![position].markAsFinal
                     ) {
-                        ConstantMethods.showWarning(context,"","You can not abuse approved resolution.")
+                        ConstantMethods.showToast(context,"You cannot abuse approved resolution.")
                     }
                     else if (resolutionDetails!![position].commentType.equals(
                             "resolution",
@@ -642,10 +642,9 @@ class MyReportedResolutionAdapter (
                         ignoreCase = true
                     ) && resolutionDetails!![position].markAsFinal
                 ) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
-                        "You cant not edit approved resolution"
+                        "You cannot edit approved resolution"
                     )
                 } else if (userId == resolutionDetails!![position].user._id && resolutionDetails!![position].commentType.equals(
                         "resolution",

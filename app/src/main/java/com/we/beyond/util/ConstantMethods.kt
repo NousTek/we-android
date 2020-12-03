@@ -470,6 +470,10 @@ object ConstantMethods {
         }
     }
 
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message,Toast.LENGTH_LONG).show()
+    }
+
     fun showAlert(context: Context,title: String, message: String) {
         try {
             val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
@@ -487,6 +491,9 @@ object ConstantMethods {
             e.printStackTrace()
         }
     }
+
+
+
     /** Show error dialog  */
     fun showError(context: Context, title: String, message: String) {
         try {

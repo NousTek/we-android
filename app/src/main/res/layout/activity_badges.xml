@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:text="Issue Posted"
+                    android:text="Issues Posted"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -170,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:text="My Resolved Issues"
+                    android:text="Issues Resolved"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 

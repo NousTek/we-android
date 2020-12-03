@@ -956,7 +956,7 @@ class GatheringCommentAdapter(
                         val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                         if (userId == commentDetails!![position].reply.user._id) {
 
-                            ConstantMethods.showWarning(context, "", "You cannot abuse your gathering.")
+                            ConstantMethods.showToast(context, "You cannot abuse your gathering.")
 
 
 
@@ -1015,7 +1015,7 @@ class GatheringCommentAdapter(
 
                             }*/
 
-                            ConstantMethods.showWarning(context, "", "You cannot abuse your gathering.")
+                            ConstantMethods.showToast(context,  "You cannot abuse your gathering.")
                         } else {
 
                            /* try {
@@ -1061,7 +1061,7 @@ class GatheringCommentAdapter(
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == commentDetails!![position].user._id) {
 
-                        ConstantMethods.showWarning(context, "", "You cannot abuse your gathering.")
+                        ConstantMethods.showToast(context,  "You cannot abuse your gathering.")
 
                        /* println("user id ${userId} comment user ${commentDetails!![position].user._id}")
                         try {

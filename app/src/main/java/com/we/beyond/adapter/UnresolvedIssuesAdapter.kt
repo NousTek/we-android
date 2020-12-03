@@ -324,7 +324,7 @@ class UnresolvedIssuesAdapter(
 
 
             holder.itemView.img_already_resolved!!.setOnClickListener {
-                ConstantMethods.showWarning(context, "Issue Resolved", "Issue already resolved")
+                ConstantMethods.showToast(context,  "Issue already resolved")
             }
 
             /** It opens ReportResolvedActivity with pass below data when click on it */
@@ -402,9 +402,8 @@ class UnresolvedIssuesAdapter(
             holder.itemView.img_gathering.setOnClickListener {
 
                 if (unresolveIssuesDetails!![position].resolved) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You cannot create gathering on resolved issues."
                     )
                 }
@@ -486,10 +485,9 @@ class UnresolvedIssuesAdapter(
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == unresolveIssuesDetails!![position].user._id) {
                     if (unresolveIssuesDetails!![position].resolved) {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             context,
-                            "",
-                            "You can not delete resolved issues."
+                            "You cannot delete resolved issues."
                         )
                     } else {
                         try {
@@ -683,12 +681,12 @@ class UnresolvedIssuesAdapter(
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == unresolveIssuesDetails!![position].user._id) {
 
-                        ConstantMethods.showWarning(context, "", "You can not abuse your issue.")
+                        ConstantMethods.showToast(context,  "You cannot abuse your issue.")
                     } else if (unresolveIssuesDetails!![position].resolved) {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             context,
-                            "",
-                            "You can not abuse resolved issues."
+
+                            "You cannot abuse resolved issues."
                         )
                     } else {
 

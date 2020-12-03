@@ -58,7 +58,7 @@
             <AutoCompleteTextView
                 android:id="@+id/dropdown_registration_for"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="wrap_content"
                 android:editable="false"
                 />
 

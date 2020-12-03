@@ -466,10 +466,10 @@ class ConnectIssueActivity : AppCompatActivity(), ConnectIssuePresenter.IConnect
 
         //Toast.makeText(this,"first call",Toast.LENGTH_SHORT).show()
         if (connectPojo.data.size == 0) {
-            ConstantMethods.showWarning(this, "", "There are no published connect.")
+            ConstantMethods.showToast(this, "There are no published articles.")
 
             noContent!!.visibility = View.VISIBLE
-            noContent!!.text = "There are no published connect."
+            noContent!!.text = "There are no published articles."
 
 
         } else {
@@ -513,10 +513,10 @@ class ConnectIssueActivity : AppCompatActivity(), ConnectIssuePresenter.IConnect
 
         //Toast.makeText(this,"first call",Toast.LENGTH_SHORT).show()
         if (connectPojo.data.size == 0) {
-            ConstantMethods.showWarning(this, "", "There are no published connect.")
+            ConstantMethods.showToast(this, "There are no published articles.")
 
             noContent!!.visibility = View.VISIBLE
-            noContent!!.text = "There are no published connect."
+            noContent!!.text = "There are no published articles."
 
 
         } else {

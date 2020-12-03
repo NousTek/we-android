@@ -92,9 +92,8 @@ class GoingActivity : AppCompatActivity(),GoingByIdPresenter.IGoingByIdView
         if (goingIdDetails.data.size == 0) {
 
 
-            ConstantMethods.showWarning(
+            ConstantMethods.showToast(
                 this,
-                "",
                 "There are no going members."
             )
         } else {

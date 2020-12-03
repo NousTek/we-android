@@ -247,10 +247,9 @@ class UpcomingGatheringAdapter
             holder.itemView.img_create_campaign.setOnClickListener {
 
                 if (gatheringList!![position].issue.resolved) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
-                        "You cannot create campaign on resolved issues."
+                        "You cannot create a campaign on resolved issues."
                     )
 
                 } else {
@@ -638,10 +637,9 @@ class UpcomingGatheringAdapter
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == gatheringList!![position].user._id) {
 
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             context,
-                            "",
-                            "You can not abuse your gathering."
+                            "You cannot abuse your gathering."
                         )
                     } else {
 

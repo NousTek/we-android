@@ -25,6 +25,7 @@
 
     //Registration Activity
     <string name="registration_title">Registration</string>
+    <string name="feedback_type">Type of issue</string>
     <string name="registration_for_hint">Registration for</string>
     <string name="registration_first_name_hint">First Name</string>
     <string name="registration_second_name_hint">Last Name</string>
@@ -46,8 +47,8 @@
     <string name="dashboard_issues">Issue</string>
     <string name="dashboard_gathering">Gathering</string>
     <string name="dashboard_connect">Article</string>
-    <string name="dashboard_heatmap">Locate\nIssues</string>
-    <string name="dashboard_near_by_me">My\nNeighbours</string>
+    <string name="dashboard_heatmap">Locate Issues</string>
+    <string name="dashboard_near_by_me">My Neighbours</string>
     <string name="title_near_by_me">My Neighbours</string>
     <string name="dashboard_leaderborad">Leaderboard</string>
     <string name="dashboard_profile">Profile</string>
@@ -57,7 +58,7 @@
     <string name="dashboard_issue_posted_title">Issues Posted</string>
     <string name="dashboard_issue_resolved_title">Issues Resolved</string>
     <string name="dashboard_gatherings_nearby_title">Gatherings Nearby</string>
-    <string name="dashboard_new_info_published_title">Article Published</string>
+    <string name="dashboard_new_info_published_title">Articles Published</string>
     <string name="dashboard_card_radius">NEARBY IN Past 30 DAYS</string>
     <string name="dashboard_gatherings_up_coming">UPCOMING IN 30 DAYS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -81,7 +82,7 @@
 
     //near by issue activity
     <string name="near_by_issue_title">Issues</string>
-    <string name="submit_issue_button">Submit an issue</string>
+    <string name="submit_issue_button">Submit an Issue</string>
 
     //filter activity
     <string name="filter_title">Filter</string>
@@ -90,14 +91,14 @@
     <string name="add_location_title">Select Location</string>
 
     //publish connect activity
-    <string name="publish_connect_title">Publish Article</string>
+    <string name="publish_connect_title">Publish an Article</string>
     <string name="publish_connection_category">Category</string>
     <string name="connect_description_title">Article Title</string>
     <string name="connect_description_details">Article Details</string>
 
     //connect issue list activity
-    <string name="connect_title">Connect</string>
-    <string name="publish_connect_button">Publish Article</string>
+    <string name="connect_title">Articles</string>
+    <string name="publish_connect_button">Publish an Article</string>
 
     //create gathering activity
     <string name="create_gathering_title">Create a Gathering</string>
@@ -107,7 +108,7 @@
     <string name="gathering_issue_location_hint">Type Venue Address &amp; Attach Location Details</string>
 
     //gathering activity
-    <string name="gathering_title">Upcoming Gathering</string>
+    <string name="gathering_title">Upcoming Gatherings</string>
     <string name="create_gathering_button">Create a Gathering</string>
 
     //create campaign activity
@@ -120,12 +121,12 @@
 
     //profile activity
     <string name="profile_title">Profile</string>
-    <string name="reported_resolution_title">Reported Resolution</string>
+    <string name="reported_resolution_title">Reported Resolutions</string>
     <string name="my_issues_title">My Issues</string>
-    <string name="my_resolution_title">My Resolution</string>
+    <string name="my_resolution_title">My Resolutions</string>
     <string name="my_gathering_title">My Gatherings</string>
-    <string name="my_campaign_title">My Campaign</string>
-    <string name="my_connect_title">My Article</string>
+    <string name="my_campaign_title">My Campaigns</string>
+    <string name="my_connect_title">My Articles</string>
     <string name="my_activities_title">My Activities</string>
 
     //reported resolved activity
@@ -148,9 +149,9 @@
 
     //going activity
     <string name="going_title">Going</string>
-    <string name="txt_view_all_issues">View All\nIssues</string>
+    <string name="txt_view_all_issues">View All Issues</string>
     <string name="txt_view_all_nearby_gatherings">View All Gatherings</string>
-    <string name="txt_view_all_articles">View All\nArticles</string>
+    <string name="txt_view_all_articles">View All Articles</string>
     <string name="txt_need_an_account">Need an account?</string>
     <string name="txt_sign_up">Sign up</string>
     <string name="txt_post_on_whatsapp">Post on Whatsapp</string>
@@ -158,4 +159,16 @@
     <string name="facebook_app_id">811547289669854</string>
     <string name="fb_login_protocol_scheme">fb811547289669854</string>
     <string name="server_client_id">427490854376-maqmnhntq5ughmmi5te5jj33vv388q2j.apps.googleusercontent.com</string>
+    <string name="feedback_details">Description of issue</string>
+    <string name="feedback_note_txt">Please include as many details as possible</string>
+    <string name="title_feedback">Feedback</string>
+
+    // Feedback Activity
+    <string-array name="issueCategories">
+        <item>Problem with the App</item>
+        <item>Request Information</item>
+        <item>General Feedback</item>
+        <item>Report Abuse</item>
+        <item>Support</item>
+    </string-array>
 </resources>

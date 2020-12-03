@@ -115,7 +115,7 @@ class IssueCategoriesAdapter(
             if(context is SubmitAnIssueActivity) {
                 val submitActivity = context as SubmitAnIssueActivity
                 submitActivity.shouldEnableNextBtn(true)
-                submitActivity.shouldDisableDescriptionIcon(true)
+                submitActivity.shouldEnableDescriptionIcon(true)
             }
             setSelected(position)
 

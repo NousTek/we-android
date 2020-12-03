@@ -333,9 +333,8 @@ class ReportedResolutionActivity : AppCompatActivity(),
             }
 
             if (issueArray!!.size == 0) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "",
                     "There are no reported resolutions found."
                 )
 

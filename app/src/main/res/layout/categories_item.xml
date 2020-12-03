@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_100sdp"
+    android:layout_height="@dimen/_115sdp"
     app:cardElevation="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_10sdp"
     android:layout_margin="@dimen/_6sdp"

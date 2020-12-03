@@ -4,7 +4,10 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.AsyncTask
@@ -17,10 +20,12 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arthenica.mobileffmpeg.FFmpeg
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -43,6 +48,9 @@ import com.we.beyond.util.ConstantFonts
 import com.we.beyond.util.ConstantMethods
 import com.we.beyond.util.FileUtils
 import com.white.easysp.EasySP
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
 import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -59,7 +67,8 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
     val context: Context = this
     var createCampaignPresenter: CreateCampaignImpl? = null
     var mediaPresenter: MediaImpl? = null
-
+    private var projection =
+        arrayOf(MediaStore.MediaColumns.DATA)
     /** init image view */
     var back: ImageView? = null
     var closeGallery: ImageView? = null
@@ -147,7 +156,7 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
     var isVideoSelected: Boolean = false
     var isCamapign: Boolean = false
     var campaignDetailsData: CampaignPojo? = null
-
+    var connectionCategoryLayout: TextInputLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,13 +176,13 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
-
+        mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
         /** initialize ids of elements */
         initElementsWithIds()
 
         /** initialize onclick listener */
         initWithListener()
-
+        initTextChangeListener()
         /** get Shared data */
         getSharedData()
 
@@ -200,10 +209,11 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
 
         if (isEdit) {
-            create!!.text = "update"
+            create!!.text = "Update"
 
         } else {
-            create!!.text = "create"
+            create!!.text = "Create"
+            shouldEnabledCreateButton(false)
         }
 
         println("campaign data $isEdit")
@@ -214,7 +224,7 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
             campaignId = campaignDetailsData!!.data._id
             linkGatheringTitle = findViewById(R.id.et_link_gathering_title)
             linkGatheringTitle!!.setText(campaignDetailsData!!.data.gathering.title)
-            linkGatheringTitle!!.typeface = ConstantFonts.raleway_semibold
+            linkGatheringTitle!!.typeface = ConstantFonts.raleway_regular
             campaignTitle!!.setText(campaignDetailsData!!.data.title)
             city = campaignDetailsData!!.data.city
             latitude = campaignDetailsData!!.data.location.coordinates[0].toString()
@@ -223,7 +233,7 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
             dateTime!!.setText(ConstantMethods.convertStringToDateStringFull(campaignDetailsData!!.data.campaignDate))
             locationTitle = findViewById(R.id.txt_location_title)
             locationTitle!!.text = campaignDetailsData!!.data.address
-            locationTitle!!.typeface = ConstantFonts.raleway_semibold
+            locationTitle!!.typeface = ConstantFonts.raleway_regular
 
 
             if (campaignDetailsData!!.data.imageUrls != null && campaignDetailsData!!.data.imageUrls.isNotEmpty()) {
@@ -290,13 +300,13 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
         if (gatheringTitle != null && gatheringTitle!!.isNotEmpty()) {
             linkGatheringTitle = findViewById(R.id.et_link_gathering_title)
             linkGatheringTitle!!.setText(gatheringTitle)
-            linkGatheringTitle!!.typeface = ConstantFonts.raleway_semibold
+            linkGatheringTitle!!.typeface = ConstantFonts.raleway_regular
         }
 
         if (address != null && address!!.isNotEmpty()) {
             locationTitle = findViewById(R.id.txt_location_title)
             locationTitle!!.text = address
-            locationTitle!!.typeface = ConstantFonts.raleway_semibold
+            locationTitle!!.typeface = ConstantFonts.raleway_regular
         }
 
         campaignTitle = findViewById(R.id.et_campaign_title)
@@ -484,10 +494,9 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context!!,
-                        "",
-                        "You can not upload more than 1 video."
+                        "You cannot upload more than 1 video."
                     )
                 }
             } catch (e: Exception) {
@@ -503,10 +512,10 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                 EasySP.init(this).putString("campaignTitle", campaignTitle!!.text.toString())
                 EasySP.init(this).putString("campaignDetails", campaignDetails!!.text.toString())
 
-                val intent = Intent(Intent.ACTION_GET_CONTENT)
-                intent.type = "image/*"
-                startActivityForResult(intent, GALLERY_IMAGE)
-
+                if(mediaAdapter!=null)
+                    pickMedia(10-mediaAdapter!!.itemCount, MimeType.ofImage(), GALLERY_IMAGE)
+                else
+                    pickMedia(10, MimeType.ofImage(), GALLERY_IMAGE)
                 galleryOptionLayout!!.visibility = View.GONE
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -525,16 +534,16 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                     EasySP.init(this)
                         .putString("campaignDetails", campaignDetails!!.text.toString())
 
-                    val intent = Intent(Intent.ACTION_GET_CONTENT)
-                    intent.setType("video/*")
-                    startActivityForResult(intent, GALLERY_VIDEO)
+                    if(mediaAdapter!=null && !mediaAdapter!!.isVideoAvailable())
+                        pickMedia(1, MimeType.ofVideo(), GALLERY_VIDEO)
+                    else
+                        Toast.makeText(this, "You cannot upload more than one video", Toast.LENGTH_SHORT).show()
 
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context!!,
-                        "",
-                        "You can not upload more than 1 video."
+                        "You cannot upload more than 1 video."
                     )
                 }
             } catch (e: Exception) {
@@ -628,7 +637,7 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                     }
 
                 } else {
-                    ConstantMethods.showError(this, "Please wait", "Please wait media uploading.")
+                    ConstantMethods.showToast(this,  "Please wait media uploading.")
                 }
             }
 
@@ -718,9 +727,8 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
                 count = 0
 
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "Please wait",
                     "Please wait media uploading."
                 )
             }
@@ -784,9 +792,8 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                         }
 
                     } else {
-                        ConstantMethods.showError(
+                        ConstantMethods.showToast(
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -795,13 +802,13 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
             }
 
             if (campaignTitle!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this, "Title", "Please Enter Title")
+                ConstantMethods.showToast(this, "Please enter title")
             } else if (campaignDetails!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this, "Details", "Please Enter Campaign Details")
+                ConstantMethods.showToast(this, "Please enter campaign details")
             } else if (dateTime!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this, "Date And Time", "Please Select Date And Time")
+                ConstantMethods.showToast(this,  "Please select date and time")
             } else if (locationTitle!!.text.isEmpty()) {
-                ConstantMethods.showWarning(this, "Location", "Please Select Campaign Location")
+                ConstantMethods.showToast(this,  "Please Select Campaign Location")
             } else {
 
                 var latLongPojo: LatLongSelectedPojo =
@@ -919,9 +926,8 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
                             count = 0
 
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please wait",
                                 "Please wait media uploading."
                             )
                         }
@@ -982,9 +988,8 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
                             count = 0
 
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please wait",
                                 "Please wait media uploading."
                             )
                         }
@@ -1048,9 +1053,8 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
                             count = 0
 
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please wait",
                                 "Please wait media uploading."
                             )
                         }
@@ -1081,6 +1085,26 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
     }
 
+    private fun pickMedia(maxLimit:Int, mimeType : Set<MimeType>, requestCode: Int)
+    {
+        if(maxLimit>0) {
+            Matisse.from(this)
+                .choose(mimeType)
+                .countable(true)
+                .maxSelectable(maxLimit)
+                .gridExpectedSize(resources.getDimensionPixelSize(R.dimen.grid_expected_size))
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .thumbnailScale(0.85f)
+                .imageEngine(GlideEngine())
+                .showPreview(false) // Default is `true`
+                .forResult(requestCode);
+        }
+        else
+        {
+            Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     /** ui initialization */
     private fun initElementsWithIds() {
         /** ids of image view */
@@ -1089,11 +1113,12 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
         /** ids of text view */
         title = findViewById(R.id.txt_title)
         title!!.typeface = ConstantFonts.raleway_semibold
-
+        connectionCategoryLayout = findViewById(R.id.linkGatheringLayout)
+        connectionCategoryLayout!!.typeface=ConstantFonts.raleway_regular
         locationTitle = findViewById(R.id.txt_location_title)
         locationTitle!!.text = ""
         locationTitle!!.hint = resources.getString(R.string.campaign_issue_location_hint)
-        locationTitle!!.typeface = ConstantFonts.raleway_semibold
+        locationTitle!!.typeface = ConstantFonts.raleway_regular
 
         addLocation = findViewById(R.id.txt_add_location)
         addLocation!!.typeface = ConstantFonts.raleway_semibold
@@ -1103,7 +1128,7 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
 
         or = findViewById(R.id.txt_or)
-        or!!.typeface = ConstantFonts.raleway_semibold
+        or!!.typeface = ConstantFonts.raleway_regular
 
         mediaOr = findViewById(R.id.txt_media_or)
         mediaOr!!.typeface = ConstantFonts.raleway_regular
@@ -1114,13 +1139,13 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
         /** ids of edit text */
         campaignTitle = findViewById(R.id.et_campaign_title)
-        campaignTitle!!.typeface = ConstantFonts.raleway_semibold
+        campaignTitle!!.typeface = ConstantFonts.raleway_regular
 
         campaignDetails = findViewById(R.id.et_campaign_details)
-        campaignDetails!!.typeface = ConstantFonts.raleway_semibold
+        campaignDetails!!.typeface = ConstantFonts.raleway_regular
 
         dateTime = findViewById(R.id.et_date_time)
-        dateTime!!.typeface = ConstantFonts.raleway_semibold
+        dateTime!!.typeface = ConstantFonts.raleway_regular
 
         /** ids of button */
         create = findViewById(R.id.btn_create)
@@ -1199,6 +1224,61 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
     }
 
+    private fun getImageFilePath(uri: Uri) {
+        val cursor: Cursor =
+            contentResolver.query(uri, projection, null, null, null)!!
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val absolutePathOfImage =
+                    cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
+                absolutePathOfImage?.let { setSelectedImage(it, uri) } ?: setSelectedImage(uri.toString(), uri)
+            }
+            shouldEnabledCreateButton(isValidForm())
+        }
+    }
+
+    private fun setSelectedImage(filePath :String, uri: Uri)
+    {
+        val path = FileUtils().getRealPath(context!!, uri!!)
+
+        var file1: File? = null
+
+        if (path != null) {
+
+
+            val compressedPath =
+
+                ConstantMethods.getCompressImage(context!!, path)
+
+            if (compressedPath != null) {
+                file1 = File(compressedPath)
+            } else {
+                file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+            }
+
+        } else {
+            file1 = RealPathUtils.getFile(context!!, mMediaUri!!)
+
+        }
+
+
+        mediaStatusArray!!.add(
+            MediaUploadingPojo(
+                file1!!.absolutePath,
+                "",
+                "image",
+                false
+            )
+        )
+
+        val json1 = Gson().toJson(mediaStatusArray!!)
+        EasySP.init(context).putString(
+            ConstantEasySP.UPLOADED_MEDIA,json1)
+
+        mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+        mediaRecycler!!.adapter = mediaAdapter
+    }
+
     /** It get image url which selected from camera or gallery and set it to media adapter */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
@@ -1209,159 +1289,85 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
 
         if (requestCode == GALLERY_IMAGE) {
-            try {
-                mMediaUri = data!!.data
-                /* mMediaUri = data!!.getData()
-                 var imageStream: InputStream? = null
-                 try {
-                     imageStream = context!!.getContentResolver().openInputStream(mMediaUri!!)
 
-                     var file1 = File(mMediaUri!!.getPath())
-                     var bt: Bitmap
-                     bt = BitmapFactory.decodeStream(imageStream)
-                     bt = ConstantMethods.imageOrientationValidator(bt, file1.absolutePath)
-                     file1 = ConstantMethods.compressImage(context, bt)*/
-
-                //val path = RealPathUtils.getPath(context!!,mMediaUri!!)
-                val path = FileUtils().getRealPath(context, mMediaUri!!)
-
-                var file1: File? = null
-                if (path != null) {
-                    var compressedPath = ConstantMethods.getCompressImage(context, path)
-                    if (compressedPath != null) {
-                        file1 = File(compressedPath)
-                    } else {
-                        file1 = RealPathUtils.getFile(context, mMediaUri!!)
+            if(mediaAdapter!!.itemCount<10)
+            {
+                if (data != null) {
+                    val mSelected:List<Uri> = Matisse.obtainResult(data)
+                    for (i in mSelected!!.indices) {
+                        val uri = mSelected[i]
+                        getImageFilePath(uri)
                     }
 
-                } else {
-                    file1 = RealPathUtils.getFile(context, mMediaUri!!)
-
                 }
-
-
-                var length: Long? = file1!!.length()
-                length = length!! / 1024
-
-                //5mb in kb
-                /* if (length > 5120) run {
-                     ConstantMethods.showError(
-                         context,
-                         "Large Image Size",
-                         "Maximum image allowed is 5 MB"
-                     )
-
-                 }
-                 else {
- */
-                mediaStatusArray!!.add(
-                    MediaUploadingPojo(
-                        file1.absolutePath,
-                        "",
-                        "image",
-                        false
-                    )
-                )
-
-
-                mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
-                mediaRecycler!!.adapter = mediaAdapter
-                //}
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }
+            else
+            {
+                Toast.makeText(this, "You can't upload more that 10 photos", Toast.LENGTH_SHORT).show()
             }
 
-
         } else if (requestCode == GALLERY_VIDEO) {
-            try {
+            if (data != null) {
+                try {
+                    val mSelected:List<Uri> = Matisse.obtainResult(data)
+                    val uri: Uri = mSelected[0]
 
-                val uri: Uri = Uri.parse(data!!.data.toString())
+                    if (uri != null) {
+                        //val path = RealPathUtils.getPath(context!!, uri)
+                        val path = FileUtils().getRealPath(context, uri)
 
-                if (uri != null) {
-                    // val path = RealPathUtils.getPath(context!!, uri)
-                    val path = FileUtils().getRealPath(context!!, uri)
+                        val mimeType = ""
+                        if (path != null) {
+                            file = File(path)
+                        } else {
+                            file = RealPathUtils.getFile(context, uri)!!
+                        }
 
-                    val mimeType = ""
-                    if (path != null) {
-                        file = File(path)
-//                    mimeType = ConstantsMethods.getMimeType(path)
-                    } else {
-                        file = RealPathUtils.getFile(context!!, uri)!!
-//                    mimeType = ConstantsMethods.getMimeType(file.getPath())
-                    }
-                    var length: Long? = file!!.length()
-                    length = length!! / 1024
+                        var length: Long? = file!!.length()
+                        length = length!! / 1024
 
-                    //decodeFile(picturePath);
-                    //100mb in kb
-                    if (length!! > 102400) {
-                        ConstantMethods.showError(
-                            context!!,
-                            "Large Video Size",
-                            "Maximum video allowed is 100 MB"
-                        )
-
-                    } else {
-                        if (file != null) {
-                            fileUri = file!!.path
-
-                            println("gallery video path $fileUri")
-
-                            mediaStatusArray!!.add(
-                                MediaUploadingPojo(
-                                    fileUri!!,
-                                    "",
-                                    "video",
-                                    false
-                                )
+                        //decodeFile(picturePath);
+                        //100mb in kb
+                        if (length!! > 102400) {
+                            ConstantMethods.showError(
+                                context!!,
+                                "Large Video Size",
+                                "Maximum video allowed is 100 MB"
                             )
 
-                            mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
-                            mediaRecycler!!.adapter = mediaAdapter
+                        } else {
+
+
+                            if (file != null) {
+                                fileUri = file!!.path
+
+                                println("gallery video path $fileUri")
+
+                                mediaStatusArray!!.add(
+                                    MediaUploadingPojo(
+                                        fileUri!!,
+                                        "",
+                                        "video",
+                                        false
+                                    )
+                                )
+
+                                val json1 = Gson().toJson(mediaStatusArray!!)
+                                EasySP.init(this).put(ConstantEasySP.UPLOADED_MEDIA, json1)
+
+                                mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
+                                mediaRecycler!!.adapter = mediaAdapter
+                            }
                         }
                     }
+                    shouldEnabledCreateButton(isValidForm())
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-
-
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         } else if (requestCode == CAMERA) {
             if (mMediaUri != null) {
-                // try {
-                /* var file = File(mMediaUri!!.getPath())
-
-                 bitmap = BitmapFactory.decodeFile(mMediaUri!!.getPath())
-
-                 bitmap =
-                     ConstantMethods.imageOrientationValidator(bitmap, mMediaUri!!.getPath())
-
-                 file = ConstantMethods.compressImage(context, bitmap)
- */
-                /*val sourceDirectory = File(
-                    Environment.getExternalStorageDirectory().toString() + "/" + resources.getString(
-                        R.string.app_name
-                    ) + "/"
-                )
-
-                if (!sourceDirectory.exists()) {
-                    sourceDirectory.mkdirs()
-                }
-
-                val targetFilePath =
-                    Environment.getExternalStorageDirectory().toString() + "/" + resources.getString(
-                        R.string.app_name
-                    ) + "/"
-
-
-                val finalPath = ConstantMethods.copyFile(file.path, file.name, targetFilePath)
-
-                println("file path intenal $finalPath")*/
-
-
-                // val path = RealPathUtils.getPath(context!!,mMediaUri!!)
                 val path = FileUtils().getRealPath(context!!, mMediaUri!!)
 
                 var file1: File? = null
@@ -1379,20 +1385,6 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                 }
 
                 var length: Long? = file1!!.length()
-                length = length!! / 1024
-
-                //decodeFile(picturePath);
-                //5mb in kb
-                /* if (length > 5120) {
-                     ConstantMethods.showError(
-                         context,
-                         "Large Image Size",
-                         "Maximum image allowed is 5 MB"
-                     )
-
-
-                 } else {*/
-
 
                 mediaStatusArray!!.add(
                     MediaUploadingPojo(
@@ -1407,15 +1399,7 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                 mediaRecycler!!.adapter = mediaAdapter
 
                 EasySP.init(context).putString("image", fileUri)
-
-                // mediaPresenter!!.onFileUpload(context!!, file.absolutePath!!)
-                // }
-
-                /* } catch (e: Exception) {
-                     e.printStackTrace()
-                 }
- */
-
+                shouldEnabledCreateButton(isValidForm())
             }
         } else if (requestCode == VIDEO) {
             // if (mMediaUri != null) {
@@ -1434,106 +1418,6 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                 val columnIndex = cursor.getColumnIndex(filePathColumn[0])
                 picturePath = cursor.getString(columnIndex)
                 cursor.close()
-                // Log.e("picture path",picturePath);
-
-
-                /*  val ffmpeg = FFmpeg.getInstance(context)
-                  ffmpeg.loadBinary(object : LoadBinaryResponseHandler() {
-
-                  })
-
-                  val targetFile = Environment.getExternalStorageDirectory().toString() + "/"
-                  val fileTarget = File(targetFile, "We.mp4")
-
-                  val file = File(picturePath)
-
-
-                  val command = arrayOf(
-                      "-y",
-                      "-i",
-                      file.path,
-                      "-s",
-                      "720x480",
-                      "-r",
-                      "30",
-                      "-c:v",
-                      "libx264",
-                      "-preset",
-                      "ultrafast",
-                      "-c:a",
-                      "copy",
-                      "-me_method",
-                      "zero",
-                      "-tune",
-                      "fastdecode",
-                      "-tune",
-                      "zerolatency",
-                      "-strict",
-                      "-2",
-                      "-pix_fmt",
-                      "yuv420p",
-                      fileTarget.toString()
-                  )
-
-                  ffmpeg!!.execute(command, object : ExecuteBinaryResponseHandler() {
-
-                      override fun onStart() {
-                          super.onStart()
-
-                          progressLayout!!.visibility = View.VISIBLE
-
-                      }
-
-                      override fun onFinish() {
-                          super.onFinish()
-
-                          isVideoSelected = true
-
-                          progressLayout!!.visibility = View.GONE
-
-                          var length: Long? = fileTarget.length()
-                          length = length!! / 1024
-
-                          //decodeFile(picturePath);
-                          //100mb in kb
-                          if (length!! > 102400) {
-                              ConstantMethods.showError(
-                                  context!!,
-                                  "Large Video Size",
-                                  "Maximum video allowed is 100 MB"
-                              )
-
-                          } else {
-
-                              mediaStatusArray!!.add(
-                                  MediaUploadingPojo(
-                                      fileTarget.absolutePath,
-                                      "",
-                                      "video",
-                                      false
-                                  )
-                              )
-
-
-                              val videosSet = java.util.HashSet<String>()
-                              for (i in 0 until mediaArray!!.size) {
-                                  videosSet.add(mediaArray!![i])
-                              }
-
-                              // mimeTypeArray!!.add("video")
-
-                              mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!)
-                              mediaRecycler!!.adapter = mediaAdapter
-
-                              EasySP.init(context!!).putString("video", fileUri)
-
-                          }
-                      }
-
-
-                  })
-
-  */
 
                 val targetFile = Environment.getExternalStorageDirectory().toString() + "/"
                 val fileTarget = File(targetFile, "We${System.currentTimeMillis()}.mp4")
@@ -1554,91 +1438,10 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                     e.printStackTrace()
                 }
 
-
-                /*  progressLayout!!.visibility = View.VISIBLE
-                  val command = arrayOf(
-                      "-y",
-                      "-i",
-                      file.path,
-                      "-s",
-                      "720x480",
-                      "-r",
-                      "30",
-                      "-c:v",
-                      "libx264",
-                      "-preset",
-                      "ultrafast",
-                      "-c:a",
-                      "copy",
-                      "-me_method",
-                      "zero",
-                      "-tune",
-                      "fastdecode",
-                      "-tune",
-                      "zerolatency",
-                      "-strict",
-                      "-2",
-                      "-pix_fmt",
-                      "yuv420p",
-                      fileTarget.toString()
-                  )
-
-
-
-                  val r = FFmpeg.execute(command)
-
-                  if(r == 0) {
-                      isVideoSelected = true
-
-                      progressLayout!!.visibility = View.GONE
-
-                      var length: Long? = fileTarget.length()
-                      length = length!! / 1024
-
-                      //decodeFile(picturePath);
-                      //100mb in kb
-                      if (length!! > 102400) {
-                          ConstantMethods.showError(
-                              context!!,
-                              "Large Video Size",
-                              "Maximum video allowed is 100 MB"
-                          )
-
-                      } else {
-
-                          mediaStatusArray!!.add(
-                              MediaUploadingPojo(
-                                  fileTarget.absolutePath,
-                                  "",
-                                  "video",
-                                  false
-                              )
-                          )
-
-
-                          val videosSet = java.util.HashSet<String>()
-                          for (i in 0 until mediaArray!!.size) {
-                              videosSet.add(mediaArray!![i])
-                          }
-
-                          // mimeTypeArray!!.add("video")
-
-                          mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!)
-                          mediaRecycler!!.adapter = mediaAdapter
-
-                          EasySP.init(context!!).putString("video", fileUri)
-
-                      }
-                  }
-
-*/
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-            //}
-
+            shouldEnabledCreateButton(isValidForm())
         } else if (requestCode == 5) {
             getSharedData()
         }
@@ -1702,8 +1505,6 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
                         videosSet.add(mediaArray!![i])
                     }
 
-                    // mimeTypeArray!!.add("video")
-
                     mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
                     mediaRecycler!!.adapter = mediaAdapter
 
@@ -1761,5 +1562,83 @@ class CreateCampaignActivity : AppCompatActivity(), CreateCampaignPresenter.ICre
 
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         //finish()
+    }
+
+    private fun initTextChangeListener()
+    {
+        campaignTitle!!.addTextChangedListener(
+            campaignTitle!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (campaignTitle!!.text!!.isNotEmpty() && campaignDetails!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty() && mediaAdapter!=null && mediaAdapter!!.itemCount>0) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+
+        dateTime!!.addTextChangedListener(
+            dateTime!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (campaignTitle!!.text!!.isNotEmpty() && campaignDetails!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty()&& mediaAdapter!=null && mediaAdapter!!.itemCount>0) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+
+        campaignDetails!!.addTextChangedListener(
+            campaignDetails!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (isValidForm()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+
+        locationTitle!!.addTextChangedListener(
+            locationTitle!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (isValidForm()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+    }
+
+    fun isValidForm():Boolean
+    {
+        return campaignTitle!!.text!!.isNotEmpty() && campaignDetails!!.text.isNotEmpty() && dateTime!!.text.isNotEmpty() &&locationTitle!!.text.isNotEmpty()&& mediaAdapter!=null && mediaAdapter!!.itemCount>0
+    }
+
+     fun shouldEnabledCreateButton(shouldEnabled: Boolean)
+    {
+        if(shouldEnabled)
+        {
+            create!!.isEnabled=true
+            create!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+        }
+        else
+        {
+            create!!.isEnabled=false
+            create!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.badges_color))
+        }
     }
 }

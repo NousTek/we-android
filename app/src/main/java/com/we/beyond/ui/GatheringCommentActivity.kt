@@ -978,6 +978,8 @@ class GatheringCommentActivity : AppCompatActivity() , CommentDetailsPresenter.I
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -1290,9 +1292,8 @@ class GatheringCommentActivity : AppCompatActivity() , CommentDetailsPresenter.I
                     }
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Empty Data",
                         "Please give us your comment."
                     )
                 }
@@ -1334,9 +1335,8 @@ class GatheringCommentActivity : AppCompatActivity() , CommentDetailsPresenter.I
                         }
 
                     } else {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Empty Data",
                             "Please give us your comment."
                         )
                     }

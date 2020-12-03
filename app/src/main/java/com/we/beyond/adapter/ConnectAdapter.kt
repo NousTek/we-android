@@ -413,7 +413,7 @@ class ConnectAdapter(
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == connectDetails!![position].user._id) {
 
-                        ConstantMethods.showWarning(context,"","You cannot abuse your connect.")
+                        ConstantMethods.showToast(context,"You cannot abuse your connect.")
                     }
 
                     else {

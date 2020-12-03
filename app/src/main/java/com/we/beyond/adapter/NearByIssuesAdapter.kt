@@ -349,7 +349,7 @@ class NearByIssuesAdapter(
             }
 
             holder.itemView.img_already_resolved!!.setOnClickListener {
-                ConstantMethods.showWarning(context, "Issue Resolved", "Issue already resolved")
+                ConstantMethods.showToast(context,  "Issue already resolved")
             }
 
             /** It opens ReportResolvedActivity with pass below data when click on it */
@@ -425,9 +425,8 @@ class NearByIssuesAdapter(
             holder.itemView.img_gathering.setOnClickListener {
 
                 if (nearByIssueDetails!![position].resolved) {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You cannot create gathering on resolved issues."
                     )
                 } else {
@@ -552,10 +551,9 @@ class NearByIssuesAdapter(
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == nearByIssueDetails!![position].user._id) {
                     if (nearByIssueDetails!![position].resolved) {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             context,
-                            "",
-                            "You can not delete resolved issues."
+                            "You cannot delete resolved issues."
                         )
                     } else {
                         println("user id ${userId} issue user ${nearByIssueDetails!![position].user._id}")
@@ -655,12 +653,11 @@ class NearByIssuesAdapter(
                     val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                     if (userId == nearByIssueDetails!![position].user._id) {
 
-                        ConstantMethods.showWarning(context, "", "You can not abuse your issue.")
+                        ConstantMethods.showToast(context,  "You cannot abuse your issue.")
                     } else if (nearByIssueDetails!![position].resolved) {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             context,
-                            "",
-                            "You can not abuse resolved issues."
+                            "You cannot abuse resolved issues."
                         )
                     } else {
 

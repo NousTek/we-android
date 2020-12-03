@@ -307,7 +307,7 @@ class ResolvedIssuesAdapter (
 
 
             holder.itemView.img_already_resolved!!.setOnClickListener {
-                ConstantMethods.showWarning(context,"Issue Resolved", "Issue already resolved")
+                ConstantMethods.showToast(context, "Issue already resolved")
             }
 
             /** It opens ReportResolvedActivity with pass below data when click on it */
@@ -381,7 +381,7 @@ class ResolvedIssuesAdapter (
 
                 if(resolveIssuesDetails!![position].resolved)
                 {
-                    ConstantMethods.showWarning(context,"","You cannot create gathering on resolved issues.")
+                    ConstantMethods.showToast(context,"You cannot create gathering on resolved issues.")
                 }
                 else {
                     println("image click")

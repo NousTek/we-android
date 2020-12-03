@@ -374,13 +374,13 @@ class MyConnectActivity : AppCompatActivity() , MyConnectPresenter.IMyConnectIss
             //ConstantMethods.showWarning(this,"", "There are no published connect.")
 
             noContent!!.visibility = View.VISIBLE
-            noContent!!.text = "There are no published connect."
+            noContent!!.text = "There are no published articles."
 
 
             try {
                 val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
-                sweetAlertDialog.contentText = "There are no published connect."
+                sweetAlertDialog.contentText = "There are no published articles."
 //                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {
@@ -587,12 +587,12 @@ class MyConnectActivity : AppCompatActivity() , MyConnectPresenter.IMyConnectIss
                // ConstantMethods.showWarning(this,"", "There are no published connect.")
 
                 noContent!!.visibility = View.VISIBLE
-                noContent!!.text = "There are no published connect."
+                noContent!!.text = "There are no published articles."
 
                 try {
                     val sweetAlertDialog = SweetAlertDialog(context , SweetAlertDialog.NORMAL_TYPE)
                     sweetAlertDialog.titleText = ""
-                    sweetAlertDialog.contentText = "There are no published connect."
+                    sweetAlertDialog.contentText = "There are no published articles."
 //                    sweetAlertDialog.show()
                     sweetAlertDialog.setCancelable(false)
                     sweetAlertDialog.setConfirmClickListener {

@@ -640,7 +640,7 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
                 )
             }
             else{
-                ConstantMethods.showWarning(this,"No Data","Images not available for this connect.")
+                ConstantMethods.showToast(this,"Images not available for this article.")
             }
         }
 
@@ -733,7 +733,7 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
                 }
             }
             else{
-                ConstantMethods.showWarning(this,"","You are not owner of this connect.")
+                ConstantMethods.showToast(this,"You are not owner of this article.")
             }
 
         }
@@ -753,7 +753,7 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
 
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == connectData!!.data.user._id) {
-                    ConstantMethods.showWarning(context,"","You can not abuse your connect.")
+                    ConstantMethods.showToast(context,"You cannot abuse your article.")
                 }
 
                 else {
@@ -838,7 +838,7 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showWarning(this,"","You are not owner of this connect.")
+                ConstantMethods.showToast(this,"You are not owner of this connect.")
             }
 
         }
@@ -1178,8 +1178,9 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
 
         try {
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-            sweetAlertDialog.titleText = "DownVote"
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -1258,9 +1259,8 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
                     }
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Empty Data",
                         "Please give us your comment."
                     )
                 }
@@ -1310,9 +1310,8 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
 
 
                     } else {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Empty Data",
                             "Please give us your comment."
                         )
                     }

@@ -192,7 +192,7 @@ class CategoriesActivity : AppCompatActivity(), CategoryPresenter.ICategoriesVie
                 }
             } else {
 
-                ConstantMethods.showWarning(this,"Category", "Please select at least one category")
+                ConstantMethods.showToast(this, "Please select at least one category")
             }
         } catch (e: Exception) {
             e.printStackTrace()

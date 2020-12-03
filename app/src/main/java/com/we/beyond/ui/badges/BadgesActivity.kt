@@ -103,7 +103,7 @@ class BadgesActivity : AppCompatActivity(), BadgesPresenter.IBadgesView, OnBadge
     /** It will open animate the badge layout and show badge details*/
     override fun onBadgesDetails(position: Int) {
         badgeLayout!!.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_in_up))
-        badgeLayout!!.visibility = View.VISIBLE
+        badgeLayout!!.visibility = View.GONE
 
         if (badgesData != null) {
 
@@ -113,13 +113,18 @@ class BadgesActivity : AppCompatActivity(), BadgesPresenter.IBadgesView, OnBadge
                     "Received Date : ${ConstantMethods.convertStringToDateStringFull(
                         badgesData!!.data.badges[position].date
                     )}"
+                ConstantMethods.showToast(this@BadgesActivity, "Received Date : ${ConstantMethods.convertStringToDateStringFull(
+                    badgesData!!.data.badges[position].date
+                )}")
             } else {
                 badgeDate!!.visibility = View.GONE
+                ConstantMethods.showToast(this@BadgesActivity, badgesData!!.data.badges[position].description)
             }
 
             badgeTitle!!.text = badgesData!!.data.badges[position].name
             badgeDescription!!.text =
                 "Description : ${badgesData!!.data.badges[position].description}"
+
         }
 
 

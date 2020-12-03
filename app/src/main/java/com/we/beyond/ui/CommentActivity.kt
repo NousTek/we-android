@@ -445,7 +445,7 @@ class CommentActivity : AppCompatActivity(), CommentDetailsPresenter.ICommentsBy
 
                 val userId = EasySP.init(context).getString(ConstantEasySP.USER_ID)
                 if (userId == replyData!!.data.user._id) {
-                    ConstantMethods.showWarning(context, "", "You can not abuse your issue.")
+                    ConstantMethods.showToast(context, "You cannot abuse your issue.")
                 }
                 /* else  if (replyData!!.data.resolved) {
                      ConstantMethods.showWarning(context,"","You can not abuse resolved issues.")
@@ -506,10 +506,9 @@ class CommentActivity : AppCompatActivity(), CommentDetailsPresenter.ICommentsBy
                     ignoreCase = true
                 ) && replyData!!.data.markAsFinal
             ) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     context,
-                    "",
-                    "You cant not delete approved resolution"
+                    "You cannot delete approved resolution"
                 )
             } else if (replyData!!.data.commentType.equals(
                     "resolution",
@@ -851,10 +850,9 @@ class CommentActivity : AppCompatActivity(), CommentDetailsPresenter.ICommentsBy
                     ignoreCase = true
                 ) && replyData!!.data.markAsFinal
             ) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     context,
-                    "",
-                    "You cant not edit approved resolution"
+                    "You cannot edit approved resolution"
                 )
             } else if (replyData!!.data.commentType.equals(
                     "resolution",
@@ -1356,6 +1354,8 @@ class CommentActivity : AppCompatActivity(), CommentDetailsPresenter.ICommentsBy
             val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
             sweetAlertDialog.titleText = ""
             sweetAlertDialog.contentText = "Do you want to DownVote?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
             sweetAlertDialog.show()
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
@@ -1689,9 +1689,8 @@ class CommentActivity : AppCompatActivity(), CommentDetailsPresenter.ICommentsBy
                     }
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         this,
-                        "Empty Data",
                         "Please give us your comment."
                     )
                 }
@@ -1733,9 +1732,8 @@ class CommentActivity : AppCompatActivity(), CommentDetailsPresenter.ICommentsBy
                         }
 
                     } else {
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Empty Data",
                             "Please give us your comment."
                         )
                     }

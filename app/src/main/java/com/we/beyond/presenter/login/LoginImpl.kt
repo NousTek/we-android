@@ -181,7 +181,7 @@ class LoginImpl(login: LoginPresenter.ILoginView) : LoginPresenter.ILoginPresent
 
                         if (forgotPasswordPojo != null) {
 
-                            ConstantMethods.showWarning(context, "Successful", forgotPasswordPojo.message)
+                            ConstantMethods.showToast(context, forgotPasswordPojo.message)
 
 
                         }

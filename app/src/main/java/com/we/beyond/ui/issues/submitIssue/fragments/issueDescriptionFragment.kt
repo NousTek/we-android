@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import com.google.gson.Gson
 
@@ -132,39 +131,39 @@ class IssueDescriptionFragment : Fragment() {
     {
         /** ids of text view */
         issueDescriptionTitle = v.findViewById(R.id.txt_description_title)
-        issueDescriptionTitle!!.typeface = ConstantFonts.raleway_semibold
+        issueDescriptionTitle!!.typeface = ConstantFonts.raleway_regular
         val submitActivity = activity as SubmitAnIssueActivity
         /** ids of edit text */
         issueTitle = v.findViewById(R.id.et_issue_title)
-        issueTitle!!.typeface = ConstantFonts.raleway_semibold
+        issueTitle!!.typeface = ConstantFonts.raleway_regular
         issueTitle!!.addTextChangedListener(
             issueTitle!!.doOnTextChanged { text, start, count, after ->
                 run {
                     if (issueDetails!!.text != null && issueDetails!!.text.isNotEmpty() && issueTitle!!.text != null && issueTitle!!.text.isNotEmpty()) {
                         submitActivity!!.shouldEnableNextBtn(true)
-                        submitActivity!!.shouldDisableLocationIcon(true)
+                        submitActivity!!.shouldEnableLocationIcon(true)
                     }
                     else
                     {
                         submitActivity!!.shouldEnableNextBtn(false)
-                        submitActivity!!.shouldDisableLocationIcon(false)
+                        submitActivity!!.shouldEnableLocationIcon(false)
                     }
                 }
             }
         )
         issueDetails = v.findViewById(R.id.et_issue_details)
-        issueDetails!!.typeface = ConstantFonts.raleway_semibold
+        issueDetails!!.typeface = ConstantFonts.raleway_regular
         issueDetails!!.addTextChangedListener(
             issueDetails!!.doOnTextChanged { text, start, count, after ->
                 run {
                     if (issueDetails!!.text != null && issueDetails!!.text.isNotEmpty() && issueTitle!!.text != null && issueTitle!!.text.isNotEmpty()) {
                         submitActivity!!.shouldEnableNextBtn(true)
-                        submitActivity!!.shouldDisableLocationIcon(true)
+                        submitActivity!!.shouldEnableLocationIcon(true)
                     }
                     else
                     {
                         submitActivity!!.shouldEnableNextBtn(false)
-                        submitActivity!!.shouldDisableLocationIcon(false)
+                        submitActivity!!.shouldEnableLocationIcon(false)
                     }
                 }
             }

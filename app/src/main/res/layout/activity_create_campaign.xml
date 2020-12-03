@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_title"
+            android:paddingBottom="10dp"
             android:layout_marginTop="@dimen/_20sdp"
             android:background="@drawable/login_border">
 
@@ -99,7 +100,8 @@
                     <RelativeLayout
                         android:id="@+id/addLocationLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_120sdp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_120sdp"
                         android:layout_margin="@dimen/_12sdp"
                         android:background="@drawable/issue_border">
 
@@ -124,15 +126,16 @@
                             android:layout_below="@+id/txt_location_title"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="7dp"
                             android:background="@drawable/gathering_border"
                             android:paddingLeft="@dimen/_30sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingRight="@dimen/_30sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:text="Add Location"
-                            android:textAllCaps="true"
+                            android:textAllCaps="false"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/_12sdp" />
+                            android:textSize="@dimen/_15sdp" />
 
                     </RelativeLayout>
 
@@ -175,6 +178,7 @@
                             android:layout_width="@dimen/_150sdp"
                             android:layout_height="wrap_content"
                             android:text="Use Camera"
+                            android:textAllCaps="false"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14sdp"
                             android:background="@drawable/issue_rounded_button_border"
@@ -188,8 +192,8 @@
                             android:id="@+id/txt_or"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="or"
-                            android:textAllCaps="true"
+                            android:text="Or"
+                            android:textAllCaps="false"
                             android:textColor="#99000000"
                             android:textSize="@dimen/_13sdp"
                             android:layout_below="@+id/btn_use_camera"
@@ -201,6 +205,7 @@
                             android:layout_width="@dimen/_150sdp"
                             android:layout_height="wrap_content"
                             android:text="Browse File"
+                            android:textAllCaps="false"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_14sdp"
                             android:background="@drawable/issue_rounded_button_border"
@@ -255,6 +260,7 @@
                         android:layout_marginRight="@dimen/_12sdp"
                         app:counterEnabled="false"
                         app:counterMaxLength="5"
+                        android:textSize="16sp"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                         android:hint="Linked Gathering"
                         app:counterOverflowTextAppearance="@style/CounterOverFlow"
@@ -268,7 +274,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:inputType="textCapWords"
-
+                            android:textSize="16sp"
+                            android:editable="false"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -283,7 +290,7 @@
         <Button
             android:id="@+id/btn_create"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_centerHorizontal="true"
             android:layout_margin="10dp"
             android:layout_above="@+id/transparentView"
@@ -292,7 +299,7 @@
             android:paddingTop="8dip"
             android:paddingBottom="8dip"
             android:text="Create"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp" />
 
@@ -335,6 +342,7 @@
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:text="Image"
+                android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 android:paddingTop="@dimen/_10sdp"
@@ -349,8 +357,8 @@
                 android:id="@+id/txt_media_or"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="or"
-                android:textAllCaps="true"
+                android:text="Or"
+                android:textAllCaps="false"
                 android:textColor="#99000000"
                 android:textSize="@dimen/_13sdp"
                 android:layout_below="@+id/btn_image"
@@ -362,6 +370,7 @@
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:text="Video"
+                android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 android:background="@drawable/issue_rounded_button_border"
@@ -409,6 +418,7 @@
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:text="Image"
+                android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 android:paddingTop="@dimen/_10sdp"
@@ -423,8 +433,8 @@
                 android:id="@+id/txt_media_or_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="or"
-                android:textAllCaps="true"
+                android:text="Or"
+                android:textAllCaps="false"
                 android:textColor="#99000000"
                 android:textSize="@dimen/_13sdp"
                 android:layout_below="@+id/btn_image_option"
@@ -436,6 +446,7 @@
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:text="Video"
+                android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/_14sdp"
                 android:background="@drawable/issue_rounded_button_border"

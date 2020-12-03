@@ -426,7 +426,7 @@ class GatheringCommentDetailsAdapter
 
                                 e.printStackTrace()
                             }*/
-                            ConstantMethods.showWarning(context, "", "You cannot abuse your gathering.")
+                            ConstantMethods.showToast(context, "You cannot abuse your gathering.")
 
 
 

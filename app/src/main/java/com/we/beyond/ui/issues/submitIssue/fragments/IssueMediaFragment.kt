@@ -41,7 +41,6 @@ import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.engine.impl.GlideEngine
 import java.io.File
-import java.io.InputStream
 
 /** It is used to select media to submit an issue */
 class IssueMediaFragment : Fragment(),
@@ -270,10 +269,9 @@ class IssueMediaFragment : Fragment(),
                     intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 59)
                     startActivityForResult(intent, VIDEO)
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context!!,
-                        "",
-                        "You can not upload more than 1 video."
+                        "You cannot upload more than 1 video."
                     )
                 }
                 /*  }
@@ -447,7 +445,7 @@ class IssueMediaFragment : Fragment(),
             {
             if (data != null) {
                     submitActivity!!.shouldEnableNextBtn(true)
-                submitActivity!!.shouldDisableCategoryIcon(true)
+                submitActivity!!.shouldEnableCategoryIcon(true)
                 val mSelected:List<Uri> = Matisse.obtainResult(data);
                 for (i in mSelected!!.indices) {
                     val uri = mSelected[i]
@@ -465,7 +463,7 @@ class IssueMediaFragment : Fragment(),
             if (data != null) {
                 try {
                     submitActivity!!.shouldEnableNextBtn(true)
-                    submitActivity!!.shouldDisableCategoryIcon(true)
+                    submitActivity!!.shouldEnableCategoryIcon(true)
                     val mSelected:List<Uri> = Matisse.obtainResult(data)
                     val uri: Uri = mSelected[0]
 

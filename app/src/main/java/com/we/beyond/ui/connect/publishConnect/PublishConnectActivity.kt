@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
@@ -15,8 +16,10 @@ import android.os.StrictMode
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arthenica.mobileffmpeg.FFmpeg
@@ -162,6 +165,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         /** initialize onclick listener */
         initWithListener()
+        initTextChangeListener()
 /*
         if (ConstantMethods.checkPermission(context)) {
             val mydir =
@@ -186,6 +190,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         } else {
             submit!!.text = "Submit"
+            shouldEnabledCreateButton(false)
         }
 
         println("campaign data $isEdit")
@@ -195,11 +200,11 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
             connectCategoryId = connectDetailsData!!.data.connectCategory._id
 
             connectTitle = findViewById(R.id.et_connect_title)
-            connectTitle!!.typeface = ConstantFonts.raleway_semibold
+            connectTitle!!.typeface = ConstantFonts.raleway_regular
             connectTitle!!.setText(connectDetailsData!!.data.title)
 
             connectDetails = findViewById(R.id.et_connect_details)
-            connectDetails!!.typeface = ConstantFonts.raleway_semibold
+            connectDetails!!.typeface = ConstantFonts.raleway_regular
             connectDetails!!.setText(connectDetailsData!!.data.description)
 
             connectCategory!!.setText(connectDetailsData!!.data.connectCategory.name)
@@ -332,9 +337,8 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context,
-                        "",
                         "You cannot upload more than 1 video."
                     )
                 }
@@ -478,7 +482,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     }
 
                 } else {
-                    ConstantMethods.showError(this, "Please wait", "Please wait media uploading.")
+                    ConstantMethods.showToast(this,  "Please wait media uploading.")
                 }
             }
 
@@ -538,10 +542,9 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     postDataToServerUpdate(jsonObject)
                 } else {
                     count = 0
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
 
                         this,
-                        "Please wait",
                         "Please wait media uploading."
                     )
                 }
@@ -607,11 +610,11 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
             }
 
             if (connectTitle!!.text.trim().isEmpty()) {
-                ConstantMethods.showWarning(this, "Title", "Please Enter Title")
+                ConstantMethods.showToast(this, "Please enter title")
                 return
             }
             if (connectDetails!!.text.trim().isEmpty()) {
-                ConstantMethods.showWarning(this, "Details", "Please Enter Connection Details")
+                ConstantMethods.showToast(this,  "Please enter article details")
                 return
             }
             if (connectCategoryId.isEmpty()) {
@@ -620,10 +623,9 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                 connectionCategoryLayout!!.isErrorEnabled = false
             }
             if (media.isEmpty()) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     this,
-                    "Please Upload Photo / Video",
-                    "You need to attach at least 1 photo or video to this connect to publish"
+                    "You need to attach at least 1 photo or video to this article to publish"
                 )
                 return
             }
@@ -639,7 +641,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     }
 
                 } else {
-                    ConstantMethods.showError(this, "Please wait", "Please wait media uploading.")
+                    ConstantMethods.showToast(this, "Please wait media uploading.")
                 }
             }
 
@@ -680,10 +682,9 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                         postDataToServer(jsonObject)
                     } else {
                         count = 0
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
 
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -721,10 +722,9 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                         postDataToServer(jsonObject)
                     } else {
                         count = 0
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
 
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -761,10 +761,9 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                         postDataToServer(jsonObject)
                     } else {
                         count = 0
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
 
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -877,7 +876,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                             }
                         }
                     }
-
+                    shouldEnabledCreateButton(isValidForm())
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -931,7 +930,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
+                shouldEnabledCreateButton(isValidForm())
 
             }
         } else if (requestCode == VIDEO) {
@@ -971,7 +970,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
+                shouldEnabledCreateButton(isValidForm())
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -1098,10 +1097,10 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         /** ids of edit text */
         connectTitle = findViewById(R.id.et_connect_title)
-        connectTitle!!.typeface = ConstantFonts.raleway_semibold
+        connectTitle!!.typeface = ConstantFonts.raleway_regular
 
         connectDetails = findViewById(R.id.et_connect_details)
-        connectDetails!!.typeface = ConstantFonts.raleway_semibold
+        connectDetails!!.typeface = ConstantFonts.raleway_regular
 
         /** ids of button */
         useCamera = findViewById(R.id.btn_use_camera)
@@ -1127,7 +1126,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         /** ids of AutoCompleteText View (spinner) */
         connectCategory = findViewById(R.id.dropdown_connection_category)
-        connectCategory!!.typeface = ConstantFonts.raleway_semibold
+        connectCategory!!.typeface = ConstantFonts.raleway_regular
 
         /** ids of recycler view */
         mediaRecycler = findViewById(R.id.recycler_media)
@@ -1136,7 +1135,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         /** ids of text input layout */
         connectionCategoryLayout = findViewById(R.id.connectionCategoriesLayout)
-
+        connectionCategoryLayout!!.typeface=ConstantFonts.raleway_regular
         /** ids of relative layout*/
         optionLayout = findViewById(R.id.captureOptionLayout)
         galleryOptionLayout = findViewById(R.id.galleryOptionLayout)
@@ -1166,14 +1165,33 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
             println("connection category $connectCategoryList")
             if (connectCategoryList!!.isNotEmpty()) {
                 for (i in 0 until connectCategoryList!!.size) {
-                    val connectCategoryAdapter =
+                    /*val connectCategoryAdapter =
                         ArrayAdapter<String>(
                             this,
                             R.layout.spinner_popup_item,
                             connectCategoryList!!
                         )
+
                     connectCategoryAdapter.setDropDownViewResource(R.layout.spinner_popup_item)
-                    connectCategory!!.setAdapter(connectCategoryAdapter)
+                    connectCategory!!.setAdapter(connectCategoryAdapter)*/
+
+                    val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item, connectCategoryList!!
+                    ) {
+                        override fun getView(
+                            position: Int,
+                            convertView: View?,
+                            parent: ViewGroup
+                        ): View {
+                            val view = super.getView(position, convertView, parent)
+                            val text =
+                                view.findViewById<View>(android.R.id.text1) as TextView
+                            text.typeface = ConstantFonts.raleway_regular
+                            return view
+                        }
+                    }
+                    connectCategory!!.setAdapter(adapter)
                 }
             }
         } catch (e: Exception) {
@@ -1248,6 +1266,7 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
                     cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DATA))
                 absolutePathOfImage?.let { setSelectedImage(it, uri) } ?: setSelectedImage(uri.toString(), uri)
             }
+            shouldEnabledCreateButton(isValidForm())
         }
     }
 
@@ -1291,5 +1310,57 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
 
         mediaAdapter = MediaAdapter(context!!, mediaStatusArray!!, false)
         mediaRecycler!!.adapter = mediaAdapter
+    }
+
+
+    private fun initTextChangeListener()
+    {
+        val category = connectCategory!!.text.toString().trim()
+        connectTitle!!.addTextChangedListener(
+            connectTitle!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (isValidForm()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+
+        connectDetails!!.addTextChangedListener(
+            connectDetails!!.doOnTextChanged { text, start, count, after ->
+                run {
+                    if (isValidForm()) {
+                        shouldEnabledCreateButton(true)
+                    }
+                    else
+                    {
+                        shouldEnabledCreateButton(false)
+                    }
+                }
+            }
+        )
+    }
+
+     fun isValidForm():Boolean
+    {
+        return connectTitle!!.text!!.isNotEmpty() && connectCategory!!.text.toString().trim()!!.isNotEmpty() && connectDetails!!.text.isNotEmpty() && mediaAdapter!=null && mediaAdapter!!.itemCount>0
+    }
+
+     fun shouldEnabledCreateButton(shouldEnabled: Boolean)
+    {
+        if(shouldEnabled)
+        {
+            submit!!.isEnabled=true
+            submit!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.colorPrimary))
+        }
+        else
+        {
+            submit!!.isEnabled=false
+            submit!!.backgroundTintList= ColorStateList.valueOf(resources.getColor(R.color.badges_color))
+        }
     }
 }

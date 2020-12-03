@@ -149,7 +149,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_2sdp"
-                                android:text="Issue Posted"
+                                android:text="Issues Posted"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -183,7 +183,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_2sdp"
-                                android:text="My Resolved Issues"
+                                android:text="Issues Resolved"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -413,7 +413,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_resolution_title"
+                        android:text="My Resolutions"
                         android:id="@+id/txt_my_resolution_title"
                         android:layout_toRightOf="@id/img_my_resolution"
                         android:textSize="@dimen/_15sdp"
@@ -507,7 +507,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_campaign_title"
+                        android:text="My Campaigns"
                         android:id="@+id/txt_my_campaign_title"
                         android:layout_toRightOf="@id/img_my_campaign"
                         android:textSize="@dimen/_15sdp"
@@ -760,7 +760,52 @@
 
 
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:background="@color/submit_issue_media_button_border" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:id="@+id/feedbackLayout"
+                    android:layout_marginLeft="@dimen/_13sdp"
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    >
+                    <ImageView
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:id="@+id/imgFeedback"
+                        android:paddingTop="3dp"
+                        android:src = "@drawable/ic_feedback"
+                        android:layout_centerVertical="true"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Feedback"
+                        android:id="@+id/txt_feedback_title"
+                        android:layout_toRightOf="@id/imgFeedback"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_9sdp"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        app:srcCompat = "@drawable/ic_next_icon"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"/>
+
+
+                </RelativeLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"

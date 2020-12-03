@@ -62,7 +62,7 @@ class IssueLocationFragment : Fragment() ,OnMapReadyCallback{
     /** init model */
     var issueData : NearByIssueByIdDetailsPojo?=null
     var updatedLocation : LatLng?=null
-
+    var isVisible: Boolean?=null
 
 
     @SuppressLint("MissingPermission")
@@ -326,6 +326,11 @@ class IssueLocationFragment : Fragment() ,OnMapReadyCallback{
         }
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        isVisible=hidden
+    }
+
     private fun resizeBitmap(mapPin: Int ,width : Int , height : Int): Bitmap?
     {
         val imageBitmap = BitmapFactory.decodeResource(resources,mapPin)
@@ -343,9 +348,9 @@ class IssueLocationFragment : Fragment() ,OnMapReadyCallback{
             var geocoder: Geocoder = Geocoder(context, Locale.getDefault())
             var addresses: ArrayList<Address> =
                 geocoder.getFromLocation(latitude, longitude, 1) as ArrayList<Address>
-            if(addresses!=null && addresses!!.isNotEmpty())
+            val submitActivity= activity as SubmitAnIssueActivity
+            if(addresses!=null && addresses!!.isNotEmpty() && submitActivity.isLocationFragmentVisible())
             {
-                val submitActivity= activity as SubmitAnIssueActivity
                 submitActivity!!.shouldEnableNextBtn(true)
             }
             address = addresses.get(0).getAddressLine(0)

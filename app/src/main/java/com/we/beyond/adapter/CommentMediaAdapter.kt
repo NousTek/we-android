@@ -139,7 +139,7 @@ class CommentMediaAdapter(var context: Context, mediaList: ArrayList<MediaUpload
                 (context).startActivity(intent)
 
             } else {
-                ConstantMethods.showError(context, "No Media", "Please wait media uploading")
+                ConstantMethods.showToast(context,  "Please wait media uploading")
             }
         }
 

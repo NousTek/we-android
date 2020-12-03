@@ -235,7 +235,7 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
             Gson().fromJson(getCommentDetailsIntentData, CommentDetailsPojo::class.java)
         resolutionDetailsData = Gson().fromJson(getUserIntentData, Resolution::class.java)
         // isMyComment = intent.getBooleanExtra("myCampaign",false)
-
+        mediaAdapter = MediaAdapter(context, mediaStatusArray!!, false)
         println("user resolution  }")
 
         if (isEdit) {
@@ -661,10 +661,9 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
 
                 } else {
-                    ConstantMethods.showWarning(
+                    ConstantMethods.showToast(
                         context!!,
-                        "",
-                        "You can not upload more than 1 video."
+                        "You cannot upload more than 1 video."
                     )
                 }
             } catch (e: Exception) {
@@ -676,7 +675,10 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
         imageGallery!!.setOnClickListener {
 
             try {
+                if(mediaAdapter!=null)
                 pickMedia(10-mediaAdapter!!.itemCount, MimeType.ofImage(), GALLERY_IMAGE)
+                else
+                    pickMedia(10, MimeType.ofImage(), GALLERY_IMAGE)
                 galleryOptionLayout!!.visibility = View.GONE
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -826,7 +828,7 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
                     }
 
                 } else {
-                    ConstantMethods.showError(this, "Please wait", "Please wait media uploading.")
+                    ConstantMethods.showToast(this, "Please wait media uploading.")
                 }
             }
 
@@ -908,9 +910,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
                     } else {
                         count = 0
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -992,9 +993,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
                     } else {
                         count = 0
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -1075,9 +1075,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
                     } else {
                         count = 0
-                        ConstantMethods.showWarning(
+                        ConstantMethods.showToast(
                             this,
-                            "Please wait",
                             "Please wait media uploading."
                         )
                     }
@@ -1293,20 +1292,19 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
                     }
 
                 } else {
-                    ConstantMethods.showError(this, "Please wait", "Please wait media uploading.")
+                    ConstantMethods.showToast(this, "Please wait media uploading.")
                 }
             }
 
 
 
             if (resolvedDetails!!.text.isEmpty()) {
-                ConstantMethods.showWarning(
+                ConstantMethods.showToast(
                     context,
-                    "Details",
-                    "Please Enter Report Resolution Details"
+                    "Please enter report resolution details"
                 )
             } else if (dateTime!!.text.isEmpty()) {
-                ConstantMethods.showWarning(context, "Date And Time", "Please Select Date And Time")
+                ConstantMethods.showToast(context,  "Please select date and time")
             } else {
 
 
@@ -1394,9 +1392,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
                         } else {
                             count = 0
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please wait",
                                 "Please wait media uploading."
                             )
                         }
@@ -1449,9 +1446,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
                         } else {
                             count = 0
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please wait",
                                 "Please wait media uploading."
                             )
                         }
@@ -1501,9 +1497,8 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
 
                         } else {
                             count = 0
-                            ConstantMethods.showWarning(
+                            ConstantMethods.showToast(
                                 this,
-                                "Please wait",
                                 "Please wait media uploading."
                             )
                         }
