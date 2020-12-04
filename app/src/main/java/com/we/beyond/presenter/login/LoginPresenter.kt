@@ -12,7 +12,7 @@ interface LoginPresenter
 
         fun goToNextScreen()
         fun goToCategoriesScreen()
-        fun registerExternalUser(email :String, firstName:String, lastName:String)
+        fun registerExternalUser(email :String, firstName:String, lastName:String, socialMediaType:String)
     }
 
     /** this interface is working for calling login and forgot password api respectively */

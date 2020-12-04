@@ -422,7 +422,7 @@
             android:text="@string/register_button"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp"
-
+            android:textAllCaps="false"
             />
         <View
             android:id="@+id/transparentView"

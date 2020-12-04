@@ -27,4 +27,5 @@ object Constants
     var EXTERNAL_USER_LAST_NAME="externalUserLastName"
     var EXTERNAL_USER_EMAIL="externalUserName"
     var IS_EXTERNAL_USER="isExternalUser"
+    var SOCIAL_MEDIA_TYPE="SOCIAL_MEDIA_TYPE"
 }

@@ -491,6 +491,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:id="@+id/myCampaignLayout"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
@@ -531,6 +532,7 @@
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_15sdp"
+                    android:visibility="gone"
                     android:background="@color/submit_issue_media_button_border" />
 
 
@@ -586,6 +588,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
                     android:id="@+id/myActivitiesLayout"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginRight="@dimen/_15sdp"
@@ -623,6 +626,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_1sdp"
+                    android:visibility="gone"
                     android:layout_marginLeft="@dimen/_15sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_15sdp"

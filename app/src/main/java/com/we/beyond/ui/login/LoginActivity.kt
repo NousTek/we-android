@@ -417,12 +417,13 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         finish()
     }
 
-    override fun registerExternalUser(email :String, firstName:String, lastName:String) {
+    override fun registerExternalUser(email :String, firstName:String, lastName:String, socialMediaType:String) {
         intent = Intent(this, RegistrationActivity::class.java)
         intent.putExtra(Constants.EXTERNAL_USER_FIRST_NAME, firstName)
         intent.putExtra(Constants.EXTERNAL_USER_LAST_NAME, lastName)
         intent.putExtra(Constants.EXTERNAL_USER_EMAIL, email)
         intent.putExtra(Constants.IS_EXTERNAL_USER, true)
+        intent.putExtra(Constants.SOCIAL_MEDIA_TYPE, socialMediaType)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         finish()
@@ -468,23 +469,25 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
 
         /** ids of edit text */
         emailEdit = findViewById(R.id.et_email)
-        emailEdit!!.typeface = ConstantFonts.raleway_semibold
+        emailEdit!!.typeface = ConstantFonts.raleway_regular
 
         passwordEdit = findViewById(R.id.et_password)
-        passwordEdit!!.typeface = ConstantFonts.raleway_semibold
+        passwordEdit!!.typeface = ConstantFonts.raleway_regular
 
         emailPasswordEdit = findViewById(R.id.et_email_password)
-        emailPasswordEdit!!.typeface = ConstantFonts.raleway_semibold
+        emailPasswordEdit!!.typeface = ConstantFonts.raleway_regular
 
 
         /** ids of text input layout */
         usernameLayout = findViewById(R.id.usernameLayout)
+        usernameLayout!!.typeface=ConstantFonts.raleway_regular
         passwordLayout = findViewById(R.id.passwordLayout)
+        passwordLayout!!.typeface=ConstantFonts.raleway_regular
         emailPasswordLayout = findViewById(R.id.forgotLayout)
 
         /** ids of relative layout */
         forgotPasswordLayout = findViewById(R.id.forgotPasswordLayout)
-
+        emailPasswordLayout!!.typeface=ConstantFonts.raleway_regular
         /** ids of button */
         login = findViewById(R.id.btn_login)
         login!!.typeface = ConstantFonts.raleway_semibold

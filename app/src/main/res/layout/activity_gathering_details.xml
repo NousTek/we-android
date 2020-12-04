@@ -264,6 +264,7 @@
             android:id="@+id/linkedCampaignLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:layout_below="@+id/view"
             android:paddingBottom="@dimen/_10sdp"
             android:background="@color/near_by_issue_background"
@@ -301,9 +302,9 @@
             android:id="@+id/commentRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linkedCampaignLayout"
+            android:layout_below="@+id/view"
             android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="3dp"
             android:layout_marginRight="@dimen/_5sdp"
             android:paddingBottom="@dimen/_50sdp" />
 
@@ -585,6 +586,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
+            android:visibility="gone"
             android:layout_gravity="bottom"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_weight="1">

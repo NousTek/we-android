@@ -22,6 +22,7 @@ import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.arthenica.mobileffmpeg.FFmpeg
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
@@ -1249,12 +1250,49 @@ class PublishConnectActivity : AppCompatActivity(), PublishConnectPresenter.IPub
         }
     }
 
-    /** It goes back to previous activity of fragment   */
     override fun onBackPressed() {
-        super.onBackPressed()
+        if(shouldShowConfirmationAlert())
+        {
+            askUserConfirmation()
+        }
+        else {
+            super.onBackPressed()
+            EasySP.init(this).putString(ConstantEasySP.GATHERING_DATE,"")
+            EasySP.init(this).putString(ConstantEasySP.SELECTED_GATHERING_ADDRESS,"")
+            EasySP.init(this).putString("gatheringTitle","")
+            EasySP.init(this).putString("gatheringDetails","")
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+    }
 
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    private fun shouldShowConfirmationAlert(): Boolean
+    {
+        return (connectTitle!!.text!=null && connectTitle!!.text.isNotEmpty()) || (connectDetails!!.text!=null && connectDetails!!.text.isNotEmpty()) || (mediaAdapter!=null && mediaAdapter!!.itemCount>0)
+    }
+    private fun askUserConfirmation()
+    {
+        try {
+            val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+            sweetAlertDialog.contentText = "Are you sure you want to discard this article?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
+            sweetAlertDialog.show()
+            sweetAlertDialog.setCancelable(false)
+            sweetAlertDialog.setConfirmClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+                finish()
+            }
 
+
+            sweetAlertDialog.setCancelClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+            }
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
     }
 
     private fun getImageFilePath(uri: Uri) {

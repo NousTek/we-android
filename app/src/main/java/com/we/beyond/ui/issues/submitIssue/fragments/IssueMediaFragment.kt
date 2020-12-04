@@ -521,6 +521,8 @@ class IssueMediaFragment : Fragment(),
             // if(data!=null) {
             if (mMediaUri != null) {
                 try {
+                    submitActivity!!.shouldEnableNextBtn(true)
+                    submitActivity!!.shouldEnableCategoryIcon(true)
                     val path = FileUtils().getRealPath(context!!, mMediaUri!!)
                     var file1: File? = null
                     if (path != null) {
@@ -565,6 +567,8 @@ class IssueMediaFragment : Fragment(),
         } else if (requestCode == VIDEO) {
             if (data != null) {
                 try {
+                    submitActivity!!.shouldEnableNextBtn(true)
+                    submitActivity!!.shouldEnableCategoryIcon(true)
                     mMediaUri = data!!.getData()
                     println("mmendia$mMediaUri")
                     val filePathColumn = arrayOf(MediaStore.Video.Media.DATA)

@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.webkit.WebView
 import android.widget.*
@@ -48,6 +49,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
     //var areaPojo : ArrayList<RegistrationPojo>?=null
 
     var isExternalUserRegistration: Boolean?=false
+    var socialMediaType: String?=null
     /** init image view */
     var back: ImageView? = null
     var close: ImageView? = null
@@ -112,6 +114,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
         isExternalUserRegistration=intent.getBooleanExtra(Constants.IS_EXTERNAL_USER, false)
+        socialMediaType=intent.getStringExtra(Constants.SOCIAL_MEDIA_TYPE)
         userTypeList = ArrayList()
         //citiesList = ArrayList()
         registrationPojo = ArrayList()
@@ -186,7 +189,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
         checkBoxText!!.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG)
 
         homeLocation = findViewById(R.id.txt_location_title)
-
+        homeLocation!!.typeface=ConstantFonts.raleway_regular
 
         /** ids of relative layout */
         moreInfoLayout = findViewById(R.id.moreInfoLayout)
@@ -195,7 +198,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
 
         /** ids of AutoCompleteText View (spinner) */
         userType = findViewById(R.id.dropdown_registration_for)
-        userType!!.typeface = ConstantFonts.raleway_semibold
+        userType!!.typeface = ConstantFonts.raleway_regular
 
         /*  city = findViewById(R.id.dropdown_city)
           city!!.typeface = ConstantFonts.raleway_semibold
@@ -205,25 +208,25 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
 
         /** ids of edit text */
         firstName = findViewById(R.id.et_first_name)
-        firstName!!.typeface = ConstantFonts.raleway_semibold
+        firstName!!.typeface = ConstantFonts.raleway_regular
 
         secondName = findViewById(R.id.et_second_name)
-        secondName!!.typeface = ConstantFonts.raleway_semibold
+        secondName!!.typeface = ConstantFonts.raleway_regular
 
         organizationName = findViewById(R.id.et_organization_name)
-        organizationName!!.typeface = ConstantFonts.raleway_semibold
+        organizationName!!.typeface = ConstantFonts.raleway_regular
 
         email = findViewById(R.id.et_email)
-        email!!.typeface = ConstantFonts.raleway_semibold
+        email!!.typeface = ConstantFonts.raleway_regular
 
         mobileNumber = findViewById(R.id.et_mobile_number)
-        mobileNumber!!.typeface = ConstantFonts.raleway_semibold
+        mobileNumber!!.typeface = ConstantFonts.raleway_regular
 
         password = findViewById(R.id.et_password)
-        password!!.typeface = ConstantFonts.raleway_semibold
+        password!!.typeface = ConstantFonts.raleway_regular
 
         retypePassword = findViewById(R.id.et_retype_password)
-        retypePassword!!.typeface = ConstantFonts.raleway_semibold
+        retypePassword!!.typeface = ConstantFonts.raleway_regular
 
         register = findViewById(R.id.btn_register)
         register!!.typeface = ConstantFonts.raleway_semibold
@@ -234,15 +237,23 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
 
         /** ids of input  text  layout*/
         userTypeLayout = findViewById(R.id.registrationForLayout)
+        userTypeLayout!!.typeface=ConstantFonts.raleway_regular
         firstNameLayout = findViewById(R.id.firstNameLayout)
+        firstNameLayout!!.typeface=ConstantFonts.raleway_regular
         secondNameLayout = findViewById(R.id.secondNameLayout)
+        secondNameLayout!!.typeface=ConstantFonts.raleway_regular
         organizationNameLayout = findViewById(R.id.organizationNameLayout)
+        organizationNameLayout!!.typeface=ConstantFonts.raleway_regular
         /* cityLayout = findViewById(R.id.cityLayout)
          areaLayout = findViewById(R.id.areaLayout)*/
         emailLayout = findViewById(R.id.EmailLayout)
+        emailLayout!!.typeface=ConstantFonts.raleway_regular
         mobileNumberLayout = findViewById(R.id.MobileNumberLayout)
+        mobileNumberLayout!!.typeface=ConstantFonts.raleway_regular
         passwordLayout = findViewById(R.id.PasswordLayout)
+        passwordLayout!!.typeface=ConstantFonts.raleway_regular
         retypePasswordLayout = findViewById(R.id.RetypePasswordLayout)
+        retypePasswordLayout!!.typeface=ConstantFonts.raleway_regular
         if(isExternalUserRegistration!!)
         {
             val emailId=intent.getStringExtra(Constants.EXTERNAL_USER_EMAIL)
@@ -521,16 +532,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
             } else {
 
             }
-            /*  if (cityText.isEmpty()) {
-                  cityLayout!!.error = "Please Select City"
-              } else {
-                  cityLayout!!.isErrorEnabled = false
-              }
-              if (areaText.isEmpty()) {
-                  areaLayout!!.error = "Please Select Area"
-              } else {
-                  areaLayout!!.isErrorEnabled = false
-              }*/
+
             if (emailText.isEmpty()) {
                 emailLayout!!.error = "Please Fill Email Address"
             } else {
@@ -723,14 +725,31 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
 
             if (userTypeList!!.isNotEmpty()) {
                 for (i in 0 until userTypeList!!.size) {
-                    val userTypeAdapter =
+                    /*val userTypeAdapter =
                         ArrayAdapter<String>(
                             this,
                             R.layout.spinner_popup_item,
                             userTypeList!!
                         )
                     userTypeAdapter.setDropDownViewResource(R.layout.spinner_popup_item)
-                    userType!!.setAdapter(userTypeAdapter)
+                    userType!!.setAdapter(userTypeAdapter)*/
+                    val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item, userTypeList!!
+                    ) {
+                        override fun getView(
+                            position: Int,
+                            convertView: View?,
+                            parent: ViewGroup
+                        ): View {
+                            val view = super.getView(position, convertView, parent)
+                            val text =
+                                view.findViewById<View>(android.R.id.text1) as TextView
+                            text.typeface = ConstantFonts.raleway_regular
+                            return view
+                        }
+                    }
+                    userType!!.setAdapter(adapter)
                 }
             }
         } catch (e: Exception) {
@@ -779,6 +798,10 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
     /**  go to next activity  */
     override fun goToNextScreen() {
         try {
+            if(isExternalUserRegistration!! && socialMediaType!=null)
+            {
+                EasySP.init(this).putString(Constants.SOCIAL_MEDIA_TYPE, socialMediaType)
+            }
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
@@ -813,7 +836,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
             if (address != null && address!!.isNotEmpty()) {
                 homeLocation = findViewById(R.id.txt_location_title)
                 homeLocation!!.text = address
-                homeLocation!!.typeface = ConstantFonts.raleway_semibold
+                homeLocation!!.typeface = ConstantFonts.raleway_regular
             }
 
 

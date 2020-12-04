@@ -20,6 +20,7 @@ import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
@@ -50,7 +51,6 @@ import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.engine.impl.GlideEngine
 import java.io.File
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -319,6 +319,15 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        val isSelected = intent.getBooleanExtra("gathering", false)
+        if(isSelected)
+        {
+            getSharedData()
+        }
+    }
+
     private fun shouldEnabledCreateButton(shouldEnabled: Boolean)
     {
         if(shouldEnabled)
@@ -335,10 +344,14 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
     /** get all shared data and set to edit text  */
     private fun getSharedData() {
         //issueId = EasySP.init(this).getString("issueId")
-
         getIssueNumber = EasySP.init(this).getInt(ConstantEasySP.ISSUE_NUMBER)
         issueTitle = EasySP.init(this).getString(ConstantEasySP.ISSUE_TITLE)
         address = EasySP.init(this).getString(ConstantEasySP.SELECTED_GATHERING_ADDRESS)
+        if(address!=null && !address.isNullOrEmpty())
+        {
+            addLocation!!.visibility=View.GONE
+            locationTitle!!.visibility=View.VISIBLE
+        }
         city = EasySP.init(this).getString("city")
         connectTitleText = EasySP.init(this).getString("gatheringTitle")
         connectDetailsText = EasySP.init(this).getString("gatheringDetails")
@@ -490,6 +503,19 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         /** It opens AddLocationActivity  */
         addLocation!!.setOnClickListener {
             ConstantMethods.hideKeyBoard(context, this)
+            addLocation!!.visibility=View.GONE
+            val intent = Intent(context, AddLocationActivity::class.java)
+            intent.putExtra("gatheringLocation", true)
+            startActivityForResult(intent,5)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            EasySP.init(this).putString("gatheringTitle", gatheringTitle!!.text.toString())
+            EasySP.init(this).putString("gatheringDetails", gatheringDetails!!.text.toString())
+
+        }
+
+        locationTitle!!.setOnClickListener{
+            ConstantMethods.hideKeyBoard(context, this)
+            addLocation!!.visibility=View.GONE
             val intent = Intent(context, AddLocationActivity::class.java)
             intent.putExtra("gatheringLocation", true)
             startActivityForResult(intent,5)
@@ -610,7 +636,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         linkIssueTitle!!.setOnClickListener {
             val intent = Intent(this, NearByIssueActivity::class.java)
             intent.putExtra("gathering",true)
-            startActivityForResult(intent,5)
+            startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
 
         }
@@ -1161,18 +1187,56 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
         }
     }
 
-
-
-    /** It goes back to previous activity of fragment   */
     override fun onBackPressed() {
-        super.onBackPressed()
-        EasySP.init(this).putString(ConstantEasySP.GATHERING_DATE,"")
-        EasySP.init(this).putString(ConstantEasySP.SELECTED_GATHERING_ADDRESS,"")
-        EasySP.init(this).putString("gatheringTitle","")
-        EasySP.init(this).putString("gatheringDetails","")
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-        // finish()
+        if(shouldShowConfirmationAlert())
+        {
+            askUserConfirmation()
+        }
+        else {
+            super.onBackPressed()
+            EasySP.init(this).putString(ConstantEasySP.GATHERING_DATE,"")
+            EasySP.init(this).putString(ConstantEasySP.SELECTED_GATHERING_ADDRESS,"")
+            EasySP.init(this).putString("gatheringTitle","")
+            EasySP.init(this).putString("gatheringDetails","")
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
     }
+
+    private fun shouldShowConfirmationAlert(): Boolean
+    {
+        val gatheringDate = EasySP.init(this).getString(ConstantEasySP.GATHERING_DATE)
+        val gatheringAddress = EasySP.init(this).getString(ConstantEasySP.SELECTED_GATHERING_ADDRESS)
+        val gatheringTitle = EasySP.init(this).getString("gatheringTitle")
+        val gatheringDetails = EasySP.init(this).getString("gatheringDetails")
+        return  (gatheringDate!!.isNotEmpty() || gatheringAddress!!.isNotEmpty() || gatheringTitle!!.isNotEmpty() || gatheringDetails!!.isNotEmpty())
+    }
+    private fun askUserConfirmation()
+    {
+        try {
+            val sweetAlertDialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+            sweetAlertDialog.contentText = "Are you sure you want to discard this gathering?"
+            sweetAlertDialog.confirmText = "Yes"
+            sweetAlertDialog.cancelText = "No"
+            sweetAlertDialog.show()
+            sweetAlertDialog.setCancelable(false)
+            sweetAlertDialog.setConfirmClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+                finish()
+            }
+
+
+            sweetAlertDialog.setCancelClickListener {
+                sweetAlertDialog.dismissWithAnimation()
+            }
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+    }
+
+
     private var projection =
         arrayOf(MediaStore.MediaColumns.DATA)
     private fun getImageFilePath(uri: Uri) {

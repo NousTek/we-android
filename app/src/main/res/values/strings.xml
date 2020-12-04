@@ -19,7 +19,7 @@
     <string name="login_password_hint">Password</string>
     <string name="login_forgot_password">Forgot Password ?</string>
     <string name="login">Login</string>
-    <string name="or">OR</string>
+    <string name="or">Or</string>
     <string name="create_account">CREATE ACCOUNT</string>
     <string name="login_issue">Have an issue? </string>
 
@@ -37,7 +37,7 @@
     <string name="registration_password_hint">Password</string>
     <string name="registration_retype_password_hint">ReType Password</string>
     <string name="terms_condition">I Accept the terms and conditions</string>
-    <string name="register_button">REGISTER</string>
+    <string name="register_button">Register</string>
     <string name="helper_text_registration_for">Assistive text</string>
     <string name="helper_text_email">Optional if you have mobile</string>
     <string name="helper_text_mobile">Optional if you have email address</string>

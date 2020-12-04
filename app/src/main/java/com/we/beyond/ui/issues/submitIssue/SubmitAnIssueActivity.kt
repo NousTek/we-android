@@ -964,7 +964,7 @@ class SubmitAnIssueActivity : AppCompatActivity(),
         val address = EasySP.init(this).getString("locationAddress")
         val city = EasySP.init(this).getString("city")
         val media = EasySP.init(this).getString(ConstantEasySP.UPLOADED_MEDIA)
-        return  (!categoryId!!.isEmpty() || !issueTitle!!.isEmpty() || !issueDetails!!.isEmpty() || !latlong!!.isEmpty() || !address!!.isEmpty() || !city!!.isEmpty() ||  ! media!!.isEmpty())
+        return  (categoryId!!.isNotEmpty() || issueTitle!!.isNotEmpty() || issueDetails!!.isNotEmpty() || latlong!!.isNotEmpty() || address!!.isNotEmpty() || city!!.isNotEmpty() ||  media!!.isNotEmpty())
     }
     /** It goes back to previous activity of fragment   */
     override fun onBackPressed() {

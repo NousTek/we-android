@@ -46,7 +46,7 @@ class IssueDescriptionFragment : Fragment() {
         initElementsWithIds(v)
 
         /** load data from shared */
-        loadData()
+//        loadData()
 
         /** initialize onclick listener */
         initWithListener()

@@ -5,23 +5,29 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.we.beyond.adapter.MediaAdapter
 import com.we.beyond.BuildConfig
 import com.we.beyond.PhotoActivity
 import com.we.beyond.R
 import com.we.beyond.RealPathUtils
+import com.we.beyond.adapter.MediaAdapter
 import com.we.beyond.api.FileUploadApi
 import com.we.beyond.api.ProfileApi
 import com.we.beyond.interceptor.ApplicationController
@@ -416,6 +422,19 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
                                     ConstantMethods.cancleProgessDialog()
                                     try {
 
+                                        var socialMediaType:String=EasySP.init(this@UserProfileActivity).getString(Constants.SOCIAL_MEDIA_TYPE)
+                                        if(socialMediaType!=null && socialMediaType.isNotEmpty())
+                                        {
+                                            if(socialMediaType.equals("Google"))
+                                            {
+                                                performGoogleSignOut()
+                                            }
+                                            else if(socialMediaType.equals("Facebook"))
+                                            {
+                                                performFacebookSignOut()
+                                            }
+                                            EasySP.init(this@UserProfileActivity).remove(Constants.SOCIAL_MEDIA_TYPE)
+                                        }
                                         EasySP.init(this@UserProfileActivity).remove(ConstantEasySP.SP_IS_LOGIN)
 
                                         EasySP.init(this@UserProfileActivity).remove(ConstantEasySP.SP_ACCESS_TOKEN)
@@ -530,6 +549,22 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
         }
     }
 
+    private fun performGoogleSignOut()
+    {
+        val gso = GoogleSignInOptions.Builder(
+            GoogleSignInOptions.DEFAULT_SIGN_IN
+        )
+            .requestEmail()
+            .requestProfile()
+            .build()
+        val mGoogleSignInClient = GoogleSignIn.getClient(this@UserProfileActivity, gso)
+        mGoogleSignInClient.signOut()
+    }
+
+    private fun performFacebookSignOut()
+    {
+        LoginManager.getInstance().logOut()
+    }
     /** ui initialization */
     private fun initElementsWithIds()
     {
@@ -631,30 +666,6 @@ class UserProfileActivity : AppCompatActivity(), ProfilePresenter.IProfileView {
     }
 
 
- /*   class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-        var mFragmentList = ArrayList<Fragment>()
-        var mFragmentTitleList = ArrayList<String>()
-
-        // this is for fragment tabs
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
-
-
-        // this counts total number of tabs
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-*/
-
-    //}
 
 
     /** It will open PhotoActivity to crop the im\mage and call api to upload image to server  */

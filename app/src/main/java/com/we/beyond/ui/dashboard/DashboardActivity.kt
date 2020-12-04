@@ -480,8 +480,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             {
                 try {
 
-                    notification!!.visibility = View.VISIBLE
-                    notifyGif!!.visibility= View.VISIBLE
+                    notification!!.visibility = View.GONE
+                    notifyGif!!.visibility= View.GONE
 
                     //notify!!.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shake))
 
@@ -498,7 +498,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     //handler for delay to hold the splash screen
                     Handler().postDelayed(object : Runnable {
                         override fun run() {
-                            notify!!.visibility= View.VISIBLE
+                            notify!!.visibility= View.GONE
                             notifyGif!!.clearAnimation()
                             notifyGif!!.visibility= View.GONE
                         }
@@ -515,7 +515,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                 notification!!.visibility = View.GONE
 
                 notifyGif!!.clearAnimation()
-                notify!!.visibility= View.VISIBLE
+                notify!!.visibility= View.GONE
                 notifyGif!!.visibility= View.GONE
                 //mp.release()
             }
@@ -610,16 +610,16 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         /** It opens CreateGatheringActivity when click on it */
         createGathering!!.setOnClickListener {
 
-            val intent = Intent(this, CreateGatheringActivity::class.java)
-            //intent.putExtra("gathering",true)
+            val intent = Intent(this, NearByIssueActivity::class.java)
+            intent.putExtra("gathering",true)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
 
         /** It opens CreateGatheringActivity when click on it */
         gatheringLayout!!.setOnClickListener {
-            val intent = Intent(this, CreateGatheringActivity::class.java)
-            //intent.putExtra("gathering",true)
+            val intent = Intent(this, NearByIssueActivity::class.java)
+            intent.putExtra("gathering",true)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             firebaseAnalytics.logEvent("share_image") {
@@ -749,7 +749,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             notification!!.visibility = View.GONE
 
             notifyGif!!.clearAnimation()
-            notify!!.visibility= View.VISIBLE
+            notify!!.visibility= View.GONE
             notifyGif!!.visibility= View.GONE
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
@@ -1058,8 +1058,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
             if(notificationBell)
             {
-                notification!!.visibility = View.VISIBLE
-                notifyGif!!.visibility= View.VISIBLE
+                notification!!.visibility = View.GONE
+                notifyGif!!.visibility= View.GONE
                 notify!!.visibility = View.GONE
 
                 Glide.with(this)
@@ -1068,7 +1068,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
                 Handler().postDelayed(object : Runnable {
                     override fun run() {
-                        notify!!.visibility= View.VISIBLE
+                        notify!!.visibility= View.GONE
                         notifyGif!!.clearAnimation()
                         notifyGif!!.visibility= View.GONE
                     }

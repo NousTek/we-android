@@ -15,6 +15,7 @@ import com.we.beyond.model.ForgotPasswordPojo
 import com.we.beyond.model.LoginPojo
 import com.we.beyond.util.ConstantEasySP
 import com.we.beyond.util.ConstantMethods
+import com.we.beyond.util.Constants
 import com.white.easysp.EasySP
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -259,7 +260,7 @@ class LoginImpl(login: LoginPresenter.ILoginView) : LoginPresenter.ILoginPresent
 
                                 EasySP.init(context)
                                     .putBoolean(ConstantEasySP.SP_IS_LOGIN, true)
-
+                                EasySP.init(context).putString(Constants.SOCIAL_MEDIA_TYPE, "Facebook")
                                 EasySP.init(context).putString(
                                     ConstantEasySP.SP_ACCESS_TOKEN,
                                     loginPojo.accessToken
@@ -302,7 +303,7 @@ class LoginImpl(login: LoginPresenter.ILoginView) : LoginPresenter.ILoginPresent
                                     val errorPojo: ErrorPojo =
                                         Gson().fromJson(er, ErrorPojo::class.java)
                                     val userInfo: ExternalUserInfo = errorPojo.data
-                                    login.registerExternalUser(userInfo.email, userInfo.firstName, userInfo.lastName)
+                                    login.registerExternalUser(userInfo.email, userInfo.firstName, userInfo.lastName, "Facebook")
                                 }
                                 else {
                                     val er: String = exception.response()!!.errorBody()!!.string()
@@ -365,7 +366,7 @@ class LoginImpl(login: LoginPresenter.ILoginView) : LoginPresenter.ILoginPresent
 
                                 EasySP.init(context)
                                     .putBoolean(ConstantEasySP.SP_IS_LOGIN, true)
-
+                                EasySP.init(context).putString(Constants.SOCIAL_MEDIA_TYPE, "Google")
                                 EasySP.init(context).putString(
                                     ConstantEasySP.SP_ACCESS_TOKEN,
                                     loginPojo.accessToken
@@ -408,7 +409,7 @@ class LoginImpl(login: LoginPresenter.ILoginView) : LoginPresenter.ILoginPresent
                                     val errorPojo: ErrorPojo =
                                         Gson().fromJson(er, ErrorPojo::class.java)
                                     val userInfo: ExternalUserInfo = errorPojo.data
-                                    login.registerExternalUser(userInfo.email, userInfo.firstName, userInfo.lastName)
+                                    login.registerExternalUser(userInfo.email, userInfo.firstName, userInfo.lastName, "Google")
                                 }
                                 else {
                                     val er: String = exception.response()!!.errorBody()!!.string()

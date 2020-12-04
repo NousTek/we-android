@@ -192,6 +192,7 @@
                     android:layout_marginRight="@dimen/_12sdp"
                     android:background="@drawable/button_fill_border"
                     android:text="@string/login"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp" />
 
@@ -426,6 +427,7 @@
                 android:backgroundTint="@color/button_background"
                 android:padding="@dimen/_10sdp"
                 android:text="Submit"
+                android:textAllCaps="false"
                 android:textColor="@color/white" />
 
 

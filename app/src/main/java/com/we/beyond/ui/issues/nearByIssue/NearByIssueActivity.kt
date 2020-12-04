@@ -259,6 +259,23 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
          }
      }*/
 
+    private fun scrollListToSelectedIssue()
+    {
+        val selectedIssueId = EasySP.init(this).getString(ConstantEasySP.ISSUE_ID)
+        var selectedIssuePosition: Int=0
+        if(selectedIssueId!=null && selectedIssueId.isNotEmpty())
+        {
+            for(nearByIssues in nearByIssueArray!!)
+            {
+                if(selectedIssueId.equals(nearByIssues._id))
+                {
+                    selectedIssuePosition=nearByIssueArray!!.indexOf(nearByIssues)
+                    break
+                }
+            }
+            nearByIssuesRecycler!!.layoutManager!!.scrollToPosition(selectedIssuePosition)
+        }
+    }
     private fun resizeBitmap(mapPin: Int, width: Int, height: Int): Bitmap? {
         val imageBitmap = BitmapFactory.decodeResource(resources, mapPin)
         return Bitmap.createScaledBitmap(imageBitmap, width, height, false)
@@ -1062,7 +1079,10 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
 
             nearByIssuesAdapter = NearByIssuesAdapter(this, nearByIssueArray!!)
             nearByIssuesRecycler!!.adapter = nearByIssuesAdapter
-
+            if(isSelected)
+            {
+                scrollListToSelectedIssue()
+            }
         }
 
 
