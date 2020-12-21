@@ -920,7 +920,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
 
                 }
             } else {
-                ConstantMethods.showToast(this, "You are not owner of this gathering.")
+                ConstantMethods.showToast(this, "You are not the owner of this gathering.")
             }
 
 
@@ -1029,7 +1029,7 @@ class GatheringDetailsActivity : AppCompatActivity(), GatheringByIdPresenter.IGa
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showToast(this,  "You are not owner of this gathering.")
+                ConstantMethods.showToast(this,  "You are not the owner of this gathering.")
             }
 
         }

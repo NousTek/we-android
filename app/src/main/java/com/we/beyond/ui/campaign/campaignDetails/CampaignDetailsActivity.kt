@@ -551,7 +551,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
                 }
             }
             else{
-                ConstantMethods.showToast(this,"You are not owner of this campaign.")
+                ConstantMethods.showToast(this,"You are not the owner of this campaign.")
             }
 
 
@@ -656,7 +656,7 @@ class CampaignDetailsActivity : AppCompatActivity(), CampaignPresenter.ICampaign
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showToast(this,"You are not owner of this campaign.")
+                ConstantMethods.showToast(this,"You are not the owner of this campaign.")
             }
 
         }

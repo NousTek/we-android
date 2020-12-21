@@ -2,18 +2,19 @@ package com.we.beyond.ui.dashboard
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.*
 import android.location.LocationListener
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -33,7 +34,6 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
-import com.we.beyond.ui.leaderBoard.LeaderBoardActivity
 import com.we.beyond.R
 import com.we.beyond.interceptor.ApplicationController
 import com.we.beyond.model.DashboardPojo
@@ -46,12 +46,12 @@ import com.we.beyond.ui.campaign.campaignDetails.CampaignDetailsActivity
 import com.we.beyond.ui.connect.connectIssue.ConnectDetailsActivity
 import com.we.beyond.ui.connect.connectIssue.ConnectIssueActivity
 import com.we.beyond.ui.connect.publishConnect.PublishConnectActivity
-import com.we.beyond.ui.gathering.createGathering.CreateGatheringActivity
 import com.we.beyond.ui.gathering.gathering.GatheringActivity
 import com.we.beyond.ui.gathering.gathering.GatheringDetailsActivity
 import com.we.beyond.ui.issues.nearByIssue.NearByIssueActivity
 import com.we.beyond.ui.issues.nearByIssue.NearByIssueDetailsActivity
 import com.we.beyond.ui.issues.submitIssue.SubmitAnIssueActivity
+import com.we.beyond.ui.leaderBoard.LeaderBoardActivity
 import com.we.beyond.ui.nearByMe.NearByMeActivity
 import com.we.beyond.ui.profile.UserProfileActivity
 import com.we.beyond.util.ConstantEasySP
@@ -143,7 +143,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
     var publishConnect: Button? = null
 
     var REQUEST_ID_MULTIPLE_PERMISSIONS = 1
-
+    var REQUEST_ID_ENABLE_SETTINGS = 2
     var latitude: Double = 0.0
     var longitude: Double = 0.0
     lateinit var rootRef: DatabaseReference
@@ -169,7 +169,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         checkAndRequestPermissions()
 
         /** check runtime permission to get the current location */
-        displayLocationSettingsRequest(this)
+//        displayLocationSettingsRequest(this)
 
         /** initialize ids of elements */
         initElementsWithIds()
@@ -212,12 +212,6 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                 val json1 = Gson().toJson(LatLongSelectedPojo(latitude,longitude))
                 EasySP.init(ApplicationController.context).putString(ConstantEasySP.LATLONG_POJO,json1)
 
-                /* val intent = Intent(context, AddLocationActivity::class.java)
-                 intent.putExtra("dashboard",true)
-                 startActivity(intent)
-                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-                 finish()*/
-
             }
 
             override fun onError(p0: Status) {
@@ -237,10 +231,10 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
             getAddress(latitude, longitude)
 
-        } else {
-            /** get current location */
+        } /*else {
+            *//** get current location *//*
             getLocation()
-        }
+        }*/
 
         val getNotificationCount = EasySP.init(this).getInt("")
         if(getNotificationCount !=null)
@@ -268,17 +262,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
     private fun getLocation() {
         try {
 
-            val locationManager =
-                this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                2000,
-                10f,
-                locationListener
-            )
             var currentLocation = getLastKnownLocation()
-//            latitude = currentLocation.latitude
-//            longitude = currentLocation.longitude
             if (currentLocation != null) {
                 latitude = currentLocation.latitude
                 longitude = currentLocation.longitude
@@ -305,6 +289,17 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     e.printStackTrace()
                 }
 
+            }
+            else
+            {
+                val locationManager =
+                    this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    600000,
+                    10f,
+                    locationListener
+                )
             }
 
 
@@ -374,7 +369,36 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                         LatLongPojo(location.latitude, location.longitude, deviceFcmToken)
                     rootRef.setValue(latLongPojo)
                 }
+                latitude = location.latitude
+                longitude = location.longitude
 
+                EasySP.init(context).put(ConstantEasySP.DASHBOARD_LATITUDE,latitude)
+                EasySP.init(context).put(ConstantEasySP.DASHBOARD_LONGITUDE,longitude)
+
+                getAddress(latitude, longitude)
+
+                try {
+                    if (ConstantMethods.checkForInternetConnection(context)) {
+
+                        EasySP.init(context).remove(ConstantEasySP.ISSUE_SELECTED_CATEGORY_ID)
+
+                        dashboardPresenter!!.getSummary(
+                            this@DashboardActivity,
+                            latitude.toString(),
+                            longitude.toString()
+                        )
+                        ConstantMethods.showProgessDialog(this@DashboardActivity, "Please wait...")
+                        dashboardPresenter!!.getSummaryOnResume(
+                            this@DashboardActivity,
+                            latitude.toString(),
+                            longitude.toString()
+                        )
+                    }
+                }
+                catch ( e : Exception)
+                {
+                    e.printStackTrace()
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -480,8 +504,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             {
                 try {
 
-                    notification!!.visibility = View.GONE
-                    notifyGif!!.visibility= View.GONE
+                    notification!!.visibility = View.VISIBLE
+                    notifyGif!!.visibility= View.VISIBLE
 
                     //notify!!.startAnimation(AnimationUtils.loadAnimation(context,R.anim.shake))
 
@@ -498,7 +522,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     //handler for delay to hold the splash screen
                     Handler().postDelayed(object : Runnable {
                         override fun run() {
-                            notify!!.visibility= View.GONE
+                            notify!!.visibility= View.VISIBLE
                             notifyGif!!.clearAnimation()
                             notifyGif!!.visibility= View.GONE
                         }
@@ -515,7 +539,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                 notification!!.visibility = View.GONE
 
                 notifyGif!!.clearAnimation()
-                notify!!.visibility= View.GONE
+                notify!!.visibility= View.VISIBLE
                 notifyGif!!.visibility= View.GONE
                 //mp.release()
             }
@@ -749,7 +773,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             notification!!.visibility = View.GONE
 
             notifyGif!!.clearAnimation()
-            notify!!.visibility= View.GONE
+            notify!!.visibility= View.VISIBLE
             notifyGif!!.visibility= View.GONE
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
@@ -922,8 +946,13 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
     ) {
         mPermissionsGranted = true
 
-        getLocation()
+        val isAccessLocationPermission:Boolean=grantResults[0]== PackageManager.PERMISSION_GRANTED
+        val isCourseLocationPermission:Boolean=grantResults[1]== PackageManager.PERMISSION_GRANTED
 
+        if(isAccessLocationPermission && isCourseLocationPermission)
+        {
+            displayLocationSettingsRequest(this@DashboardActivity)
+        }
         when (requestCode) {
             REQUEST_ID_MULTIPLE_PERMISSIONS -> {
                 // Check the result of each permission granted
@@ -974,6 +1003,10 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         if (camera != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA)
         }
+         if(fineLocation == PackageManager.PERMISSION_GRANTED && fineLocation == PackageManager.PERMISSION_GRANTED)
+         {
+             displayLocationSettingsRequest(this@DashboardActivity)
+         }
         if (read != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
@@ -1012,10 +1045,13 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             override fun onResult(result: LocationSettingsResult) {
                 val status = result.getStatus()
                 when (status.getStatusCode()) {
-                    LocationSettingsStatusCodes.SUCCESS -> Log.i(
+                    LocationSettingsStatusCodes.SUCCESS -> {
+                        getLocation()
+                        Log.i(
                         "error",
                         "All location settings are satisfied."
                     )
+                    }
                     LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
                         Log.i(
                             "error",
@@ -1026,7 +1062,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                             // in onActivityResult().
                             status.startResolutionForResult(
                                 this@DashboardActivity,
-                                REQUEST_ID_MULTIPLE_PERMISSIONS
+                                REQUEST_ID_ENABLE_SETTINGS
                             )
                         } catch (e: IntentSender.SendIntentException) {
                             Log.i("error", "PendingIntent unable to execute request.")
@@ -1039,6 +1075,25 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                 }
             }
         })
+    }
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==REQUEST_ID_ENABLE_SETTINGS)
+        {
+            if(resultCode==Activity.RESULT_OK)
+            {
+                getLocation()
+            }
+        }
+    }
+
+    private fun startLocationUpdates() {
+
     }
 
 
@@ -1058,8 +1113,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
             if(notificationBell)
             {
-                notification!!.visibility = View.GONE
-                notifyGif!!.visibility= View.GONE
+                notification!!.visibility = View.VISIBLE
+                notifyGif!!.visibility= View.VISIBLE
                 notify!!.visibility = View.GONE
 
                 Glide.with(this)
@@ -1068,7 +1123,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
                 Handler().postDelayed(object : Runnable {
                     override fun run() {
-                        notify!!.visibility= View.GONE
+                        notify!!.visibility= View.VISIBLE
                         notifyGif!!.clearAnimation()
                         notifyGif!!.visibility= View.GONE
                     }

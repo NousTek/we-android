@@ -733,7 +733,7 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
                 }
             }
             else{
-                ConstantMethods.showToast(this,"You are not owner of this article.")
+                ConstantMethods.showToast(this,"You are not the owner of this article.")
             }
 
         }
@@ -838,7 +838,7 @@ class ConnectDetailsActivity : AppCompatActivity() , ConnectByIdPresenter.IConne
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showToast(this,"You are not owner of this connect.")
+                ConstantMethods.showToast(this,"You are not the owner of this article.")
             }
 
         }

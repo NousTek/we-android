@@ -846,6 +846,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
 
                 val intent = Intent(this, CreateGatheringActivity::class.java)
                 intent.putExtra("issue", true)
+                intent.putExtra("gathering", true)
                 intent.putExtra("issueId", issueId)
                 EasySP.init(this).putString(ConstantEasySP.ISSUE_TITLE, nearByIssuesData!!.data.title)
                 startActivityForResult(intent, 1)
@@ -952,7 +953,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                     }
                 }
             } else {
-                ConstantMethods.showToast(this, "You are not owner of this issue.")
+                ConstantMethods.showToast(this, "You are not the owner of this issue.")
             }
 
 
@@ -1301,7 +1302,7 @@ class NearByIssueDetailsActivity : AppCompatActivity(),
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             } else {
 
-                ConstantMethods.showToast(this,  "You are not owner of this issue.")
+                ConstantMethods.showToast(this,  "You are not the owner of this issue.")
             }
 
         }

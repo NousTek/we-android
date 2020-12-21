@@ -46,7 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_profile_name"
-                android:layout_marginTop="@dimen/_5sdp"
                 android:gravity="center"
                 android:textColor="#595959"
                 android:textSize="@dimen/_10sdp" />

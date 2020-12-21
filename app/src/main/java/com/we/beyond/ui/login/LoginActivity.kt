@@ -285,6 +285,7 @@ class LoginActivity : AppCompatActivity(), LoginPresenter.ILoginView {
         permissions.add("email")
         permissions.add("public_profile")
         loginButton.setPermissions(permissions)
+        loginButton.loginBehavior=LoginBehavior.NATIVE_WITH_FALLBACK
         loginButton.performClick()
     }
     private fun appInstalledOrNot(uri: String): Boolean {

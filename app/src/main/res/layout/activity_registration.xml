@@ -53,41 +53,13 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 >
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/registrationForLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    android:layout_marginRight="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    app:counterEnabled="false"
-                    android:minHeight="@dimen/_60sdp"
-                    app:counterMaxLength="5"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:hint="@string/registration_title"
-                    app:counterOverflowTextAppearance="@style/CounterOverFlow"
-                    app:counterTextAppearance="@style/CounterText"
-                    app:errorEnabled="true"
-                    android:textColorHint="@color/login_hint"
-                    app:hintTextAppearance="@style/HintText">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/dropdown_registration_for"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="@dimen/_40sdp"
-                        android:editable="false"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/firstNameLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_60sdp"
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:layout_marginRight="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     app:counterEnabled="false"
                     app:counterMaxLength="5"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -241,7 +213,32 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/registrationForLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:layout_marginRight="@dimen/_12sdp"
+                    app:counterEnabled="false"
+                    android:minHeight="@dimen/_60sdp"
+                    app:counterMaxLength="5"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:hint="@string/registration_title"
+                    app:counterOverflowTextAppearance="@style/CounterOverFlow"
+                    app:counterTextAppearance="@style/CounterText"
+                    app:errorEnabled="true"
+                    android:textColorHint="@color/login_hint"
+                    app:hintTextAppearance="@style/HintText">
 
+                    <AutoCompleteTextView
+                        android:id="@+id/dropdown_registration_for"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/_40sdp"
+                        android:editable="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/MobileNumberLayout"
                     android:layout_width="match_parent"

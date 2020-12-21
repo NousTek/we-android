@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
-        android:text="@string/heat_map_title"
+        android:text="@string/dashboard_heatmap"
         android:textColor="@color/white"
         android:layout_toRightOf="@+id/img_back"
         android:textSize="@dimen/_16sdp"/>

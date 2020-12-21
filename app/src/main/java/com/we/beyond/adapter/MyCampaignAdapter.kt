@@ -316,12 +316,12 @@ class MyCampaignAdapter(
                             SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                         sweetAlertDialog.titleText = ""
                         sweetAlertDialog.contentText = "You are not owner of this campaign."
-                        sweetAlertDialog.show()
+//                        sweetAlertDialog.show()
                         sweetAlertDialog.setCancelable(false)
                         sweetAlertDialog.setConfirmClickListener {
                             sweetAlertDialog.dismissWithAnimation()
                         }
-
+                        ConstantMethods.showToast(context,"You are not the owner of this campaign.")
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

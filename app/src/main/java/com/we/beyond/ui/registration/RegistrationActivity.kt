@@ -16,6 +16,9 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.common.api.ResultCallback
 import com.google.android.gms.location.*
@@ -564,7 +567,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
             }
             if (!isPasswordValid(passwordText)) {
 
-                passwordLayout!!.error = "Required minimum 6 characters"
+                passwordLayout!!.error = "Invalid password format"
 
             } else {
                 passwordLayout!!.isErrorEnabled = false
@@ -637,7 +640,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
                                     } else {
                                         ConstantMethods.showToast(
                                             this,
-                                            "Invalid Password"
+                                            "Password must contain at least 6 characters including UPPERCASE, Lower case, numbers and special characters."
                                         )
                                     }
                                 } else {
@@ -685,7 +688,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
      * returns false if password is invalid
      */
     fun isPasswordValid(pawd: String): Boolean {
-        val pattern = Pattern.compile("^(?=.*\\d)(?=.*[!@#\$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}\$")
+        val pattern = Pattern.compile("^(?=.*\\d)(?=.*[!@#\$%^&*_])(?=.*[a-z])(?=.*[A-Z]).{8,20}\$")
         val matcher = pattern.matcher(pawd)
         if (matcher.matches())
         {
@@ -802,6 +805,14 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
             {
                 EasySP.init(this).putString(Constants.SOCIAL_MEDIA_TYPE, socialMediaType)
             }
+            if(socialMediaType.equals("Google"))
+            {
+                performGoogleSignOut()
+            }
+            else if(socialMediaType.equals("Facebook"))
+            {
+                performFacebookSignOut()
+            }
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
@@ -817,6 +828,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
     /** go to previous activity  */
     override fun goToPreviousScreen() {
         try {
+
             intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
@@ -853,5 +865,22 @@ class RegistrationActivity : AppCompatActivity(), RegistrationPresenter.IRegistr
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         finish()
 
+    }
+
+    private fun performGoogleSignOut()
+    {
+        val gso = GoogleSignInOptions.Builder(
+            GoogleSignInOptions.DEFAULT_SIGN_IN
+        )
+            .requestEmail()
+            .requestProfile()
+            .build()
+        val mGoogleSignInClient = GoogleSignIn.getClient(this@RegistrationActivity, gso)
+        mGoogleSignInClient.signOut()
+    }
+
+    private fun performFacebookSignOut()
+    {
+        LoginManager.getInstance().logOut()
     }
 }

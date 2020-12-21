@@ -580,12 +580,12 @@ class GatheringCommentAdapter(
                                     SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                                 sweetAlertDialog.titleText = ""
                                 sweetAlertDialog.contentText = "You are not owner of this reply."
-                                sweetAlertDialog.show()
+//                                sweetAlertDialog.show()
                                 sweetAlertDialog.setCancelable(false)
                                 sweetAlertDialog.setConfirmClickListener {
                                     sweetAlertDialog.dismissWithAnimation()
                                 }
-
+                                ConstantMethods.showToast(context,"You are not the owner of this reply.")
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
@@ -750,12 +750,12 @@ class GatheringCommentAdapter(
                                     SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                                 sweetAlertDialog.titleText = ""
                                 sweetAlertDialog.contentText = "You are not owner of this comment."
-                                sweetAlertDialog.show()
+//                                sweetAlertDialog.show()
                                 sweetAlertDialog.setCancelable(false)
                                 sweetAlertDialog.setConfirmClickListener {
                                     sweetAlertDialog.dismissWithAnimation()
                                 }
-
+                                ConstantMethods.showToast(context,"You are not the owner of this comment.")
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
@@ -917,12 +917,12 @@ class GatheringCommentAdapter(
                                 SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                             sweetAlertDialog.titleText = ""
                             sweetAlertDialog.contentText = "You are not owner of this comment."
-                            sweetAlertDialog.show()
+//                            sweetAlertDialog.show()
                             sweetAlertDialog.setCancelable(false)
                             sweetAlertDialog.setConfirmClickListener {
                                 sweetAlertDialog.dismissWithAnimation()
                             }
-
+                            ConstantMethods.showToast(context,"You are not the owner of this comment.")
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -1165,12 +1165,12 @@ class GatheringCommentAdapter(
                                     SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                                 sweetAlertDialog.titleText = ""
                                 sweetAlertDialog.contentText = "You are not owner of this reply."
-                                sweetAlertDialog.show()
+//                                sweetAlertDialog.show()
                                 sweetAlertDialog.setCancelable(false)
                                 sweetAlertDialog.setConfirmClickListener {
                                     sweetAlertDialog.dismissWithAnimation()
                                 }
-
+                                ConstantMethods.showToast(context,"You are not the owner of this reply.")
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
@@ -1205,12 +1205,12 @@ class GatheringCommentAdapter(
                                     SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                                 sweetAlertDialog.titleText = ""
                                 sweetAlertDialog.contentText = "You are not owner of this comment."
-                                sweetAlertDialog.show()
+//                                sweetAlertDialog.show()
                                 sweetAlertDialog.setCancelable(false)
                                 sweetAlertDialog.setConfirmClickListener {
                                     sweetAlertDialog.dismissWithAnimation()
                                 }
-
+                                ConstantMethods.showToast(context,"You are not the owner of this comment.")
                             } catch (e: Exception) {
                                 e.printStackTrace()
                             }
@@ -1247,12 +1247,12 @@ class GatheringCommentAdapter(
                                 SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                             sweetAlertDialog.titleText = ""
                             sweetAlertDialog.contentText = "You are not owner of this comment."
-                            sweetAlertDialog.show()
+//                            sweetAlertDialog.show()
                             sweetAlertDialog.setCancelable(false)
                             sweetAlertDialog.setConfirmClickListener {
                                 sweetAlertDialog.dismissWithAnimation()
                             }
-
+                            ConstantMethods.showToast(context,"You are not the owner of this comment.")
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

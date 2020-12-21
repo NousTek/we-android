@@ -255,12 +255,12 @@ class NotificationActivity : AppCompatActivity() , NotificationPresenter.INotifi
 
 
             noContent!!.visibility = View.VISIBLE
-            noContent!!.text = "No Notification found."
+            noContent!!.text = "No notification found."
 
             try {
                 val sweetAlertDialog = SweetAlertDialog(this , SweetAlertDialog.NORMAL_TYPE)
                 sweetAlertDialog.titleText = ""
-                sweetAlertDialog.contentText = "No Notification found."
+                sweetAlertDialog.contentText = "No notification found."
 //                sweetAlertDialog.show()
                 sweetAlertDialog.setCancelable(false)
                 sweetAlertDialog.setConfirmClickListener {

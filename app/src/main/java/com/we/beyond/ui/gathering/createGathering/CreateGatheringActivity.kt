@@ -352,6 +352,11 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
             addLocation!!.visibility=View.GONE
             locationTitle!!.visibility=View.VISIBLE
         }
+        else
+        {
+            addLocation!!.visibility=View.VISIBLE
+            locationTitle!!.visibility=View.GONE
+        }
         city = EasySP.init(this).getString("city")
         connectTitleText = EasySP.init(this).getString("gatheringTitle")
         connectDetailsText = EasySP.init(this).getString("gatheringDetails")
@@ -836,9 +841,9 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
                 ConstantMethods.showToast(this, "Please select date and time")
             } else if (locationTitle!!.text.isEmpty()) {
                 ConstantMethods.showToast(this, "Please select gathering location")
-            }else if (media!!.isEmpty()) {
+            } /*else if (media!!.isEmpty()) {
                 ConstantMethods.showToast(this, "You need to attach at least 1 photo to this gathering to post")
-            }
+            }*/
 
             else {
 
@@ -888,7 +893,7 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
 //                val imageArray = ArrayList<String>()
 
 
-             if (details.isNotEmpty() && gatheringTitle!!.text.isNotEmpty()  && issueId!!.isNotEmpty() && dateTime!!.text.isNotEmpty() && latlongArray.isNotEmpty() && imageArray.isNotEmpty()) {
+             if (details.isNotEmpty() && gatheringTitle!!.text.isNotEmpty()  && issueId!!.isNotEmpty() && dateTime!!.text.isNotEmpty() && latlongArray.isNotEmpty()) {
 
                     if (ConstantMethods.checkForInternetConnection(this@CreateGatheringActivity)) {
 
@@ -1221,6 +1226,10 @@ class CreateGatheringActivity : AppCompatActivity(), CreateGatheringPresenter.IC
             sweetAlertDialog.setCancelable(false)
             sweetAlertDialog.setConfirmClickListener {
                 sweetAlertDialog.dismissWithAnimation()
+                EasySP.init(this).putString(ConstantEasySP.GATHERING_DATE,"")
+                EasySP.init(this).putString(ConstantEasySP.SELECTED_GATHERING_ADDRESS,"")
+                EasySP.init(this).putString("gatheringTitle","")
+                EasySP.init(this).putString("gatheringDetails","")
                 finish()
             }
 

@@ -439,6 +439,7 @@ class NearByIssuesAdapter(
 
                     val intent = Intent(context, CreateGatheringActivity::class.java)
                     intent.putExtra("issueList", true)
+                    intent.putExtra("gathering", true)
                     intent.putExtra("issueId", nearByIssueDetails!![position]._id)
                     (context as NearByIssueActivity).startActivityForResult(intent, 1)
                     (context).overridePendingTransition(
@@ -613,12 +614,12 @@ class NearByIssuesAdapter(
                             SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE)
                         sweetAlertDialog.titleText = ""
                         sweetAlertDialog.contentText = "You are not owner of this issue."
-                        sweetAlertDialog.show()
+//                        sweetAlertDialog.show()
                         sweetAlertDialog.setCancelable(false)
                         sweetAlertDialog.setConfirmClickListener {
                             sweetAlertDialog.dismissWithAnimation()
                         }
-
+                        ConstantMethods.showToast(context,"You are not the owner of this issue.")
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

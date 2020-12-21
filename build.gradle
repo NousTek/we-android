@@ -15,7 +15,7 @@ buildscript {
         // in the individual module build.gradle files
 
         // Add the Crashlytics Gradle plugin.
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.0.0-beta02'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
     }
 }
 
