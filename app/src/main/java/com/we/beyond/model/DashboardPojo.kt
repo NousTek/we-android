@@ -12,6 +12,7 @@ data class DashboardData(
     var upcomingGatheringCount : Int,
     var publishedConnectCount : Int,
     var allIssuesCount : Int,
+    var allGatheringsCount: Int,
     var user : DashboardUserData
 )
 

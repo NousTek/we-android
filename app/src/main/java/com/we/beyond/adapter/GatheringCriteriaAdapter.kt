@@ -55,8 +55,11 @@ class GatheringCriteriaAdapter
         /** It set data to views */
         holder.categoryTitle.text = gatheringCriteria!![position]
         holder.categoryTitle.typeface = ConstantFonts.raleway_semibold
-
-
+        if(position==0 && selectedPosition==-1)
+        {
+            holder.categoryTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
+            holder.categoryTitle.setBackgroundResource(R.drawable.button_fill_border)
+        }
         /** It select and un select criteria and changes its text color and background */
         holder.itemView.setOnClickListener {
 
@@ -119,7 +122,7 @@ class GatheringCriteriaAdapter
 
 
     /** It select and un select the views*/
-    private fun setSelected(position: Int) {
+     fun setSelected(position: Int) {
 
         for (i in 0 until viewArray.size) {
             viewArray[i].txt_connect_category.setTextColor(
@@ -134,6 +137,7 @@ class GatheringCriteriaAdapter
         }
 
     }
+
 
     /** View holder to initialize ui */
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

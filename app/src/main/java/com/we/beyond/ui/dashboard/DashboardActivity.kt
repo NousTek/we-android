@@ -118,6 +118,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
     var newInfoPublishedTitle : TextView?=null
     var newInfoPublishedKm : TextView?=null
     var allIssuesCount : TextView?=null
+    var allGatheringCount : TextView?=null
     var hello : TextView?=null
     var name : TextView?=null
     var nearByMe : TextView?=null
@@ -296,8 +297,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
                 locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
-                    600000,
-                    10f,
+                    6000,
+                    1f,
                     locationListener
                 )
             }
@@ -437,7 +438,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             issueResolvedCount!!.text = summary.data.resolvedIssueCount.toString()
             gatheringsNearByCount!!.text = summary.data.upcomingGatheringCount.toString()
             newInfoPublishedCount!!.text = summary.data.publishedConnectCount.toString()
-
+            allIssuesCount!!.text = summary.data.allIssuesCount!!.toString()
+            allGatheringCount!!.text= summary.data.allGatheringsCount!!.toString()
             selectedCategotyId.addAll(summary.data.user.categories)
 
 
@@ -475,6 +477,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             gatheringsNearByCount!!.text = summary.data.upcomingGatheringCount.toString()
             newInfoPublishedCount!!.text = summary.data.publishedConnectCount.toString()
             allIssuesCount!!.text = summary.data.allIssuesCount!!.toString()
+            allGatheringCount!!.text= summary.data.allGatheringsCount!!.toString()
             selectedCategotyId.addAll(summary.data.user.categories)
 
             EasySP.init(context).remove(ConstantEasySP.ISSUE_SELECTED_CATEGORY_ID)
@@ -887,7 +890,9 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         newInfoPublishedKm = findViewById(R.id.txt_new_info_published_km)
         newInfoPublishedKm!!.typeface = ConstantFonts.raleway_semibold
         allIssuesCount =findViewById(R.id.txtIssueCnt)
+        allGatheringCount=findViewById(R.id.txtGatheringCnt)
         allIssuesCount!!.typeface = ConstantFonts.raleway_semibold
+        allGatheringCount!!.typeface = ConstantFonts.raleway_semibold
         hello = findViewById(R.id.txt_hello)
         hello!!.typeface = ConstantFonts.raleway_semibold
 
@@ -1129,7 +1134,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     }
                 }, 5000.toLong())
 
-                if (ConstantMethods.checkForInternetConnection(context)) {
+                if (ConstantMethods.checkForInternetConnection(context) && (!"0.0".equals(latitude.toString())) && (!"0.0".equals(longitude.toString()))) {
                     ConstantMethods.showProgessDialog(this, "Please Wait...")
                     dashboardPresenter!!.getSummaryOnResume(
                         this,
@@ -1140,7 +1145,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
             }
             else{
-                if (ConstantMethods.checkForInternetConnection(context)) {
+                if (ConstantMethods.checkForInternetConnection(context) && (!"0.0".equals(latitude.toString())) && (!"0.0".equals(longitude.toString()))) {
                     ConstantMethods.showProgessDialog(this, "Please Wait...")
                     dashboardPresenter!!.getSummaryOnResume(
                         this,
@@ -1299,7 +1304,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
                     else -> {
 
-                        if (ConstantMethods.checkForInternetConnection(context)) {
+                        if (ConstantMethods.checkForInternetConnection(context) && (!"0.0".equals(latitude.toString())) && (!"0.0".equals(longitude.toString()))) {
                             ConstantMethods.showProgessDialog(this, "Please wait...")
                             dashboardPresenter!!.getSummaryOnResume(
                                 this,

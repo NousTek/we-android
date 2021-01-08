@@ -28,9 +28,10 @@ class ApplicationController : MultiDexApplication() {
 
         object Dev {
             //val BASE_URL = "http://WeTest-env.m8vkwfpfid.ap-south-1.elasticbeanstalk.com/"
-           val BASE_URL = "https://www.weapp.mobi/"
+//             Production environment
+//           val BASE_URL = "https://www.weapp.mobi/"
 //            Dev environment
-//            val BASE_URL = "https://dev-api.weapp.mobi/"
+            val BASE_URL = "https://dev-api.weapp.mobi/"
 //            Staging environment
 //            val BASE_URL = "https://stage-api.weapp.mobi/"
            // val BASE_URL = "http://weapplive-env-prod.xfaj3epmdm.ap-south-1.elasticbeanstalk.com/"

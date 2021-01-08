@@ -122,9 +122,9 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
         gatheringArray!!.clear()
 
         gatheringCriteria = ArrayList()
-        gatheringCriteria!!.add("Today")
-        gatheringCriteria!!.add("Tomorrow")
-        gatheringCriteria!!.add("Weekend")
+        gatheringCriteria!!.add(" All ")
+        gatheringCriteria!!.add("Upcoming")
+        gatheringCriteria!!.add("Past")
         // gatheringCriteria!!.add("Next month")
 
         /** initialize implementation */
@@ -138,7 +138,8 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
         /** set connect category adapter */
         setGatheringCriteria()
-
+//        gatheringCriteriaAdapter!!.setSelected(0)
+//        (gatheringCriteriaRecycler!!.adapter).setS
         /** post Data to server */
         getCurrentDateGathering()
 
@@ -344,11 +345,12 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
         val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
         val d = Date()
         var dayOfTheWeek = sdf.format(d)
-
+        val startDateRange=sdf.parse("1950-01-01 00:00:00");
+        var startDayOfWeek=sdf.format(startDateRange)
         println("date of week $dayOfTheWeek")
 
         //today
-        currentDate = ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeek)
+        currentDate = ConstantMethods.convertDateStringToServerDateTodayFull(startDayOfWeek)
 
         println("current date $currentDate")
 
@@ -374,41 +376,49 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
             when (gatheringId) {
 
-                "Today" -> {
+                "All" -> {
                     val d = Date()
+                    val startDateRange=sdf.parse("1950-01-01");
                     var dayOfTheWeek = sdf.format(d)
+                    var startDayOfWeek=sdf.format(startDateRange)
+                    val calendar = Calendar.getInstance()
 
                     println("date of week $dayOfTheWeek")
 
                     //today
-                    startDate =
+                    /*startDate =
                         ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeek + " 00:00:00")
                     endDate =
-                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeek + " 23:59:59")
-
+                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeek + " 23:59:59")*/
+                    startDate= ConstantMethods.convertDateStringToServerDateTodayFull(startDayOfWeek + " 00:00:00")
+                    endDate=""
                     println("start date today  $startDate $endDate")
 
                     postDataToServerWithCriteria(pageNo, startDate, endDate)
                     gatheringAdapter!!.notifyDataSetChanged()
 
                 }
-                "Tomorrow" -> {
+                "Upcoming" -> {
 
                     //tomorrow
                     val calendar = Calendar.getInstance()
                     val today = calendar.time
-
                     calendar.add(Calendar.DAY_OF_YEAR, 1)
                     val tomorrow = calendar.time
 
                     var dayOfTheWeekTomorrow = sdf.format(tomorrow)
-
+                    val startDateRange=sdf.parse("1950-01-01");
+                    var startDayOfWeek=sdf.format(startDateRange)
                     println("date of week $dayOfTheWeekTomorrow")
+                    val d = Date()
+                    var dayOfTheWeek = sdf.format(d)
 
-                    startDate =
-                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekTomorrow + " 00:00:00")
-                    endDate =
-                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekTomorrow + " 23:59:59")
+                    startDate=ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeek + " 00:00:00")
+                    /*startDate =
+                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekTomorrow + " 00:00:00")*/
+                    /*endDate =
+                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekTomorrow + " 23:59:59")*/
+                    endDate=""
 
                     println("start date tomorrow $startDate $endDate")
 
@@ -460,7 +470,7 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
 
                  }*/
-                "Weekend" -> {
+                "Past" -> {
                     //week end
                     val calendarNextWeekStart = Calendar.getInstance()
                     calendarNextWeekStart.time = Date()
@@ -471,8 +481,8 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
                     println("date of week $dayOfTheWeekStart")
 
-                    startDate =
-                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekStart + " 00:00:00")
+                    /*startDate =
+                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekStart + " 00:00:00")*/
 
                     println("week end $startDate")
 
@@ -482,13 +492,18 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
                     calendarNextWeekEnd.add(Calendar.WEEK_OF_MONTH, 1)
                     calendarNextWeekEnd.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
                     val weekEnd = calendarNextWeekEnd.time
-
+                    val d = Date()
+                    var dayOfTheWeek = sdf.format(d)
                     var dayOfTheWeekEnd = sdf.format(weekEnd)
-
+                    val startDateRange=sdf.parse("1950-01-01");
+                    var startDayOfWeek=sdf.format(startDateRange)
                     println("date of week $dayOfTheWeekEnd")
 
-                    endDate =
-                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekEnd + " 00:00:00")
+                   /* endDate =
+                        ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeekEnd + " 00:00:00")*/
+                    startDate =
+                        ConstantMethods.convertDateStringToServerDateTodayFull(startDayOfWeek + " 00:00:00")
+                    endDate=ConstantMethods.convertDateStringToServerDateTodayFull(dayOfTheWeek + " 00:00:00")
 
                     println("week end $endDate")
 
@@ -723,7 +738,8 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
         /** It calls again getCurrentDateGathering api when pull it from top */
         pullToRefresh!!.setOnRefreshListener {
             resetValue()
-            getCurrentDateGathering()
+//            getCurrentDateGathering()
+            postDataToServerWithCriteriaOnLoadMore(page, startDate, endDate)
             pullToRefresh!!.isRefreshing = false
         }
 
@@ -797,13 +813,13 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
             when (gatheringId) {
 
-                "Today" -> {
+                "All" -> {
 
 
                     postDataToServerWithCriteriaOnLoadMore(++page, startDate, endDate)
 
                 }
-                "Tomorrow" -> {
+                "Upcoming" -> {
 
                     postDataToServerWithCriteriaOnLoadMore(++page, startDate, endDate)
 
@@ -816,7 +832,7 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
 
                 }
-                "Weekend" -> {
+                "Past" -> {
                     //week end
 
                     postDataToServerWithCriteriaOnLoadMore(++page, startDate, endDate)

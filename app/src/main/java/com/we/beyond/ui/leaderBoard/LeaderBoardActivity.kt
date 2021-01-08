@@ -108,10 +108,10 @@ class LeaderBoardActivity : AppCompatActivity(), LeaderBoardPresenter.ILeaderBoa
 
         /** array initialization */
         leaderBoardCriteria = ArrayList()
-        leaderBoardCriteria!!.add("Today's")
-        leaderBoardCriteria!!.add("Last 7 Days")
-        leaderBoardCriteria!!.add("Last 30 Days")
         leaderBoardCriteria!!.add("All Time")
+        leaderBoardCriteria!!.add("Last 30 Days")
+        leaderBoardCriteria!!.add("Last 7 Days")
+        leaderBoardCriteria!!.add("Today's")
 
         /** initialize implementation */
         leaderBoardPresenter = LeaderBoardImpl(this)
