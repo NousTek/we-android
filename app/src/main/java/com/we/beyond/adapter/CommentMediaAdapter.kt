@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.we.beyond.R
 import com.we.beyond.model.MediaUploadingPojo
+import com.we.beyond.ui.MediaViewPagerActivity
 import com.we.beyond.ui.PreviewActivity
 import com.we.beyond.util.ConstantEasySP
 import com.we.beyond.util.ConstantMethods
@@ -26,10 +27,12 @@ class CommentMediaAdapter(var context: Context, mediaList: ArrayList<MediaUpload
 
     /** init array list */
     var mediaList: ArrayList<MediaUploadingPojo>? = null
-
+    var imageUrlList: ArrayList<String>? = null
+    var videoUrlList: ArrayList<String>? = null
     init {
 
         this.mediaList = mediaList
+        initMediaLists()
     }
 
     override fun onCreateViewHolder(
@@ -133,9 +136,13 @@ class CommentMediaAdapter(var context: Context, mediaList: ArrayList<MediaUpload
         holder.cardview.setOnClickListener {
 
             if (mediaList!![position].serverUrl != null && mediaList!![position].serverUrl.isNotEmpty()) {
-                val intent = Intent(context, PreviewActivity::class.java)
+                /*val intent = Intent(context, PreviewActivity::class.java)
                 intent.putExtra(ConstantEasySP.PREVIEW_MEDIA, mediaList!![position].serverUrl)
                 intent.putExtra(ConstantEasySP.MIME_TYPE, mediaList!![position].mimeType)
+                (context).startActivity(intent)*/
+                val intent = Intent(context, MediaViewPagerActivity::class.java)
+                intent.putStringArrayListExtra("mediaImage", imageUrlList)
+                intent.putStringArrayListExtra("mediaVideo", videoUrlList)
                 (context).startActivity(intent)
 
             } else {
@@ -143,6 +150,25 @@ class CommentMediaAdapter(var context: Context, mediaList: ArrayList<MediaUpload
             }
         }
 
+
+    }
+
+    private fun initMediaLists()
+    {
+        imageUrlList= ArrayList()
+        videoUrlList= ArrayList()
+        for( media in mediaList!!)
+        {
+            if(media.mimeType.contains("image"))
+            {
+                imageUrlList!!.add(media.serverUrl)
+            }
+            else
+                if(media.mimeType.contains("video"))
+                {
+                    videoUrlList!!.add(media.serverUrl)
+                }
+        }
 
     }
 

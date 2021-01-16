@@ -108,7 +108,7 @@
     <string name="gathering_issue_location_hint">Type Venue Address &amp; Attach Location Details</string>
 
     //gathering activity
-    <string name="gathering_title">Upcoming Gatherings</string>
+    <string name="gathering_title">Gatherings</string>
     <string name="create_gathering_button">Create a Gathering</string>
 
     //create campaign activity

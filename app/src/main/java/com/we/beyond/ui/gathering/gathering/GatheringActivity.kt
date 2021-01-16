@@ -351,7 +351,7 @@ class GatheringActivity : AppCompatActivity(), GatheringPresenter.IGatheringView
 
         //today
         currentDate = ConstantMethods.convertDateStringToServerDateTodayFull(startDayOfWeek)
-
+        startDate=currentDate
         println("current date $currentDate")
 
         postDataToServer(pageNo, currentDate)
