@@ -25,6 +25,7 @@ import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.*
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.material.card.MaterialCardView
@@ -206,7 +207,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                 latitude = location!!.latitude
                 longitude = location.longitude
 
-
+                EasySP.init(context).put("lat", latitude)
+                EasySP.init(context).put("long", longitude)
                 EasySP.init(context).put(ConstantEasySP.DASHBOARD_LATITUDE,latitude)
                 EasySP.init(context).put(ConstantEasySP.DASHBOARD_LONGITUDE,longitude)
 
@@ -216,7 +218,7 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             }
 
             override fun onError(p0: Status) {
-                //Toast.makeText(context, "${p0.status}", Toast.LENGTH_LONG).show()
+//                Toast.makeText(context, "${p0.status}", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -277,7 +279,8 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
                     if (ConstantMethods.checkForInternetConnection(context)) {
 
                         EasySP.init(context).remove(ConstantEasySP.ISSUE_SELECTED_CATEGORY_ID)
-
+                        EasySP.init(context).put("lat", latitude)
+                        EasySP.init(context).put("long", longitude)
                         dashboardPresenter!!.getSummary(
                             this,
                             latitude.toString(),
@@ -788,11 +791,28 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
             try {
                 if (ConstantMethods.checkForInternetConnection(context)) {
                     ConstantMethods.showProgessDialog(this, "Please wait...")
-                    dashboardPresenter!!.getSummaryOnResume(
-                        this,
-                        latitude.toString(),
-                        longitude.toString()
-                    )
+
+                    val coarseLocation =
+                        ContextCompat.checkSelfPermission(
+                            this@DashboardActivity,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
+                    val fineLocation =
+                        ContextCompat.checkSelfPermission(
+                            this@DashboardActivity,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        )
+                    if(fineLocation == PackageManager.PERMISSION_GRANTED && coarseLocation == PackageManager.PERMISSION_GRANTED && locationEnabled())
+                    {
+                       getLocation()
+                    }
+                    else {
+                        dashboardPresenter!!.getSummaryOnResume(
+                            this,
+                            latitude.toString(),
+                            longitude.toString()
+                        )
+                    }
                 }
             }
             catch (e : Exception)
@@ -1109,7 +1129,15 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
 
         super.onResume()
         try {
+            val getLatitude = EasySP.init(this).getString("lat").trim()
+            val getLongitude = EasySP.init(this).getString("long").trim()
+            if (getLatitude != null && getLatitude.isNotEmpty() && getLatitude.length > 0) {
+                latitude = getLatitude.toDouble()
+                longitude = getLongitude.toDouble()
 
+                getAddress(latitude, longitude)
+
+            }
             EasySP.init(this).put(ConstantEasySP.UPLOADED_MEDIA,"")
 
             notificationBell = EasySP.init(this).getBoolean("notification")
@@ -1322,4 +1350,10 @@ class DashboardActivity : AppCompatActivity() , DashboardPresenter.IDashboardVie
         }
     }
 
+
+    private fun locationEnabled(): Boolean{
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var gpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        return gpsStatus
+    }
 }

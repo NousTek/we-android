@@ -244,7 +244,7 @@ class ReportResolvedActivity : AppCompatActivity(), ReportResolvedPresenter.IRep
             resoltionId = intent.getStringExtra("resolutionId")
 
         } else {
-            resolved!!.text = "resolved"
+            resolved!!.text = "Resolved"
         }
 
         println("campaign data $isEdit")

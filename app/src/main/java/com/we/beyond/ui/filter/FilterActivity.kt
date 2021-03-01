@@ -227,7 +227,7 @@ class FilterActivity : AppCompatActivity() ,OnChangeDataFilterListener{
                 }
                 else if(radiusValue.isEmpty())
                 {
-                    EasySP.init(this).put("radius",5.0)
+                    EasySP.init(this).put("radius",50000.0)
                     //showWarning("Km Radius", "Please select at least radius")
                 }
                 else{
@@ -331,7 +331,7 @@ class FilterActivity : AppCompatActivity() ,OnChangeDataFilterListener{
             }
             else if(radiusValue.isEmpty())
             {
-                EasySP.init(this).put("radius",5.0)
+                EasySP.init(this).put("radius",50000.0)
                 //showWarning("Km Radius", "Please select at least radius")
             }
             else{

@@ -579,8 +579,8 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
                 sortByValue = "Newest"
             }
             if (radiusValue.isEmpty()) {
-                radiusValue = "5.0"
-                radius = 5.0
+                radiusValue = "50000.0"
+                radius = 50000.0
             }
 
 
@@ -938,8 +938,8 @@ class NearByIssueActivity : AppCompatActivity(), NearByIssuePresenter.INearByIss
                 sortByValue = "Newest"
             }
             if (radiusValue.isEmpty()) {
-                radiusValue = "5.0"
-                radius = 5.0
+                radiusValue = "50000.0"
+                radius = 50000.0
             }
             else{
                 radius = radiusValue.toDouble()
